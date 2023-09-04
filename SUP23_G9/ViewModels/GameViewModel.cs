@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace SUP23_G9.ViewModels
 {
-    class MainViewModel : BaseViewModel
+    class GameViewModel : BaseViewModel
     {
-        public BaseViewModel CurrentViewModel { get; set; } = new GameViewModel();
+
     }
 }

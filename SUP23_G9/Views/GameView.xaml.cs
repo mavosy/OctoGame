@@ -1,5 +1,4 @@
-﻿using SUP23_G9.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,14 +16,13 @@ using System.Windows.Shapes;
 namespace SUP23_G9.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for GameView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class GameView : UserControl
     {
-        public MainWindow()
+        public GameView()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
         }
     }
 }
