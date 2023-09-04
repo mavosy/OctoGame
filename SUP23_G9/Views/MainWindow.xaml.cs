@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SUP23_G9
+namespace SUP23_G9.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

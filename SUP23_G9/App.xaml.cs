@@ -13,5 +13,6 @@ namespace SUP23_G9
     /// </summary>
     public partial class App : Application
     {
+
     }
 }
