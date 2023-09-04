@@ -11,6 +11,6 @@ namespace SUP23_G9.ViewModels.Base
 
     class BaseViewModel
     {
-        
+
     }
 }
