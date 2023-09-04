@@ -10,6 +10,6 @@ namespace SUP23_G9.ViewModels.Base
     [AddINotifyPropertyChangedInterface]
     class BaseViewModel
     {
-
+        //Comment
     }
 }
