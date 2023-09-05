@@ -5,15 +5,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SUP23_G9.Views"
              xmlns:character="clr-namespace:SUP23_G9.Views.Characters"
+             xmlns:vm="clr-namespace:SUP23_G9.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <!--<vm:GameViewModel/>-->
+        <character:PlayerCharacter/>
+    </UserControl.DataContext>
     <Border
         Background="White"
         BorderBrush="DarkTurquoise"
         BorderThickness="5"
         CornerRadius="5">
-        <StackPanel>
-            <character:PlayerCharacter Width="100" Height="100" Canvas.Left="{Binding LeftCoordinates}" Canvas.Top="{Binding TopCoordinates}" Panel.ZIndex="100" BorderBrush="Black" BorderThickness="5"/>
-        </StackPanel>
+        <Canvas Name="gameArea">
+            <Image Name="player" Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp" Width="50" Height="50" Canvas.Left="350" Canvas.Top="150" Focusable="True" KeyDown="player_KeyDown" KeyUp="player_KeyUp"/>
+            <Rectangle Name="cube" Width="32" Height="36" Fill="Black" Canvas.Left="10" Canvas.Top="10" Visibility="Hidden"/>
+            <character:PlayerCharacter x:Name="playerC" Width="100" Height="100" Canvas.Left="10" Canvas.Top="10" BorderBrush="Black" BorderThickness="5" Visibility="Hidden"/>
+        </Canvas>
     </Border>
 </UserControl>

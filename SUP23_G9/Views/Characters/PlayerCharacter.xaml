@@ -6,11 +6,8 @@
              xmlns:local="clr-namespace:SUP23_G9.Views.Characters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-                 KeyDown="Character_KeyDown">
+                 Focusable="True">
     <Rectangle 
-        Fill="DarkGreen"
-        Width="100"
-        Height="100"
-        >
+        Fill="DarkGreen">
     </Rectangle>
 </local:Character>

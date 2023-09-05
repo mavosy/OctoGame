@@ -12,66 +12,67 @@ namespace SUP23_G9.ViewModels
 {
     class PlayerViewModel : BaseViewModel
     {
-        //private readonly Timer? _timer;
 
-        //public PlayerViewModel()
-        //{
-        //    LeftCoordinates = 0;
-        //    TopCoordinates = 0;
+    //private readonly Timer? _timer;
 
-        //    _timer = new Timer();
-        //    _timer.Interval = 100;
-        //    _timer.Elapsed += (_, _) => MovePlayerCharacter();
+    //public PlayerViewModel()
+    //{
+    //    LeftCoordinates = 0;
+    //    TopCoordinates = 0;
 
-        //    //ArrowKeyDownCommand = new RelayCommand(x => ExecuteArrowKeyDown());
-        //}
+    //    _timer = new Timer();
+    //    _timer.Interval = 100;
+    //    _timer.Elapsed += (_, _) => MovePlayerCharacter();
 
-        ////Skapa ett relaycommand hanterar eventhandlers keydown tex
-        //public ICommand ArrowKeyDownCommand { get; }
-        //public double LeftCoordinates { get; set; }
-        //public double TopCoordinates { get; set; }
+    //    //ArrowKeyDownCommand = new RelayCommand(x => ExecuteArrowKeyDown());
+    //}
+
+    ////Skapa ett relaycommand hanterar eventhandlers keydown tex
+    //public ICommand ArrowKeyDownCommand { get; }
+    //public double LeftCoordinates { get; set; }
+    //public double TopCoordinates { get; set; }
 
 
-        //private void ExecuteArrowKeyDown(object obj)
-        //{
-        //    if (obj is Key key)
-        //    {
-        //        if (key == currentKey)
-        //        {
-        //            // The same key is pressed again, so stop the timer to prevent rapid movements
-        //            _timer.Stop();
-        //            currentKey = Key.None; // Reset the current key
-        //        }
-        //        else
-        //        {
-        //            // Start the timer when the arrow key is pressed
-        //            currentKey = key;
-        //            _timer.Start();
-        //        }
-        //    }
-        //}
+    //private void ExecuteArrowKeyDown(object obj)
+    //{
+    //    if (obj is Key key)
+    //    {
+    //        if (key == currentKey)
+    //        {
+    //            // Kollar om knappen trycks ner igen
+    //            _timer.Stop();
+    //            currentKey = Key.None; // Resetta knapp
+    //        }
+    //        else
+    //        {
+    //            // Startar timer
+    //            currentKey = key;
+    //            _timer.Start();
+    //        }
+    //    }
+    //}
 
-        //private void MovePlayerCharacter()
-        //{
-        //    int speed = 10; // Adjust this for your desired movement speed
+    //private void MovePlayerCharacter()
+    //{
+    //    int speed = 10; // hastighet
 
-        //    switch (currentKey)
-        //    {
-        //        case Key.Left:
-        //            LeftCoordinates -= speed;
-        //            break;
-        //        case Key.Right:
-        //            LeftCoordinates += speed;
-        //            break;
-        //        case Key.Up:
-        //            TopCoordinates -= speed;
-        //            break;
-        //        case Key.Down:
-        //            TopCoordinates += speed;
-        //            break;
-        //    }
-        //}
+    //    switch (currentKey)
+    //    {
+    //        case Key.Left:
+    //            LeftCoordinates -= speed;
+    //            break;
+    //        case Key.Right:
+    //            LeftCoordinates += speed;
+    //            break;
+    //        case Key.Up:
+    //            TopCoordinates -= speed;
+    //            break;
+    //        case Key.Down:
+    //            TopCoordinates += speed;
+    //            break;
+    //    }
+    //}
 
-        //private Key currentKey; // To keep track of the last pressed key
-    }
+    //private Key currentKey; // håller vilken knapp som trycks ner
+}
 }

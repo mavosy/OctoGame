@@ -8,12 +8,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\Components\Images\Happy_Kraken_Left.bmp" />
+    <None Remove="Views\Components\Images\Happy_Kraken_Right.bmp" />
+    <None Remove="Views\Components\Images\PirateShip1_Left.bmp" />
+    <None Remove="Views\Components\Images\PirateShip1_Right.bmp" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Views\Mobs\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Components\Images\Happy_Kraken_Left.bmp">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Views\Components\Images\Happy_Kraken_Right.bmp">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Views\Components\Images\PirateShip1_Left.bmp">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Views\Components\Images\PirateShip1_Right.bmp">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
