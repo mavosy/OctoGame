@@ -1,4 +1,5 @@
-﻿using SUP23_G9.ViewModels.Base;
+﻿using SUP23_G9.Commands;
+using SUP23_G9.ViewModels.Base;
 using SUP23_G9.Views.Components;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
+using System.Windows.Input;
 
 namespace SUP23_G9.ViewModels
 {
@@ -24,7 +27,7 @@ namespace SUP23_G9.ViewModels
         }
 
         private void FillGrid()
-        {
+    {
             Ocean = new ObservableCollection<GameGrid>();
             for (int x = 0; x < _gameGridSize; x++)
             {
@@ -43,6 +46,6 @@ namespace SUP23_G9.ViewModels
 
         }
 
-       
+
     }
 }
