@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:SUP23_G9.ViewModels"
              xmlns:local="clr-namespace:SUP23_G9.Views"
+             d:DataContext="{d:DesignInstance vm:GameViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border
@@ -11,5 +13,15 @@
         BorderBrush="DarkTurquoise"
         BorderThickness="5"
         CornerRadius="5">
+        <Grid>
+            <ItemsControl ItemsSource="{Binding Player2.Ocean}" Grid.Column="1" Grid.Row="2">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="10" Rows="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+                          
+        </Grid>
     </Border>
 </UserControl>
