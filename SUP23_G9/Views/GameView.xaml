@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
-        <!--<vm:GameViewModel/>-->
+        <!--<vm:GameViewModel/>  Om man vill lägga saker i gameviewmodel istället-->
         <character:PlayerCharacter/>
     </UserControl.DataContext>
     <Border
@@ -17,10 +17,51 @@
         BorderBrush="DarkTurquoise"
         BorderThickness="5"
         CornerRadius="5">
-        <Canvas Name="gameArea">
-            <Image Name="player" Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp" Width="50" Height="50" Canvas.Left="350" Canvas.Top="150" Focusable="True" KeyDown="player_KeyDown" KeyUp="player_KeyUp"/>
-            <Rectangle Name="cube" Width="32" Height="36" Fill="Black" Canvas.Left="10" Canvas.Top="10" Visibility="Hidden"/>
-            <character:PlayerCharacter x:Name="playerC" Width="100" Height="100" Canvas.Left="10" Canvas.Top="10" BorderBrush="Black" BorderThickness="5" Visibility="Hidden"/>
+        <Canvas Name="gameArea" Background="LightSeaGreen">
+            <Image 
+                Name="player" 
+                Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp" 
+                Width="50" 
+                Height="50" 
+                Canvas.Left="350" 
+                Canvas.Top="230" 
+                Focusable="True" 
+                KeyDown="player_KeyDown" 
+                KeyUp="player_KeyUp"/>
+            
+            <Image 
+                Name="pirateShip1" 
+                Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Left.bmp" 
+                Width="50" 
+                Height="50" 
+                Canvas.Left="150" 
+                Canvas.Top="30"/>
+            
+            <Image Name="pirateShip2" 
+                   Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Right.bmp" 
+                   Width="50" 
+                   Height="50" 
+                   Canvas.Left="350" 
+                   Canvas.Top="150"/>
+            
+            <Image Name="pirateShip3" 
+                   Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Left.bmp" 
+                   Width="50" 
+                   Height="50" 
+                   Canvas.Left="550" 
+                   Canvas.Top="300"/>
+            
+            <!--Ett försök att använda en user control istället. Gick sådär.-->
+            <!--<character:PlayerCharacter 
+                x:Name="playerC" 
+                Width="100" 
+                Height="100" 
+                Canvas.Left="{Binding LeftCoordinates}" 
+                Canvas.Top="{Binding RightCoordinates}" 
+                BorderBrush="Black" 
+                BorderThickness="5" 
+                Visibility="Hidden"/>-->
+            
         </Canvas>
     </Border>
 </UserControl>
