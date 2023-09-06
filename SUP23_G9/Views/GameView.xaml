@@ -7,18 +7,23 @@
              xmlns:local="clr-namespace:SUP23_G9.Views"
              d:DataContext="{d:DesignInstance vm:GameViewModel}"
              xmlns:character="clr-namespace:SUP23_G9.Views.Characters"
-             xmlns:vm="clr-namespace:SUP23_G9.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
-        <!--<vm:GameViewModel/>  Om man vill lägga saker i gameviewmodel istället-->
-        <character:PlayerCharacter/>
-    </UserControl.DataContext>
+
     <Border
         Background="White"
         BorderBrush="DarkTurquoise"
         BorderThickness="5"
         CornerRadius="5">
+        <Grid>
+        
+            <ItemsControl ItemsSource="{Binding Player2.Ocean}" Grid.Column="1" Grid.Row="2">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="10" Rows="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
         <Canvas Name="gameArea" Background="LightSeaGreen">
             <Image 
                 Name="player" 
@@ -64,16 +69,9 @@
                 BorderThickness="5" 
                 Visibility="Hidden"/>-->
             
-        </Canvas>
-        <Grid>
-            <ItemsControl ItemsSource="{Binding Player2.Ocean}" Grid.Column="1" Grid.Row="2">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="10" Rows="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
                           
+        
+        </Canvas>
         </Grid>
     </Border>
 </UserControl>
