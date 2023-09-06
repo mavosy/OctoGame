@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -21,6 +22,7 @@ using System.Windows.Threading;
 using static System.Net.Mime.MediaTypeNames;
 using Application = System.Windows.Application;
 using Image = System.Windows.Controls.Image;
+using Timer = System.Timers.Timer;
 
 namespace SUP23_G9.Views
 {
@@ -30,11 +32,11 @@ namespace SUP23_G9.Views
     public partial class GameView : UserControl, INotifyPropertyChanged
     {
         #region Field-variables
-        Timer? _timer = new();     //nyar upp en ny timer från namespace System.Timers
+        Timer? _timer;     //nyar upp en ny timer från namespace System.Timers
         
         bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;   //bool-variabel för om en given knapp är nertryckt eller släppt
         
-        readonly int _playerSpeed = 5;    //sätter spelarens hastighet
+        int _playerSpeed = 5;    //sätter spelarens hastighet
         int _mobSpeed = 5;              //sätter mobens hastighet 
 
         //fields för bild-URIs
@@ -49,7 +51,7 @@ namespace SUP23_G9.Views
         {
             InitializeComponent();
             player.Focus();     //försöker fokusera på spelaren, behövs för KeyDown-event
-
+            _timer = new Timer();
             _timer.Interval = 10;    //sätter ett intervall i millisekunder för hur ofta MovePlayerEvent ska köras
             _timer.Elapsed += MovePlayerEvent;     //kör MovePlayerEvent varje gång interval ska börja om
             _timer.Elapsed += MoveMobEvent;     //kör MoveMobEvent varje gång interval ska börja om
@@ -196,7 +198,10 @@ namespace SUP23_G9.Views
             {
                 SetTopMovement(player, -_playerSpeed);      //sätter ny x-koordinat till den förra koordinaten PLUS _playerSpeed
             }
-            CollisionCheckTest();
+            CollisionCheck(player, pirateShip1);
+            CollisionCheck(player, pirateShip2);
+            CollisionCheck(player, pirateShip3);
+            
         }
 
         /// <summary>
@@ -219,15 +224,6 @@ namespace SUP23_G9.Views
             Dispatcher.Invoke(() => Canvas.SetTop(image, Canvas.GetTop(image) - speed));
         }
 
-        /// <summary>
-        /// Byter en bildkälla i UI till en ny
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="newImageURI"></param>
-        private void ChangeImage(Image image, string newImageURI)
-        {
-            Dispatcher.Invoke(() => image.Source = new BitmapImage(new Uri(@newImageURI, UriKind.Relative)));   //byter imagesource till ny källa
-        }
 
         private void MoveMobLeft(Image mobImage)
         {
@@ -246,21 +242,36 @@ namespace SUP23_G9.Views
             }
         }
 
-        private void CollisionCheckTest()    //Funkar men inte helt felfritt
-        {
-            bool collisionX = Dispatcher.Invoke(() => Canvas.GetLeft(player) < Canvas.GetLeft(pirateShip1) + (pirateShip1.Width)) && Dispatcher.Invoke(() => Canvas.GetLeft(player) + (player.Width) > Canvas.GetLeft(pirateShip1));
-            bool collisionY = Dispatcher.Invoke(() => Canvas.GetTop(player) < Canvas.GetTop(pirateShip1) + (pirateShip1.Height)) && Dispatcher.Invoke(() => Canvas.GetTop(player) + (player.Height) > Canvas.GetTop(pirateShip1));
-
-            if (collisionX && collisionY)
-            {
-                MessageBox.Show("The pirate ship was dragged down to the dark depths of the ocean, crushed by slimy tendrils and eaten for dinner");
-            }
-        }
 
         private void MoveMobEvent(object? sender, ElapsedEventArgs e)
         {
             MoveMobLeft(pirateShip1);
         } 
         #endregion
+
+        private void CollisionCheck(Image image1, Image image2)    //Funkar men inte helt felfritt
+        {
+            bool collisionX = Dispatcher.Invoke(() => Canvas.GetLeft(image1) < Canvas.GetLeft(image2) + (image2.Width)) && Dispatcher.Invoke(() => Canvas.GetLeft(image1) + (image1.Width) > Canvas.GetLeft(image2));
+            bool collisionY = Dispatcher.Invoke(() => Canvas.GetTop(image1) < Canvas.GetTop(image2) + (image2.Height)) && Dispatcher.Invoke(() => Canvas.GetTop(image1) + (image1.Height) > Canvas.GetTop(image2));
+
+            if (collisionX && collisionY)
+            {
+                //_timer.Stop();
+                //_timer.Enabled = false;
+                Dispatcher.Invoke(() => image2.Source = null);
+                //MessageBox.Show("The pirate ship was dragged down to the dark depths of the ocean, crushed by slimy tendrils and eaten for dinner");
+
+            }
+        }
+
+        /// <summary>
+        /// Byter en bildkälla i UI till en ny
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="newImageURI"></param>
+        private void ChangeImage(Image image, string newImageURI)
+        {
+            Dispatcher.Invoke(() => image.Source = new BitmapImage(new Uri(@newImageURI, UriKind.Relative)));   //byter imagesource till ny källa
+        }
     }
 }

@@ -9,7 +9,7 @@
              xmlns:character="clr-namespace:SUP23_G9.Views.Characters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
+
     <Border
         Background="White"
         BorderBrush="DarkTurquoise"
@@ -17,48 +17,48 @@
         CornerRadius="5">
         <Grid>
             <ItemsControl ItemsSource="{Binding Player2.Ocean}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid Columns="10" Rows="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="10" Rows="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
             <Canvas Name="gameArea">
                 <Image 
                     Name="player" 
                     Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp" 
                     Width="50" 
                     Height="50" 
-                    Canvas.Left="350" 
-                    Canvas.Top="230" 
+                    Canvas.Left="682" 
+                    Canvas.Top="195" 
                     Focusable="True" 
                     KeyDown="player_KeyDown" 
                     KeyUp="player_KeyUp"/>
-            
+
                 <Image 
                     Name="pirateShip1" 
                     Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Left.bmp" 
                     Width="50" 
                     Height="50" 
                     Canvas.Left="150" 
-                    Canvas.Top="30"/>
-            
+                    Canvas.Top="30" IsEnabled="True"/>
+
                 <Image Name="pirateShip2" 
                     Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Right.bmp" 
                     Width="50" 
                     Height="50" 
                     Canvas.Left="350" 
                     Canvas.Top="150"/>
-            
+
                 <Image Name="pirateShip3" 
                     Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Left.bmp" 
                     Width="50" 
                     Height="50" 
                     Canvas.Left="550" 
                     Canvas.Top="300"/>
-            
-            <!--Ett försök att använda en user control istället. Gick sådär.-->
-            <!--<character:PlayerCharacter 
+
+                <!--Ett försök att använda en user control istället. Gick sådär.-->
+                <!--<character:PlayerCharacter 
                 x:Name="playerC" 
                 Width="100" 
                 Height="100" 
@@ -67,9 +67,9 @@
                 BorderBrush="Black" 
                 BorderThickness="5" 
                 Visibility="Hidden"/>-->
-            
-                          
-        
+
+
+
             </Canvas>
         </Grid>
     </Border>
