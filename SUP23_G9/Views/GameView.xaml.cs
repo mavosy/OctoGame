@@ -232,6 +232,7 @@ namespace SUP23_G9.Views
         private void MoveMobLeft(Image mobImage)
         {
             SetLeftMovement(mobImage, _mobSpeed);
+           
 
             bool mobIsAtLeftEdge = !IsNotAtLeftEdge(pirateShip1, 5);
             bool mobIsAtRightEdge = !IsNotAtRightEdge(pirateShip1, 5);

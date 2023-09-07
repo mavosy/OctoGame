@@ -15,16 +15,17 @@
         BorderBrush="DarkTurquoise"
         BorderThickness="5"
         CornerRadius="5">
-        <Grid>
         
-            <ItemsControl ItemsSource="{Binding Player2.Ocean}" Grid.Column="1" Grid.Row="2">
+        <Grid> <!--Rutnät som vi kan använda-->
+            <ItemsControl ItemsSource="{Binding Player2.Ocean}" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="10" Rows="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
-        <Canvas Name="gameArea" Background="LightSeaGreen">
+            
+        <Canvas Name="gameArea">
             <Image 
                 Name="player" 
                 Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp" 
