@@ -6,7 +6,30 @@
         xmlns:local="clr-namespace:SUP23_G9.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <Canvas Name="myCanvas" Background="LightBlue" Focusable="True" KeyDown="KeyIsDown" KeyUp="KeyIsUp">
+
+        <!-- Gör om alla rektanglar till user control klasser MVVM -->
+
+        <Rectangle Name="player" Height="50" Width="50" Fill="red" Canvas.Left="250" Canvas.Top="66" />
+
+        <Rectangle Name="mob" Height="50" Width="50" Fill="blue" Tag="mob" Canvas.Left="315" Canvas.Top="320" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+        <Rectangle Name="mob2" Height="50" Width="50" Fill="blue" Tag="mob" Canvas.Left="474" Canvas.Top="206" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+        <Rectangle Name="mob3" Height="50" Width="50" Fill="blue" Tag="mob" Canvas.Left="186" Canvas.Top="217" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+        <Rectangle Name="mob4" Height="50" Width="50" Fill="blue" Tag="mob" Canvas.Left="646" Canvas.Top="320" HorizontalAlignment="Left" VerticalAlignment="Center" />
+
+        <Rectangle Name="evilmob" Height="50" Width="50" Fill="purple" Tag="evilmob" Canvas.Left="375" Canvas.Top="91" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+        <Rectangle Name="evilmob2" Height="50" Width="50" Fill="purple" Tag="evilmob" Canvas.Left="568" Canvas.Top="278" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+        <Label x:Name="scoreBoard" Content="Poäng:" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" Height="50" Width="165" FontSize="18" FontWeight="Bold"/>
+
+        <TextBlock x:Name="startMenu" Background="White" Canvas.Left="315" TextWrapping="Wrap" Text="" Canvas.Top="190" Height="41" Width="185" FontSize="20" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden" />
+
+
+
+
+    </Canvas>
 </Window>

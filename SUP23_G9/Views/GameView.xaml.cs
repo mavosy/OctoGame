@@ -19,7 +19,7 @@ namespace SUP23_G9.Views
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class GameView : UserControl
     {
 
         bool goLeft, goRight, goUp, goDown;
@@ -32,7 +32,7 @@ namespace SUP23_G9.Views
         DispatcherTimer gameTimer = new DispatcherTimer();
         DispatcherTimer countTimer = new DispatcherTimer();
 
-        public MainWindow()
+        public GameView()
         {
             InitializeComponent();
             StartGame();
@@ -60,7 +60,7 @@ namespace SUP23_G9.Views
         {
             startMenu.Text = count.ToString();
 
-            if(count == 0)
+            if (count == 0)
             {
                 countTimer.Stop();
                 startMenu.Visibility = Visibility.Hidden;
@@ -80,8 +80,8 @@ namespace SUP23_G9.Views
 
 
         //Spelaren kan röra på sig top/down/left/right
-        private void GameTimerEvent(object? sender, EventArgs e) 
-     
+        private void GameTimerEvent(object? sender, EventArgs e)
+
         {
             if (goLeft == true && Canvas.GetLeft(player) > 5)
             {
@@ -103,27 +103,28 @@ namespace SUP23_G9.Views
                 Canvas.SetTop(player, Canvas.GetTop(player) + playerSpeed);
             }
 
-           if(count == 0)
-            {            Rectangle[] mobz = new Rectangle[] { mob, mob2, mob3, mob4, evilmob, evilmob2 };
-
-            foreach(var mob in mobz)
+            if (count == 0)
             {
-                //Ska röra sig vertikalt därav använder SetTop/GetTop
-                Canvas.SetTop(mob, Canvas.GetTop(mob) + speed);
+                Rectangle[] mobz = new Rectangle[] { mob, mob2, mob3, mob4, evilmob, evilmob2 };
 
-                if (Canvas.GetTop(mob) + (mob.Height * 2) > Application.Current.MainWindow.Height)
+                foreach (var mob in mobz)
+                {
+                    //Ska röra sig vertikalt därav använder SetTop/GetTop
+                    Canvas.SetTop(mob, Canvas.GetTop(mob) + speed);
+
+                    if (Canvas.GetTop(mob) + (mob.Height * 2) > Application.Current.MainWindow.Height)
                     {
-                    Canvas.SetTop(mob, 0); //Ny position 0 dvs toppen
+                        Canvas.SetTop(mob, 0); //Ny position 0 dvs toppen
                     }
-            }
+                }
 
             }
-            
+
 
             //Upptäcker kollision
-            foreach(var x in myCanvas.Children.OfType<Rectangle>())
+            foreach (var x in myCanvas.Children.OfType<Rectangle>())
             {
-                if ((string)x.Tag == "mob" ) // reagerar på allt med tag mob
+                if ((string)x.Tag == "mob") // reagerar på allt med tag mob
                 {
 
                     Rect playerHitBox = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
@@ -137,12 +138,12 @@ namespace SUP23_G9.Views
                         playerSpeed = 0;
 
                         if (score == 4)
-                            { 
-                                MessageBox.Show("Grattis! Du åt alla 4 skeppen");
-                            
-                            }
+                        {
+                            MessageBox.Show("Grattis! Du åt alla 4 skeppen");
+
                         }
-                    }  
+                    }
+                }
             }
 
             // Upptäcker kollision med evil mob
@@ -155,7 +156,7 @@ namespace SUP23_G9.Views
                     if (playerHitBox.IntersectsWith(evilmobs))
                     {
                         MessageBox.Show("You lost!");
-                        Close(); // Bättre om visar total poäng och så att spelaren kan restarta igen
+                        //Close(); // Bättre om visar total poäng och så att spelaren kan restarta igen
                     }
 
                     else
@@ -175,7 +176,7 @@ namespace SUP23_G9.Views
                     break;
 
                 case Key.D:
-                    goRight= true;
+                    goRight = true;
                     break;
 
                 case Key.W:
@@ -186,7 +187,7 @@ namespace SUP23_G9.Views
                     goDown = true;
                     break;
 
-                    default:
+                default:
                     break;
             }
         }
