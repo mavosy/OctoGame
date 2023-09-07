@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -21,6 +22,7 @@ using System.Windows.Threading;
 using static System.Net.Mime.MediaTypeNames;
 using Application = System.Windows.Application;
 using Image = System.Windows.Controls.Image;
+using Timer = System.Timers.Timer;
 
 namespace SUP23_G9.Views
 {
@@ -49,7 +51,7 @@ namespace SUP23_G9.Views
         {
             InitializeComponent();
             player.Focus();     //försöker fokusera på spelaren, behövs för KeyDown-event
-
+            _timer = new Timer();
             _timer.Interval = 10;    //sätter ett intervall i millisekunder för hur ofta MovePlayerEvent ska köras
             _timer.Elapsed += MovePlayerEvent;     //kör MovePlayerEvent varje gång interval ska börja om
             _timer.Elapsed += MoveMobEvent;     //kör MoveMobEvent varje gång interval ska börja om
@@ -222,15 +224,6 @@ namespace SUP23_G9.Views
             Dispatcher.Invoke(() => Canvas.SetTop(image, Canvas.GetTop(image) - speed));
         }
 
-        /// <summary>
-        /// Byter en bildkälla i UI till en ny
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="newImageURI"></param>
-        private void ChangeImage(Image image, string newImageURI)
-        {
-            Dispatcher.Invoke(() => image.Source = new BitmapImage(new Uri(@newImageURI, UriKind.Relative)));   //byter imagesource till ny källa
-        }
 
         private void MoveMobLeft(Image mobImage)
         {
@@ -249,7 +242,8 @@ namespace SUP23_G9.Views
             }
         }
 
-        private void CollisionCheckTest()    //Funkar men inte helt felfritt
+
+        private void MoveMobEvent(object? sender, ElapsedEventArgs e)
         {
             MoveMobLeft(pirateShip1);
         }
@@ -262,14 +256,22 @@ namespace SUP23_G9.Views
 
             if (collisionX && collisionY)
             {
-                MessageBox.Show("The pirate ship was dragged down to the dark depths of the ocean, crushed by slimy tendrils and eaten for dinner");
+                //_timer.Stop();
+                //_timer.Enabled = false;
+                Dispatcher.Invoke(() => image2.Source = null);
+                //MessageBox.Show("The pirate ship was dragged down to the dark depths of the ocean, crushed by slimy tendrils and eaten for dinner");
+
             }
         }
 
-        private void MoveMobEvent(object? sender, ElapsedEventArgs e)
+        /// <summary>
+        /// Byter en bildkälla i UI till en ny
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="newImageURI"></param>
+        private void ChangeImage(Image image, string newImageURI)
         {
-            MoveMobLeft(pirateShip1);
-        } 
-        #endregion
+            Dispatcher.Invoke(() => image.Source = new BitmapImage(new Uri(@newImageURI, UriKind.Relative)));   //byter imagesource till ny källa
+        }
     }
 }
