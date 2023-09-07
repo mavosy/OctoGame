@@ -30,11 +30,11 @@ namespace SUP23_G9.Views
     public partial class GameView : UserControl, INotifyPropertyChanged
     {
         #region Field-variables
-        Timer? _timer = new();     //nyar upp en ny timer från namespace System.Timers
-        
+        Timer? _timer;     //nyar upp en ny timer från namespace System.Timers
+
         bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;   //bool-variabel för om en given knapp är nertryckt eller släppt
-        
-        readonly int _playerSpeed = 5;    //sätter spelarens hastighet
+
+        int _playerSpeed = 5;    //sätter spelarens hastighet
         int _mobSpeed = 5;              //sätter mobens hastighet 
 
         //fields för bild-URIs
@@ -196,7 +196,10 @@ namespace SUP23_G9.Views
             {
                 SetTopMovement(player, -_playerSpeed);      //sätter ny x-koordinat till den förra koordinaten PLUS _playerSpeed
             }
-            CollisionCheckTest();
+            CollisionCheck(player, pirateShip1);
+            CollisionCheck(player, pirateShip2);
+            CollisionCheck(player, pirateShip3);
+
         }
 
         /// <summary>
@@ -232,7 +235,6 @@ namespace SUP23_G9.Views
         private void MoveMobLeft(Image mobImage)
         {
             SetLeftMovement(mobImage, _mobSpeed);
-           
 
             bool mobIsAtLeftEdge = !IsNotAtLeftEdge(pirateShip1, 5);
             bool mobIsAtRightEdge = !IsNotAtRightEdge(pirateShip1, 5);
@@ -249,8 +251,14 @@ namespace SUP23_G9.Views
 
         private void CollisionCheckTest()    //Funkar men inte helt felfritt
         {
-            bool collisionX = Dispatcher.Invoke(() => Canvas.GetLeft(player) < Canvas.GetLeft(pirateShip1) + (pirateShip1.Width)) && Dispatcher.Invoke(() => Canvas.GetLeft(player) + (player.Width) > Canvas.GetLeft(pirateShip1));
-            bool collisionY = Dispatcher.Invoke(() => Canvas.GetTop(player) < Canvas.GetTop(pirateShip1) + (pirateShip1.Height)) && Dispatcher.Invoke(() => Canvas.GetTop(player) + (player.Height) > Canvas.GetTop(pirateShip1));
+            MoveMobLeft(pirateShip1);
+        }
+        #endregion
+
+        private void CollisionCheck(Image image1, Image image2)    //Funkar men inte helt felfritt
+        {
+            bool collisionX = Dispatcher.Invoke(() => Canvas.GetLeft(image1) < Canvas.GetLeft(image2) + (image2.Width)) && Dispatcher.Invoke(() => Canvas.GetLeft(image1) + (image1.Width) > Canvas.GetLeft(image2));
+            bool collisionY = Dispatcher.Invoke(() => Canvas.GetTop(image1) < Canvas.GetTop(image2) + (image2.Height)) && Dispatcher.Invoke(() => Canvas.GetTop(image1) + (image1.Height) > Canvas.GetTop(image2));
 
             if (collisionX && collisionY)
             {
