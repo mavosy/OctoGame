@@ -28,6 +28,7 @@ namespace SUP23_G9.Views
         {
             InitializeComponent();
             DataContext = new MainViewModel();
+            DataContext = new TimerViewModel(30);  // 1 minuters nedräkning
         }
     }
 }

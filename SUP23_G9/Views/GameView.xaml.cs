@@ -273,5 +273,8 @@ namespace SUP23_G9.Views
         {
             Dispatcher.Invoke(() => image.Source = new BitmapImage(new Uri(@newImageURI, UriKind.Relative)));   //byter imagesource till ny källa
         }
+
+        // Timern
+
     }
 }
