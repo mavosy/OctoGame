@@ -17,10 +17,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Threading;
-using static System.Net.Mime.MediaTypeNames;
-using Application = System.Windows.Application;
-using Image = System.Windows.Controls.Image;
+//using System.Windows.Threading;
+//using Application = System.Windows.Application;
+//using Image = System.Windows.Controls.Image;
 
 namespace SUP23_G9.Views
 {
