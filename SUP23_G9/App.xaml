@@ -6,6 +6,9 @@
              xmlns:views="clr-namespace:SUP23_G9.Views"
              StartupUri="/Views/MainWindow.xaml">
     <Application.Resources>
-         
+        <DataTemplate
+            DataType="{x:Type vm:GameViewModel}">
+            <views:GameView/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

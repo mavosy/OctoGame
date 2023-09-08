@@ -4,30 +4,40 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SUP23_G9.Views"
-             xmlns:Mobs="clr-namespace:SUP23_G9.Views.Mobs" x:Class="SUP23_G9.Views.GameView"
+             xmlns:Mobs="clr-namespace:SUP23_G9.Views.Mobs" xmlns:Characters="clr-namespace:SUP23_G9.Views.Characters" x:Class="SUP23_G9.Views.GameView"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Canvas x:Name="myCanvas" Background="LightBlue" Focusable="True" KeyDown="KeyIsDown" KeyUp="KeyIsUp">
+    <Canvas x:Name="myCanvas" Background="LightBlue" >
 
-        <!-- Gör om alla rektanglar till objekt? -->
+        <!-- Spelare -->
+        <Rectangle x:Name="player" Height="50" Width="50" Fill="red" Canvas.Left="375" Canvas.Top="200" Focusable="True" KeyDown="KeyIsDown" KeyUp="KeyIsUp" />
 
-        <Rectangle x:Name="player" Height="50" Width="50" Fill="red" Canvas.Left="250" Canvas.Top="66" />
+        <!-- Skepp -->
+        <Characters:Ship x:Name="mob" Tag="mob" Canvas.Left="68" Canvas.Top="65"/>
+        <Characters:Ship x:Name="mob2" Tag="mob" Canvas.Left="170" Canvas.Top="309"/>
+        <Characters:Ship x:Name="mob3" Tag="mob" Canvas.Left="491" Canvas.Top="65"/>
+        <Characters:Ship x:Name="mob4" Tag="mob" Canvas.Left="666" Canvas.Top="309" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-        <Rectangle x:Name="mob" Height="50" Width="50" Fill="blue" Tag="mob" Canvas.Left="315" Canvas.Top="320" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Characters:Ship x:Name="mob5" Tag="mob" Canvas.Left="491" Canvas.Top="359"/>
+        <Characters:Ship x:Name="mob6" Tag="mob" Canvas.Left="338" Canvas.Top="90"/>
+        <Characters:Ship x:Name="mob7" Tag="mob" Canvas.Left="712" Canvas.Top="40"/>
+        <Characters:Ship x:Name="mob8" Tag="mob" Canvas.Left="32" Canvas.Top="220"/>
 
-        <Rectangle x:Name="mob2" Height="50" Width="50" Fill="blue" Tag="mob" Canvas.Left="474" Canvas.Top="206" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <!-- Hinder -->
+        <Characters:Obstacle x:Name="evilmob" Tag="evilmob" Canvas.Left="207" Canvas.Top="175"/>
+        <Characters:Obstacle x:Name="evilmob2" Tag="evilmob" Canvas.Left="575" Canvas.Top="175"/>
+        <Characters:Obstacle x:Name="evilmob3" Tag="evilmob" Canvas.Left="43" Canvas.Top="375"/>
 
-        <Rectangle x:Name="mob3" Height="50" Width="50" Fill="blue" Tag="mob" Canvas.Left="186" Canvas.Top="217" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Rectangle Fill="white" Height="45" Canvas.Left="10" Stroke="Black" Canvas.Top="15" Width="165" HorizontalAlignment="Left" VerticalAlignment="Center" Opacity="0.6"/>
 
-        <Rectangle x:Name="mob4" Height="50" Width="50" Fill="blue" Tag="mob" Canvas.Left="646" Canvas.Top="320" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        <Rectangle Fill="white" Height="45" Canvas.Left="9" Stroke="Black" Canvas.Top="70" Width="166" HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="0.6"/>
 
-        <Rectangle x:Name="evilmob" Height="50" Width="50" Fill="purple" Tag="evilmob" Canvas.Left="375" Canvas.Top="91" HorizontalAlignment="Left" VerticalAlignment="Top" />
-
-        <Rectangle x:Name="evilmob2" Height="50" Width="50" Fill="purple" Tag="evilmob" Canvas.Left="568" Canvas.Top="278" HorizontalAlignment="Left" VerticalAlignment="Top" />
-
+        <!-- Poäng tavla -->
         <Label x:Name="scoreBoard" Content="Poäng:" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" Height="50" Width="165" FontSize="18" FontWeight="Bold"/>
 
-        <TextBlock x:Name="startMenu" Background="White" Canvas.Left="315" TextWrapping="Wrap" Text="" Canvas.Top="190" Height="41" Width="185" FontSize="20" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden" />
+        <!-- Start meny -->
+        <TextBlock x:Name="startMenu" Background="#FF10D4B8" Canvas.Left="290" TextWrapping="Wrap" Text="" Canvas.Top="141" Height="129" Width="234" FontSize="48" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden" />
+
 
     </Canvas>
 </UserControl>
