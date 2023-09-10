@@ -19,9 +19,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using static System.Net.Mime.MediaTypeNames;
-using Application = System.Windows.Application;
-using Image = System.Windows.Controls.Image;
 using Timer = System.Timers.Timer;
 
 namespace SUP23_G9.Views
@@ -32,7 +29,7 @@ namespace SUP23_G9.Views
     public partial class GameView : UserControl, INotifyPropertyChanged
     {
         #region Field-variables
-        Timer? _timer;     //nyar upp en ny timer från namespace System.Timers
+        DispatcherTimer? _timer;     //nyar upp en ny timer från namespace System.Timers
         
         bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;   //bool-variabel för om en given knapp är nertryckt eller släppt
         
@@ -51,10 +48,10 @@ namespace SUP23_G9.Views
         {
             InitializeComponent();
             player.Focus();     //försöker fokusera på spelaren, behövs för KeyDown-event
-            _timer = new Timer();
-            _timer.Interval = 10;    //sätter ett intervall i millisekunder för hur ofta MovePlayerEvent ska köras
-            _timer.Elapsed += MovePlayerEvent;     //kör MovePlayerEvent varje gång interval ska börja om
-            _timer.Elapsed += MoveMobEvent;     //kör MoveMobEvent varje gång interval ska börja om
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromMilliseconds(10);    //sätter ett intervall i millisekunder för hur ofta MovePlayerEvent ska köras
+            _timer.Tick += MovePlayerEvent;     //kör MovePlayerEvent varje gång interval ska börja om
+            _timer.Tick += MoveMobEvent;     //kör MoveMobEvent varje gång interval ska börja om
 
             //_timer.Elapsed += MoveMobEvent;
             _timer.Start();    //startar timer
@@ -175,7 +172,7 @@ namespace SUP23_G9.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MovePlayerEvent(object? sender, ElapsedEventArgs e)
+        private void MovePlayerEvent(object? sender, EventArgs e)
         {
             if (_leftButtonIsDown && IsNotAtLeftEdge(player, 5))
             {
@@ -243,7 +240,7 @@ namespace SUP23_G9.Views
         }
 
 
-        private void MoveMobEvent(object? sender, ElapsedEventArgs e)
+        private void MoveMobEvent(object? sender, EventArgs e)
         {
             MoveMobLeft(pirateShip1);
         } 
