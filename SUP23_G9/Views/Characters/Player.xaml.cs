@@ -16,13 +16,19 @@ using System.Windows.Shapes;
 namespace SUP23_G9.Views.Characters
 {
     /// <summary>
-    /// Interaction logic for Obstacle.xaml
+    /// Interaction logic for Player.xaml
     /// </summary>
-    public partial class Obstacle : UserControl
+    public partial class Player : UserControl
     {
-        public Obstacle()
+        public Player()
         {
             InitializeComponent();
+            krakenControl.Focus();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            krakenControl.Focus();
         }
     }
 }

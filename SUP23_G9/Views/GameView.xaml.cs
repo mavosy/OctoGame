@@ -32,7 +32,9 @@ namespace SUP23_G9.Views
         DispatcherTimer _timer;
         
         bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;   //bool-variabel för om en given knapp är nertryckt eller släppt
-        
+
+
+        int _distanceToEdge = 5;
         int _playerSpeed = 5;    //sätter spelarens hastighet
         int _mobSpeed = 5;              //sätter mobens hastighet
 
@@ -49,14 +51,14 @@ namespace SUP23_G9.Views
         public GameView()
         {
             InitializeComponent();
-            player.Focus();     //försöker fokusera på spelaren, behövs för KeyDown-event
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromMilliseconds(10);    //sätter ett intervall i millisekunder för hur ofta MovePlayerEvent ska köras
-            _timer.Tick += MovePlayerEvent;     //kör MovePlayerEvent varje gång interval ska börja om
-            _timer.Tick += MoveMobEvent;     //kör MoveMobEvent varje gång interval ska börja om
+            //player.Focus();     //försöker fokusera på spelaren, behövs för KeyDown-event
+            //_timer = new DispatcherTimer();
+            //_timer.Interval = TimeSpan.FromMilliseconds(10);    //sätter ett intervall i millisekunder för hur ofta MovePlayerEvent ska köras
+            //_timer.Tick += MovePlayerEvent;     //kör MovePlayerEvent varje gång interval ska börja om
+            //_timer.Tick += MoveMobEvent;     //kör MoveMobEvent varje gång interval ska börja om
 
-            //_timer.Elapsed += MoveMobEvent;
-            _timer.Start();    //startar timer
+            ////_timer.Elapsed += MoveMobEvent;
+            //_timer.Start();    //startar timer
             
 
         }
@@ -75,19 +77,19 @@ namespace SUP23_G9.Views
         {
             switch (e.Key)   //I KeyEventArgs finns värdet "Key" som helt enkelt är vilken knapp som har tryckts ner, typ P, R, 8, Enter, NumLock etc. Switchar på det och sätter bool till true
             {
-                case Key.A:        //här kan man ange typ vilka tangenter som helst, det ändrar kontrollen till spelet. Kanske ha userInput så man kan ändra själv?
+                case Key.J:        //här kan man ange typ vilka tangenter som helst, det ändrar kontrollen till spelet. Kanske ha userInput så man kan ändra själv?
                     _leftButtonIsDown = true;
                     break;
 
-                case Key.D:
+                case Key.L:
                     _rightButtonIsDown = true;
                     break;
 
-                case Key.W:
+                case Key.I:
                     _upButtonIsDown = true;
                     break;
 
-                case Key.S:
+                case Key.K:
                     _downButtonIsDown = true;
                     break;
 
@@ -105,19 +107,19 @@ namespace SUP23_G9.Views
         {
             switch (e.Key) //switchar på e.Key och sätter booleans för *ButtonIsDown till false när man släpper tangent
             {
-                case Key.A:
+                case Key.J:
                     _leftButtonIsDown = false;
                     break;
 
-                case Key.D:
+                case Key.L:
                     _rightButtonIsDown = false;
                     break;
 
-                case Key.W:
+                case Key.I:
                     _upButtonIsDown = false;
                     break;
 
-                case Key.S:
+                case Key.K:
                     _downButtonIsDown = false;
                     break;
 
@@ -134,9 +136,9 @@ namespace SUP23_G9.Views
         /// <param name="image"></param>
         /// <param name="distanceToEdge"></param>
         /// <returns></returns>
-        private bool IsNotAtLeftEdge(Image image, int distanceToEdge)
+        private bool IsNotAtLeftEdge(Image image)
         {
-            return Dispatcher.Invoke(() => Canvas.GetLeft(image) > distanceToEdge);
+            return Dispatcher.Invoke(() => Canvas.GetLeft(image) > _distanceToEdge);
         }
 
         /// <summary>
@@ -145,9 +147,9 @@ namespace SUP23_G9.Views
         /// <param name="image"></param>
         /// <param name="distanceToEdge"></param>
         /// <returns></returns>
-        private bool IsNotAtRightEdge(Image image, int distanceToEdge)
+        private bool IsNotAtRightEdge(Image image)
         {
-            return Dispatcher.Invoke(() => Canvas.GetLeft(image) + (image.Width) < (_gameWindowWidth - 70) - distanceToEdge);
+            return Dispatcher.Invoke(() => Canvas.GetLeft(image) + (image.Width) < (_gameWindowWidth - 70) - _distanceToEdge);
         }
 
         /// <summary>
@@ -156,9 +158,9 @@ namespace SUP23_G9.Views
         /// <param name="image"></param>
         /// <param name="distanceToEdge"></param>
         /// <returns></returns>
-        private bool IsNotAtTopEdge(Image image, int distanceToEdge)
+        private bool IsNotAtTopEdge(Image image)
         {
-            return Dispatcher.Invoke(() => Canvas.GetTop(image) > distanceToEdge);
+            return Dispatcher.Invoke(() => Canvas.GetTop(image) > _distanceToEdge);
         }
 
         /// <summary>
@@ -167,9 +169,9 @@ namespace SUP23_G9.Views
         /// <param name="image"></param>
         /// <param name="distanceToEdge"></param>
         /// <returns></returns>
-        private bool IsNotAtBottomEdge(Image image, int distanceToEdge)
+        private bool IsNotAtBottomEdge(Image image)
         {
-            return Dispatcher.Invoke(() => Canvas.GetTop(image) + (image.Height) < (Application.Current.MainWindow.ActualHeight - 93) - distanceToEdge);
+            return Dispatcher.Invoke(() => Canvas.GetTop(image) + (image.Height) < (Application.Current.MainWindow.ActualHeight - 93) - _distanceToEdge);
         }
         #endregion
 
@@ -181,24 +183,24 @@ namespace SUP23_G9.Views
         /// <param name="e"></param>
         private void MovePlayerEvent(object? sender, EventArgs e)
         {
-            if (_leftButtonIsDown && IsNotAtLeftEdge(player, 5))
+            if (_leftButtonIsDown && IsNotAtLeftEdge(player))
             {
                 SetLeftMovement(player, _playerSpeed); //sätter ny x-koordinat till den förra koordinaten MINUS _playerSpeed
                 ChangeImage(player, _krakenLeft);        //koden gör att Kraken vänder på sig beroende på vilket håll den rör sig åt (vänster eller höger)
             }
 
-            if (_rightButtonIsDown && IsNotAtRightEdge(player, 5))
+            if (_rightButtonIsDown && IsNotAtRightEdge(player))
             {
                 SetLeftMovement(player, -_playerSpeed);   //sätter ny x-koordinat till den förra koordinaten PLUS _playerSpeed
                 ChangeImage(player, _krakenRight);       //koden gör att Kraken vänder på sig beroende på vilket håll den rör sig åt (vänster eller höger)
             }
 
-            if (_upButtonIsDown && IsNotAtTopEdge(player, 5))
+            if (_upButtonIsDown && IsNotAtTopEdge(player))
             {
                 SetTopMovement(player, _playerSpeed);       //sätter ny y-koordinat till den förra koordinaten MINUS _playerSpeed
             }
 
-            if (_downButtonIsDown && IsNotAtBottomEdge(player, 5))
+            if (_downButtonIsDown && IsNotAtBottomEdge(player))
             {
                 SetTopMovement(player, -_playerSpeed);      //sätter ny x-koordinat till den förra koordinaten PLUS _playerSpeed
             }
@@ -231,8 +233,8 @@ namespace SUP23_G9.Views
         {
             SetLeftMovement(mobImage, _mobSpeed);
 
-            bool mobIsAtLeftEdge = !IsNotAtLeftEdge(pirateShip1, 5);
-            bool mobIsAtRightEdge = !IsNotAtRightEdge(pirateShip1, 5);
+            bool mobIsAtLeftEdge = !IsNotAtLeftEdge(pirateShip1);
+            bool mobIsAtRightEdge = !IsNotAtRightEdge(pirateShip1);
 
             if (mobIsAtLeftEdge)
             {
@@ -251,12 +253,12 @@ namespace SUP23_G9.Views
         }
         #endregion
 
-        private void player_Loaded(object sender, RoutedEventArgs e)
-        {
-            var window = Window.GetWindow(this);
-            window.KeyDown += player_KeyDown;
-            window.KeyUp += player_KeyUp;
-        }
+        //private void player_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    var window = Window.GetWindow(this);
+        //    window.KeyDown += player_KeyDown;
+        //    window.KeyUp += player_KeyUp;
+        //}
 
         private void MoveMobEvent(object? sender, EventArgs e)
         {

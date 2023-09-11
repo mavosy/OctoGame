@@ -20,6 +20,7 @@ namespace SUP23_G9.Views.Characters
     /// </summary>
     public partial class Ship : UserControl
     {
+
         public Ship()
         {
             InitializeComponent();

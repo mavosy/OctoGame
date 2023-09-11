@@ -1,5 +1,6 @@
 ﻿using SUP23_G9.Commands;
 using SUP23_G9.ViewModels.Base;
+using SUP23_G9.Views.Characters;
 using SUP23_G9.Views.Components;
 using System;
 using System.Collections.Generic;
@@ -8,44 +9,114 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace SUP23_G9.ViewModels
 {
-    internal abstract class PlayerViewModel : BaseViewModel
-    {
-        /// <summary>
-        /// Gamegrid
-        /// </summary>
-        //public ObservableCollection<GameGrid>? Ocean { get; private set; }
 
-        //private const int _gameGridSize = 10;
+    public class PlayerViewModel : BaseViewModel
+    {
+        readonly double _distanceToEdge = 5;
+        readonly int _playerSpeed = 10;
 
         public PlayerViewModel()
         {
-            //FillGrid();
+            LeftCoordinates = 500;
+            TopCoordinates = 350;
+            Width = 50;
+            Height = 50;
+            UpKeyDownCommand = new RelayCommand(x => MovePlayerUp(), x=> IsNotAtTopEdge());
+            DownKeyDownCommand = new RelayCommand(x => MovePlayerDown(), x=> IsNotAtBottomEdge());
+            LeftKeyDownCommand = new RelayCommand(x => MovePlayerLeft(), x=> IsNotAtLeftEdge());
+            RightKeyDownCommand = new RelayCommand(x => MovePlayerRight(), x=> IsNotAtRightEdge());
+
         }
 
-        //private void FillGrid()
-        //{
-        //    Ocean = new ObservableCollection<GameGrid>();
-        //    for (int x = 0; x < _gameGridSize; x++)
-        //    {
-        //        for (int y = 0; y < _gameGridSize; y++)
-        //        {
-        //            var piece = new GameGrid()
-        //            {
-        //                X = x,
-        //                Y = y,
-        //            };
-        //            Ocean.Add(piece);
-
-        //        }
-
-        //    }
-
-        //}
+        public double LeftCoordinates { get; set; }
+        public double TopCoordinates { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public ICommand UpKeyDownCommand { get; private set; }
+        public ICommand DownKeyDownCommand { get; private set; }
+        public ICommand LeftKeyDownCommand { get; private set; }
+        public ICommand RightKeyDownCommand { get; private set; }
 
 
+        /// <summary>
+        /// Sätter horizontell rörelse och hastighet
+        /// </summary>
+        /// <param name="imageComponent"></param>
+        /// <param name="speed"></param>
+        private void MovePlayerLeft()
+        {
+            LeftCoordinates -= _playerSpeed;
+        }
+        
+        private void MovePlayerRight()
+        {
+            LeftCoordinates += _playerSpeed;
+        }
+
+        /// <summary>
+        /// Sätter vertikal rörelse och hastighet
+        /// </summary>
+        /// <param name="imageComponent"></param>
+        /// <param name="speed"></param>
+        private void MovePlayerUp()
+        {
+            TopCoordinates -= _playerSpeed;
+        }
+        
+        private void MovePlayerDown()
+        {
+            TopCoordinates += _playerSpeed;
+        }
+
+        /// <summary>
+        /// Kollar om en 'image' är tillräckligt långt från kanten eller inte.
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="distanceToEdge"></param>
+        /// <returns></returns>
+        private bool IsNotAtLeftEdge()
+        {
+            return LeftCoordinates > _distanceToEdge; 
+        }
+
+        /// <summary>
+        /// Kollar om en 'image' är tillräckligt långt från kanten eller inte.
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="distanceToEdge"></param>
+        /// <returns></returns>
+        private bool IsNotAtRightEdge()
+        {
+            return LeftCoordinates + Width < Application.Current.MainWindow.ActualWidth - 70 - _distanceToEdge;
+        }
+
+        /// <summary>
+        /// Kollar om en 'image' är tillräckligt långt från kanten eller inte.
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="distanceToEdge"></param>
+        /// <returns></returns>
+        private bool IsNotAtTopEdge()
+        {
+            return TopCoordinates > _distanceToEdge;
+        }
+
+        /// <summary>
+        /// Kollar om en 'image' är tillräckligt långt från kanten eller inte.
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="distanceToEdge"></param>
+        /// <returns></returns>
+        private bool IsNotAtBottomEdge()
+        {
+            return TopCoordinates + Height < Application.Current.MainWindow.ActualHeight - 93 - _distanceToEdge;
+        }
     }
 }

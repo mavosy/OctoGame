@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:SUP23_G9.ViewModels"
              xmlns:local="clr-namespace:SUP23_G9.Views"
-             xmlns:Characters="clr-namespace:SUP23_G9.Views.Characters" x:Class="SUP23_G9.Views.GameView"
+             xmlns:Characters="clr-namespace:SUP23_G9.Views.Characters"
+             x:Class="SUP23_G9.Views.GameView"
              d:DataContext="{d:DesignInstance {x:Type vm:GameViewModel}}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -32,11 +33,15 @@
                     Width="50"
                     Height="50"
                     Canvas.Left="682"
-                    Canvas.Top="195"
-                    Focusable="True"
-                    Loaded="player_Loaded"
+                    Canvas.Top="195">
+                    <!--Focusable="True"-->
+                    <!--Loaded="player_Loaded"--><!--
                     KeyDown="player_KeyDown"
-                    KeyUp="player_KeyUp"/>
+                    KeyUp="player_KeyUp">-->
+                    <!--<Image.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding SearchCommand}" CommandParameter="{Binding Path=Source, RelativeSource={RelativeSource AncestorType={x:Type Image}}}" />
+                    </Image.InputBindings>-->
+                </Image>
 
                 <Image 
                     x:Name="pirateShip1" 
@@ -44,7 +49,7 @@
                     Width="50" 
                     Height="50" 
                     Canvas.Left="150" 
-                    Canvas.Top="30" IsEnabled="True"/>
+                    Canvas.Top="30"/>
 
                 <Image x:Name="pirateShip2" 
                     Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Right.bmp" 
@@ -59,23 +64,9 @@
                     Height="50" 
                     Canvas.Left="550" 
                     Canvas.Top="300"/>
-
+                <Characters:Player x:Name="kraken"/>
                 <Characters:Ship x:Name="shippy" Canvas.Left="150" Canvas.Top="245"/>
                 <Characters:Obstacle Canvas.Left="329" Canvas.Top="331"/>
-
-                <!--Ett försök att använda en user control istället. Gick sådär.-->
-                <!--<character:PlayerCharacter 
-                x:Name="playerC" 
-                Width="100" 
-                Height="100" 
-                Canvas.Left="{Binding LeftCoordinates}" 
-                Canvas.Top="{Binding RightCoordinates}" 
-                BorderBrush="Black" 
-                BorderThickness="5" 
-                Visibility="Hidden"/>-->
-
-
-
             </Canvas>
         </Grid>
     </Border>
