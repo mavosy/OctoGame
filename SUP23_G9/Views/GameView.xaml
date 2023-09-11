@@ -61,6 +61,7 @@
                     Canvas.Top="300"/>
 
                 <Characters:Ship x:Name="shippy" Canvas.Left="150" Canvas.Top="245"/>
+                <Characters:Obstacle Canvas.Left="329" Canvas.Top="331"/>
 
                 <!--Ett försök att använda en user control istället. Gick sådär.-->
                 <!--<character:PlayerCharacter 

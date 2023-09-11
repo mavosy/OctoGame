@@ -261,7 +261,7 @@ namespace SUP23_G9.Views
         private void MoveMobEvent(object? sender, EventArgs e)
         {
             MoveMobLeft(pirateShip1);
-        } 
+        }
 
         private void CollisionCheck(Image image1, Image image2)    //Funkar men inte helt felfritt
         {
