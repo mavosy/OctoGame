@@ -17,34 +17,34 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Gamegrid
         /// </summary>
-        public ObservableCollection<GameGrid>? Ocean { get; private set; }
+        //public ObservableCollection<GameGrid>? Ocean { get; private set; }
 
-        private const int _gameGridSize = 10;
+        //private const int _gameGridSize = 10;
 
         public PlayerViewModel()
         {
-            FillGrid();
+            //FillGrid();
         }
 
-        private void FillGrid()
-    {
-            Ocean = new ObservableCollection<GameGrid>();
-            for (int x = 0; x < _gameGridSize; x++)
-            {
-                for (int y = 0; y < _gameGridSize; y++)
-                {
-                    var piece = new GameGrid()
-                    {
-                        X = x,
-                        Y = y,
-                    };
-                    Ocean.Add(piece);
+        //private void FillGrid()
+        //{
+        //    Ocean = new ObservableCollection<GameGrid>();
+        //    for (int x = 0; x < _gameGridSize; x++)
+        //    {
+        //        for (int y = 0; y < _gameGridSize; y++)
+        //        {
+        //            var piece = new GameGrid()
+        //            {
+        //                X = x,
+        //                Y = y,
+        //            };
+        //            Ocean.Add(piece);
 
-                }
+        //        }
 
-            }
+        //    }
 
-        }
+        //}
 
 
     }

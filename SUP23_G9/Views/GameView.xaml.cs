@@ -1,6 +1,9 @@
 ﻿using SUP23_G9.ViewModels.Base;
+using SUP23_G9.Views.Characters;
+using SUP23_G9.Views.Components;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
@@ -53,7 +56,12 @@ namespace SUP23_G9.Views
 
             //_timer.Elapsed += MoveMobEvent;
             _timer.Start();    //startar timer
+            
+
         }
+
+
+
         #endregion
 
         #region KeyEvents
@@ -221,7 +229,6 @@ namespace SUP23_G9.Views
         private void MoveMobLeft(Image mobImage)
         {
             SetLeftMovement(mobImage, _mobSpeed);
-           
 
             bool mobIsAtLeftEdge = !IsNotAtLeftEdge(pirateShip1, 5);
             bool mobIsAtRightEdge = !IsNotAtRightEdge(pirateShip1, 5);
@@ -235,6 +242,13 @@ namespace SUP23_G9.Views
                 _mobSpeed = -_mobSpeed;   //byter håll
             }
         }
+
+
+        private void MoveMobEvent(object? sender, ElapsedEventArgs e)
+        {
+            MoveMobLeft(pirateShip1);
+        }
+        #endregion
 
         private void player_Loaded(object sender, RoutedEventArgs e)
         {

@@ -14,8 +14,9 @@
         BorderBrush="DarkTurquoise"
         BorderThickness="5"
         CornerRadius="5">
-        <Grid>
-            <ItemsControl ItemsSource="{Binding Player2.Ocean}">
+        
+        <Grid> <!--Rutnät -->
+            <ItemsControl ItemsSource="{Binding Ocean}" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="10" Rows="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
