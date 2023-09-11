@@ -29,12 +29,14 @@ namespace SUP23_G9.Views
     public partial class GameView : UserControl, INotifyPropertyChanged
     {
         #region Field-variables
-        DispatcherTimer? _timer;     //nyar upp en ny timer från namespace System.Timers
+        DispatcherTimer _timer;
         
         bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;   //bool-variabel för om en given knapp är nertryckt eller släppt
         
         int _playerSpeed = 5;    //sätter spelarens hastighet
         int _mobSpeed = 5;              //sätter mobens hastighet
+
+        double _gameWindowWidth = Application.Current.MainWindow.Width;
 
         //fields för bild-URIs
         readonly string _krakenLeft = "/Views/Components/Images/Happy_Kraken_Left.bmp";
@@ -146,7 +148,7 @@ namespace SUP23_G9.Views
         /// <returns></returns>
         private bool IsNotAtRightEdge(Image image, int distanceToEdge)
         {
-            return Dispatcher.Invoke(() => Canvas.GetLeft(image) + (image.Width) < (Application.Current.MainWindow.ActualWidth - 70) - distanceToEdge);
+            return Dispatcher.Invoke(() => Canvas.GetLeft(image) + (image.Width) < (_gameWindowWidth - 70) - distanceToEdge);
         }
 
         /// <summary>
@@ -261,7 +263,6 @@ namespace SUP23_G9.Views
         {
             MoveMobLeft(pirateShip1);
         } 
-        
 
         private void CollisionCheck(Image image1, Image image2)    //Funkar men inte helt felfritt
         {
