@@ -33,7 +33,7 @@ namespace SUP23_G9.Views
         bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;   //bool-variabel för om en given knapp är nertryckt eller släppt
         
         int _playerSpeed = 5;    //sätter spelarens hastighet
-        int _mobSpeed = 5;              //sätter mobens hastighet 
+        int _mobSpeed = 5;              //sätter mobens hastighet
 
         //fields för bild-URIs
         readonly string _krakenLeft = "/Views/Components/Images/Happy_Kraken_Left.bmp";
@@ -41,7 +41,7 @@ namespace SUP23_G9.Views
         readonly string _pirateShip1Left = "/Views/Components/Images/PirateShip1_Left.bmp";
         readonly string _pirateShip1Right = "/Views/Components/Images/PirateShip1_Right.bmp.bmp";
         #endregion
-
+         
         #region Constructors
         public GameView()
         {
@@ -197,7 +197,6 @@ namespace SUP23_G9.Views
             CollisionCheck(player, pirateShip1);
             CollisionCheck(player, pirateShip2);
             CollisionCheck(player, pirateShip3);
-            
         }
 
         /// <summary>
@@ -220,7 +219,6 @@ namespace SUP23_G9.Views
             Dispatcher.Invoke(() => Canvas.SetTop(image, Canvas.GetTop(image) - speed));
         }
 
-
         private void MoveMobLeft(Image mobImage)
         {
             SetLeftMovement(mobImage, _mobSpeed);
@@ -238,6 +236,12 @@ namespace SUP23_G9.Views
             }
         }
 
+        private void player_Loaded(object sender, RoutedEventArgs e)
+        {
+            var window = Window.GetWindow(this);
+            window.KeyDown += player_KeyDown;
+            window.KeyUp += player_KeyUp;
+        }
 
         private void MoveMobEvent(object? sender, EventArgs e)
         {
@@ -256,7 +260,6 @@ namespace SUP23_G9.Views
                 //_timer.Enabled = false;
                 Dispatcher.Invoke(() => image2.Source = null);
                 //MessageBox.Show("The pirate ship was dragged down to the dark depths of the ocean, crushed by slimy tendrils and eaten for dinner");
-
             }
         }
 

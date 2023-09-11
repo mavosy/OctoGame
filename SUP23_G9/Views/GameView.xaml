@@ -25,14 +25,15 @@
             </ItemsControl>
             <Canvas Name="gameArea">
                 <Image 
-                    Name="player" 
+                    Name="player"
                     Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp" 
-                    Width="50" 
-                    Height="50" 
-                    Canvas.Left="682" 
-                    Canvas.Top="195" 
-                    Focusable="True" 
-                    KeyDown="player_KeyDown" 
+                    Width="50"
+                    Height="50"
+                    Canvas.Left="682"
+                    Canvas.Top="195"
+                    Focusable="True"
+                    Loaded="player_Loaded"
+                    KeyDown="player_KeyDown"
                     KeyUp="player_KeyUp"/>
 
                 <Image 
