@@ -1,5 +1,4 @@
 ﻿using SUP23_G9.ViewModels.Base;
-using SUP23_G9.Views.Characters;
 using SUP23_G9.Views.Components;
 using System;
 using System.Collections.Generic;
@@ -53,6 +52,7 @@ namespace SUP23_G9.Views
             _timer.Interval = TimeSpan.FromMilliseconds(10);    //sätter ett intervall i millisekunder för hur ofta MovePlayerEvent ska köras
             _timer.Tick += MovePlayerEvent;     //kör MovePlayerEvent varje gång interval ska börja om
             _timer.Tick += MoveMobEvent;     //kör MoveMobEvent varje gång interval ska börja om
+
 
             //_timer.Elapsed += MoveMobEvent;
             _timer.Start();    //startar timer
@@ -261,7 +261,7 @@ namespace SUP23_G9.Views
         {
             MoveMobLeft(pirateShip1);
         } 
-        #endregion
+        
 
         private void CollisionCheck(Image image1, Image image2)    //Funkar men inte helt felfritt
         {
