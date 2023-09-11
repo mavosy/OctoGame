@@ -1,5 +1,4 @@
 ﻿using SUP23_G9.ViewModels.Base;
-using SUP23_G9.Views.Characters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

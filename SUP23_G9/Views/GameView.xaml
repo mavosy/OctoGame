@@ -6,7 +6,6 @@
              xmlns:vm="clr-namespace:SUP23_G9.ViewModels"
              xmlns:local="clr-namespace:SUP23_G9.Views"
              d:DataContext="{d:DesignInstance vm:GameViewModel}"
-             xmlns:character="clr-namespace:SUP23_G9.Views.Characters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
