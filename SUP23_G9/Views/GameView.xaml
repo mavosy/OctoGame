@@ -17,7 +17,7 @@
         CornerRadius="5">
         
         <Grid> <!--Rutnät -->
-            <ItemsControl ItemsSource="{Binding Player2.Ocean}" >
+            <ItemsControl ItemsSource="{Binding Ocean}" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="10" Rows="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>

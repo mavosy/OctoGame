@@ -24,11 +24,8 @@ namespace SUP23_G9.Views
         {
             InitializeComponent();
             DataContext = new StartViewModel();
+            
         }
 
-        private void StartBtn_Click(object sender, RoutedEventArgs e)
-        {
-           
-        }
     }
 }

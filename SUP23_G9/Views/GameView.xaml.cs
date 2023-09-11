@@ -1,7 +1,9 @@
 ﻿using SUP23_G9.ViewModels.Base;
 using SUP23_G9.Views.Characters;
+using SUP23_G9.Views.Components;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
@@ -38,6 +40,7 @@ namespace SUP23_G9.Views
 
         int _playerSpeed = 5;    //sätter spelarens hastighet
         int _mobSpeed = 5;              //sätter mobens hastighet 
+       
 
         //fields för bild-URIs
         readonly string _krakenLeft = "/Views/Components/Images/Happy_Kraken_Left.bmp";
@@ -45,6 +48,7 @@ namespace SUP23_G9.Views
         readonly string _pirateShip1Left = "/Views/Components/Images/PirateShip1_Left.bmp";
         readonly string _pirateShip1Right = "/Views/Components/Images/PirateShip1_Right.bmp.bmp";
         #endregion
+
 
         #region Constructors
         public GameView()
@@ -58,7 +62,12 @@ namespace SUP23_G9.Views
 
             //_timer.Elapsed += MoveMobEvent;
             _timer.Start();    //startar timer
+            
+
         }
+
+
+
         #endregion
 
         #region KeyEvents
