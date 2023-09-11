@@ -26,7 +26,7 @@ namespace SUP23_G9.Views
     /// <summary>
     /// Interaction logic for GameView.xaml
     /// </summary>
-    public partial class GameView : UserControl, INotifyPropertyChanged
+    public partial class GameView : UserControl
     {
         #region Field-variables
         DispatcherTimer _timer;
