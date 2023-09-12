@@ -35,34 +35,10 @@ namespace SUP23_G9.ViewModels
                         X = x,
                         Y = y,
                     };
+
                     Ocean.Add(piece);
-
                 }
-
             }
-
-        }
-
-        /// <summary>
-        /// Sätter horizontell rörelse och hastighet
-        /// </summary>
-        /// <param name="imageComponent"></param>
-        /// <param name="speed"></param>
-        private void SetLeftMovement()
-        {
-            Ship ship = new Ship();
-            double speed = 10;
-            Canvas.SetLeft(ship, Canvas.GetLeft(ship) - speed);
-        }
-
-        /// <summary>
-        /// Sätter vertikal rörelse och hastighet
-        /// </summary>
-        /// <param name="imageComponent"></param>
-        /// <param name="speed"></param>
-        private void SetTopMovement(Image image, int speed)
-        {
-            Canvas.SetTop(image, Canvas.GetTop(image) - speed);
         }
     }
 }

@@ -22,12 +22,6 @@
         <KeyBinding Command="{Binding LeftKeyDownCommand}" Key="A"/>
         <KeyBinding Command="{Binding RightKeyDownCommand}" Key="D"/>
     </UserControl.InputBindings>
-    <!--<UserControl.InputBindings>
-        <KeyBinding 
-            Key="W" 
-            Command="{Binding SearchCommand}" 
-            CommandParameter="{Binding Path=Text, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}"/>
-    </UserControl.InputBindings>-->
     <Grid>
         <Image 
             x:Name="kraken"

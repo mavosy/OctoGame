@@ -12,6 +12,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace SUP23_G9.ViewModels
@@ -32,7 +33,6 @@ namespace SUP23_G9.ViewModels
             DownKeyDownCommand = new RelayCommand(x => MovePlayerDown(), x=> IsNotAtBottomEdge());
             LeftKeyDownCommand = new RelayCommand(x => MovePlayerLeft(), x=> IsNotAtLeftEdge());
             RightKeyDownCommand = new RelayCommand(x => MovePlayerRight(), x=> IsNotAtRightEdge());
-
         }
 
         public double LeftCoordinates { get; set; }
@@ -43,7 +43,6 @@ namespace SUP23_G9.ViewModels
         public ICommand DownKeyDownCommand { get; private set; }
         public ICommand LeftKeyDownCommand { get; private set; }
         public ICommand RightKeyDownCommand { get; private set; }
-
 
         /// <summary>
         /// Sätter horizontell rörelse och hastighet
@@ -118,5 +117,28 @@ namespace SUP23_G9.ViewModels
         {
             return TopCoordinates + Height < Application.Current.MainWindow.ActualHeight - 93 - _distanceToEdge;
         }
+
+        //private void CollisionCheck(Image image1, Image image2)    //Funkar men inte helt felfritt
+        //{
+        //    bool collisionX = Dispatcher.Invoke(() => Canvas.GetLeft(image1) < Canvas.GetLeft(image2) + (image2.Width)) && Dispatcher.Invoke(() => Canvas.GetLeft(image1) + (image1.Width) > Canvas.GetLeft(image2));
+        //    bool collisionY = Dispatcher.Invoke(() => Canvas.GetTop(image1) < Canvas.GetTop(image2) + (image2.Height)) && Dispatcher.Invoke(() => Canvas.GetTop(image1) + (image1.Height) > Canvas.GetTop(image2));
+
+        //    if (collisionX && collisionY)
+        //    {
+        //        //_timer.Stop();
+        //        //_timer.Enabled = false;
+        //        Dispatcher.Invoke(() => image2.Source = null);
+        //        //MessageBox.Show("The pirate ship was dragged down to the dark depths of the ocean, crushed by slimy tendrils and eaten for dinner");
+        //    }
+        //}
+        ///// <summary>
+        ///// Byter en bildkälla i UI till en ny
+        ///// </summary>
+        ///// <param name="image"></param>
+        ///// <param name="newImageURI"></param>
+        //private void ChangeImage(Image image, string newImageURI)
+        //{
+        //    Dispatcher.Invoke(() => image.Source = new BitmapImage(new Uri(@newImageURI, UriKind.Relative)));   //byter imagesource till ny källa
+        //}
     }
 }
