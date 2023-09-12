@@ -1,15 +1,8 @@
-﻿using SUP23_G9.ViewModels.Base;
-using SUP23_G9.Views.Components;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Numerics;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,18 +12,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Threading;
 
-namespace SUP23_G9.Views
+namespace SUP23_G9.Views.Characters
 {
     /// <summary>
-    /// Interaction logic for GameView.xaml
+    /// Interaction logic for Player.xaml
     /// </summary>
-    public partial class GameView : UserControl
+    public partial class Player : UserControl
     {
-        public GameView()
+        public Player()
         {
             InitializeComponent();
+            krakenControl.Focus();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            krakenControl.Focus();
         }
     }
 }
