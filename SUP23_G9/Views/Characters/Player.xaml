@@ -8,25 +8,28 @@
              xmlns:vm="clr-namespace:SUP23_G9.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Canvas.Left="{Binding LeftCoordinates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-             Canvas.Top="{Binding TopCoordinates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+             Canvas.Left="{Binding LeftCoordinates, UpdateSourceTrigger=PropertyChanged}"
+             Canvas.Top="{Binding TopCoordinates, UpdateSourceTrigger=PropertyChanged}"
              Loaded="UserControl_Loaded"
              Focusable="True"
+             KeyDown="krakenControl_KeyDown"
+             KeyUp="krakenControl_KeyUp"
              >
     <UserControl.DataContext>
         <vm:PlayerViewModel/>
     </UserControl.DataContext>
     <UserControl.InputBindings>
-        <KeyBinding Command="{Binding UpKeyDownCommand}" Key="W"/>
-        <KeyBinding Command="{Binding DownKeyDownCommand}" Key="S"/>
-        <KeyBinding Command="{Binding LeftKeyDownCommand}" Key="A"/>
-        <KeyBinding Command="{Binding RightKeyDownCommand}" Key="D"/>
+        <KeyBinding Command="{Binding UpKeyDownCommand, UpdateSourceTrigger=PropertyChanged}" Key="W"/>
+        <KeyBinding Command="{Binding DownKeyDownCommand, UpdateSourceTrigger=PropertyChanged}" Key="S"/>
+        <KeyBinding Command="{Binding LeftKeyDownCommand, UpdateSourceTrigger=PropertyChanged}" Key="A"/>
+        <KeyBinding Command="{Binding RightKeyDownCommand, UpdateSourceTrigger=PropertyChanged}" Key="D"/>
     </UserControl.InputBindings>
     <Grid>
         <Image 
-            x:Name="kraken"
-            Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp" 
-            Width="{Binding Width}" 
-            Height="{Binding Height}"/>
+            x:Name="krakenImage" 
+            Width="50"
+            Height="50"
+            Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp">
+        </Image>
     </Grid>
 </UserControl>
