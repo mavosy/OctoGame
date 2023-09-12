@@ -10,7 +10,11 @@
              d:DataContext="{d:DesignInstance {x:Type vm:GameViewModel}}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-
+    <!-- För Timern istället för datatcontext = new GameViewModel(); i Mainwindow -->
+    <UserControl.DataContext>
+        <vm:GameViewModel/>
+    </UserControl.DataContext>
+   
     <Border
         Background="White"
         BorderBrush="DarkTurquoise"
@@ -18,20 +22,27 @@
         CornerRadius="5">
 
         <Grid>
+            <!--Timer -->
+            <TextBlock Text="{Binding CountdownTimer.RemainingTime}" 
+                       HorizontalAlignment="Right" 
+                       VerticalAlignment="Top" 
+                       Margin="10" 
+                       FontSize="20" 
+                       Foreground="Black"/>
             <!--Rutnät -->
-            <ItemsControl ItemsSource="{Binding Ocean}" >
+            <!--<ItemsControl ItemsSource="{Binding Ocean}" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="10" Rows="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-            </ItemsControl>
+            </ItemsControl>-->
             <Canvas x:Name="gameArea">
                 <Characters:Player x:Name="kraken"/>
                 <Characters:Ship x:Name="shippy" Canvas.Left="150" Canvas.Top="245"/>
                 <Characters:Obstacle Canvas.Left="329" Canvas.Top="331"/>
-                
-                
+              
+
             </Canvas>
         </Grid>
     </Border>

@@ -34,21 +34,6 @@ namespace SUP23_G9.Commands
         {
             _execute(parameter);
         }
-        //private readonly Func<bool> _canExecute;
-
-        //public BaseViewModel(Action execute, Func<bool> canExecute = null)
-        //{
-        //    _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-        //    _canExecute = canExecute ?? (() => true);
-        //}
-
-
-
-
-
-        //public bool CanExecute(object parameter) => _canExecute();
-
-        //public void Execute(object parameter) => _execute();
-
+       
     }
 }
