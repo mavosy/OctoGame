@@ -1,27 +1,31 @@
-﻿using System;
+﻿using SUP23_G9.Commands;
+using SUP23_G9.ViewModels.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace SUP23_G9.ViewModels
 {
-    internal class TimerViewModel: INotifyPropertyChanged
+    internal class TimerViewModel: BaseViewModel
     {
         private DispatcherTimer _timer;
         private int _remainingSeconds;
         private string _remainingTime;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
-        public TimeViewModel(int initialSeconds)
+        public TimerViewModel(int initialSeconds)
         {
             _remainingSeconds = initialSeconds;
             _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             _timer.Tick += Timer_Tick;
 
-            StartCommand = new BaseViewModel(StartTimer);
-            StopCommand = new BaseViewModel(StopTimer);
+            StartCommand = new RelayCommand(x =>StartTimer());
+            StopCommand = new RelayCommand(x => StopTimer());
 
             UpdateRemainingTime();
         }
@@ -32,12 +36,13 @@ namespace SUP23_G9.ViewModels
             set
             {
                 _remainingTime = value;
-                OnPropertyChanged(nameof(RemainingTime));
+               
             }
         }
+        //public string  RemainingTime { get; set; }
 
-        public ICommand StartCommand { get; }
-        public ICommand StopCommand { get; }
+        public ICommand StartCommand { get; private set; }
+        public ICommand StopCommand { get; private set; }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -64,8 +69,8 @@ namespace SUP23_G9.ViewModels
             RemainingTime = $"{minutes:00 min}:{seconds:00 sec}";
         }
 
-        protected void OnPropertyChanged(string propertyName) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        //protected void OnPropertyChanged(string propertyName) =>
+        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
-}
+

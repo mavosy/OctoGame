@@ -25,5 +25,20 @@
                         Grid.Row="1"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"/>
+        <!--<StackPanel VerticalAlignment="Center" Grid.Column="1">
+
+            --><!-- Denna TextBlock visar nedräkningen --><!--
+            <TextBlock Text="{Binding RemainingTime}" 
+                       FontSize="1" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"/>
+
+            <Button Content="Start Countdown" 
+                    Command="{Binding StartCommand}" 
+                    HorizontalAlignment="Center"/>
+            <Button Content="Stop Countdown" 
+                    Command="{Binding StopCommand}" 
+                    HorizontalAlignment="Center"/>
+        </StackPanel>-->
     </Grid>
 </Window>
