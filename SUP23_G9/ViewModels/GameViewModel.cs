@@ -7,6 +7,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
@@ -14,31 +16,53 @@ namespace SUP23_G9.ViewModels
 {
     class GameViewModel : BaseViewModel
     {
-        public ObservableCollection<GameGrid>? Ocean { get; private set; }
+        private Timer gameTimer;
+        private readonly int _speed = 4;
+        private double mainWindowHeight;
+        public ObservableCollection<double> ShipTopCoordinates { get; } = new ObservableCollection<double>
+        {
+            100,
+            200,
+            300,
+            400,
+            500
+        };
 
-        private const int _gameGridSize = 10;
 
         public GameViewModel()
         {
-            FillGrid();
+            StartMovingObject();
         }
 
-        private void FillGrid()
+        private void StartMovingObject()
         {
-            Ocean = new ObservableCollection<GameGrid>();
-            for (int x = 0; x < _gameGridSize; x++)
-            {
-                for (int y = 0; y < _gameGridSize; y++)
-                {
-                    var piece = new GameGrid()
-                    {
-                        X = x,
-                        Y = y,
-                    };
+            gameTimer = new Timer(20);
+            gameTimer.Elapsed += GameTimerEvent;
+            gameTimer.Start();
+            mainWindowHeight = 600; //krashar när använder widnow current height, har bara satt en statisk höjd
+        }
 
-                    Ocean.Add(piece);
+        private void GameTimerEvent(object sender, ElapsedEventArgs e)
+        {
+            MoveObjectDown();
+        }
+
+        private void MoveObjectDown()
+        {
+            //Måste iterera runt alla ships objekten för att se vilken som hamnar utanför
+            for (int i = 0; i < ShipTopCoordinates.Count; i++)
+            {
+                double newTop = ShipTopCoordinates[i] + _speed;
+
+                if (newTop > mainWindowHeight)
+                {
+                    newTop = 0;
                 }
+
+                ShipTopCoordinates[i] = newTop;
             }
         }
     }
 }
+    
+    
