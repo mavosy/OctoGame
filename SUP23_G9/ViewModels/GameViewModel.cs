@@ -18,19 +18,32 @@ namespace SUP23_G9.ViewModels
     {
         private Timer gameTimer;
         private readonly int _speed = 4;
-        private double mainWindowHeight;
+
+        //public double LeftCoordinates { get; set; }
+        // public double TopCoordinates { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+
+        private double mainWindowHeight = Application.Current.MainWindow.ActualHeight;
+
         public ObservableCollection<double> ShipTopCoordinates { get; } = new ObservableCollection<double>
         {
             100,
             200,
             300,
             400,
-            500
+            500,
+            600
         };
 
 
         public GameViewModel()
         {
+
+            //LeftCoordinates = 500;
+            Width = 50;
+            Height = 50;
+
             StartMovingObject();
         }
 
@@ -39,7 +52,6 @@ namespace SUP23_G9.ViewModels
             gameTimer = new Timer(20);
             gameTimer.Elapsed += GameTimerEvent;
             gameTimer.Start();
-            mainWindowHeight = 600; //krashar när använder widnow current height, har bara satt en statisk höjd
         }
 
         private void GameTimerEvent(object sender, ElapsedEventArgs e)
@@ -49,20 +61,16 @@ namespace SUP23_G9.ViewModels
 
         private void MoveObjectDown()
         {
-            //Måste iterera runt alla ships objekten för att se vilken som hamnar utanför
-            for (int i = 0; i < ShipTopCoordinates.Count; i++)
-            {
-                double newTop = ShipTopCoordinates[i] + _speed;
 
-                if (newTop > mainWindowHeight)
+                for (int i = 0; i < ShipTopCoordinates.Count; i++)
                 {
-                    newTop = 0;
-                }
+                    ShipTopCoordinates[i] += _speed;
 
-                ShipTopCoordinates[i] = newTop;
+                    if (ShipTopCoordinates[i] > mainWindowHeight)
+                    {
+                        ShipTopCoordinates[i] = 0;
+                    }
+                }
             }
         }
     }
-}
-    
-    
