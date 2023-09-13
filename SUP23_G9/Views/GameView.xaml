@@ -26,7 +26,7 @@
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
             <Canvas x:Name="gameArea" Height="450" Width="800">
-                <Characters:Player x:Name="kraken" Canvas.Left="477" Canvas.Top="83" />
+                <Characters:Player x:Name="kraken" />
                 <Characters:Obstacle Canvas.Left="266" Canvas.Top="{Binding ShipTopCoordinates[1]}" />
                 <Characters:Ship Canvas.Left="439" Canvas.Top="{Binding ShipTopCoordinates[2]}" />
                 <Characters:Ship Canvas.Left="624" Canvas.Top="{Binding ShipTopCoordinates[3]}" />

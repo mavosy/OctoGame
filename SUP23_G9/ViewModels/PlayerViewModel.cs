@@ -30,8 +30,8 @@ namespace SUP23_G9.ViewModels
 
         public PlayerViewModel()
         {
-            LeftCoordinates = 500;
-            TopCoordinates = 350;
+            //LeftCoordinates = 500;
+            //TopCoordinates = 350;
             Width = 50;
             Height = 50;
 
@@ -111,7 +111,7 @@ namespace SUP23_G9.ViewModels
 
         public bool IsNotAtRightEdge()
         {
-            return LeftCoordinates + Width < Application.Current.MainWindow.ActualWidth - 70 - _distanceToEdge;
+            return LeftCoordinates + Width < Application.Current.MainWindow.Width - 70 - _distanceToEdge;
         }
 
         public bool IsNotAtTopEdge()
@@ -121,7 +121,7 @@ namespace SUP23_G9.ViewModels
 
         public bool IsNotAtBottomEdge()
         {
-            return TopCoordinates + Height < Application.Current.MainWindow.ActualHeight - 93 - _distanceToEdge;
+            return TopCoordinates + Height < Application.Current.MainWindow.Height - 93 - _distanceToEdge;
         }
 
         internal void HandleKeyDown(KeyEventArgs e)
