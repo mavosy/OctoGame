@@ -11,11 +11,10 @@
     mc:Ignorable="d"
     d:DesignHeight="450" d:DesignWidth="800">
 
-    <Border
-        Background="White"
-        BorderBrush="DarkTurquoise"
-        BorderThickness="5"
-        CornerRadius="5">
+    <Border Background="PaleTurquoise"
+            BorderBrush="DarkTurquoise"
+            BorderThickness="5"
+            CornerRadius="5">
 
         <Grid>
             <!--Rutnät -->

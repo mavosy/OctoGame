@@ -16,14 +16,14 @@ using System.Windows.Shapes;
 namespace SUP23_G9.Views
 {
     /// <summary>
-    /// Interaction logic for StartView.xaml
+    /// Interaction logic for GameOverView.xaml
     /// </summary>
-    public partial class StartView : Window 
+    public partial class GameOverView : Window
     {
-        public StartView()
+        public GameOverView()
         {
             InitializeComponent();
-            DataContext = new StartViewModel();
+            
         }
     }
 }

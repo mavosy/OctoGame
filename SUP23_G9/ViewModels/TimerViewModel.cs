@@ -16,13 +16,11 @@ namespace SUP23_G9.ViewModels
         private int _remainingSeconds;
         private string _remainingTime;
 
-        //public event PropertyChangedEventHandler PropertyChanged;
-
         public TimerViewModel(int initialSeconds)
         {
             _remainingSeconds = initialSeconds;
             _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-            _timer.Tick += Timer_Tick;
+            _timer.Tick += TimerTick;
 
             StartCommand = new RelayCommand(x =>StartTimer());
             StopCommand = new RelayCommand(x => StopTimer());
@@ -36,15 +34,13 @@ namespace SUP23_G9.ViewModels
             set
             {
                 _remainingTime = value;
-               
             }
         }
-        //public string  RemainingTime { get; set; }
 
         public ICommand StartCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private void TimerTick(object sender, EventArgs e)
         {
             if (_remainingSeconds > 0)
             {
@@ -68,9 +64,6 @@ namespace SUP23_G9.ViewModels
             int seconds = _remainingSeconds % 60;
             RemainingTime = $"{minutes:00 min}:{seconds:00 sec}";
         }
-
-        //protected void OnPropertyChanged(string propertyName) =>
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
 

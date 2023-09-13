@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SUP23_G9.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,12 +24,30 @@ namespace SUP23_G9.Views.Characters
         public Player()
         {
             InitializeComponent();
-            krakenControl.Focus();
         }
 
+        private PlayerViewModel ViewModel { get { return DataContext as PlayerViewModel; } }
+
+        /// <summary>
+        /// Sätter fokus på spelare
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             krakenControl.Focus();
+        }
+
+        private void krakenControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (ViewModel == null) return;
+            ViewModel.HandleKeyDown(e);
+        }
+
+        private void krakenControl_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (ViewModel == null) return;
+            ViewModel.HandleKeyUp(e);
         }
     }
 }

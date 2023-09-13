@@ -1,19 +1,14 @@
 ﻿using SUP23_G9.Commands;
 using SUP23_G9.Views;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows;
+using System.Windows.Input;
 
 namespace SUP23_G9.ViewModels
 {
-    internal class StartViewModel : INotifyPropertyChanged
+    public class StartViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private ICommand _startCommand;
 
@@ -34,7 +29,6 @@ namespace SUP23_G9.ViewModels
         public StartViewModel()
         {
             StartCommand = new RelayCommand(parameter => StartGame());
-           
         }
 
         private void OnPropertyChanged(string propertyName)
@@ -44,13 +38,13 @@ namespace SUP23_G9.ViewModels
 
         public void StartGame()
         {
-            // Skapa en instans av din MainWindow
+            // Skapa en instans av "MainWindow"
             MainWindow mainWindow = new MainWindow();
 
-            // Visa huvudfönstret med Show
+            // Visa MainWindow
             mainWindow.Show();
 
-            // Stäng det nuvarande fönstret
+            // Stäng det nuvarande fönstret (StartView)
             Application.Current.MainWindow.Close();
         }
     }

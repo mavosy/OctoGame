@@ -14,15 +14,17 @@ using System.Windows.Threading;
 
 namespace SUP23_G9.ViewModels
 {
-    class GameViewModel : BaseViewModel
+    public class GameViewModel : BaseViewModel
     {
         private Timer gameTimer;
         private readonly int _speed = 4;
+        //public ObservableCollection<GameGrid>? Ocean { get; private set; }
 
         //public double LeftCoordinates { get; set; }
         // public double TopCoordinates { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        //private const int _gameGridSize = 10;
 
         private double mainWindowHeight = Application.Current.MainWindow.ActualHeight;
 
@@ -45,6 +47,7 @@ namespace SUP23_G9.ViewModels
             Height = 50;
 
             StartMovingObject();
+            //FillGrid();
         }
 
         private void StartMovingObject()
@@ -65,6 +68,18 @@ namespace SUP23_G9.ViewModels
                 for (int i = 0; i < ShipTopCoordinates.Count; i++)
                 {
                     ShipTopCoordinates[i] += _speed;
+        //private void FillGrid()
+        //{
+        //    Ocean = new ObservableCollection<GameGrid>();
+        //    for (int x = 0; x < _gameGridSize; x++)
+        //    {
+        //        for (int y = 0; y < _gameGridSize; y++)
+        //        {
+        //            var piece = new GameGrid()
+        //            {
+        //                X = x,
+        //                Y = y,
+        //            };
 
                     if (ShipTopCoordinates[i] > mainWindowHeight)
                     {
@@ -74,3 +89,9 @@ namespace SUP23_G9.ViewModels
             }
         }
     }
+        //            Ocean.Add(piece);
+        //        }
+        //    }
+        //}
+    }
+}
