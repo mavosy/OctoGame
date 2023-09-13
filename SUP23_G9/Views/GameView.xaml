@@ -18,13 +18,13 @@
 
         <Grid>
             <!--Rutnät -->
-            <ItemsControl ItemsSource="{Binding Ocean}">
+            <!--<ItemsControl ItemsSource="{Binding Ocean}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="10" Rows="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-            </ItemsControl>
+            </ItemsControl>-->
             <Canvas x:Name="gameArea" Height="450" Width="800">
                 <Characters:Player x:Name="kraken" Canvas.Left="477" Canvas.Top="83" />
                 <Characters:Obstacle Canvas.Left="266" Canvas.Top="{Binding ShipTopCoordinates[1]}" />
