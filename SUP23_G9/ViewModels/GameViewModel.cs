@@ -22,7 +22,18 @@ namespace SUP23_G9.ViewModels
         {
             FillGrid();
         }
+        private Points _pointsSystem = new Points();
 
+        public int Score
+        {
+            get => _pointsSystem.Score;
+        }
+
+        public void SomeGameEventHappened()
+        {
+            _pointsSystem.AddPoints(10);
+          
+        }
         private void FillGrid()
         {
             Ocean = new ObservableCollection<GameGrid>();
