@@ -20,6 +20,7 @@ namespace SUP23_G9.ViewModels
         private readonly int _speed = 4;
         //public ObservableCollection<GameGrid>? Ocean { get; private set; }
 
+
         //public double LeftCoordinates { get; set; }
         // public double TopCoordinates { get; set; }
         public int Width { get; set; }
@@ -48,6 +49,8 @@ namespace SUP23_G9.ViewModels
 
             StartMovingObject();
             //FillGrid();
+
+       
         }
 
         private void StartMovingObject()
@@ -65,9 +68,19 @@ namespace SUP23_G9.ViewModels
         private void MoveObjectDown()
         {
 
-                for (int i = 0; i < ShipTopCoordinates.Count; i++)
+
+            for (int i = 0; i < ShipTopCoordinates.Count; i++)
+            {
+                ShipTopCoordinates[i] += _speed;
+
+
+                if (ShipTopCoordinates[i] > mainWindowHeight)
                 {
-                    ShipTopCoordinates[i] += _speed;
+                    ShipTopCoordinates[i] = 0;
+                }
+            }
+        }
+        //
         //private void FillGrid()
         //{
         //    Ocean = new ObservableCollection<GameGrid>();
@@ -81,17 +94,12 @@ namespace SUP23_G9.ViewModels
         //                Y = y,
         //            };
 
-                    if (ShipTopCoordinates[i] > mainWindowHeight)
-                    {
-                        ShipTopCoordinates[i] = 0;
-                    }
-                }
-            }
-        }
-    }
+
         //            Ocean.Add(piece);
         //        }
         //    }
         //}
-    //}
-//}
+    }
+}
+
+

@@ -174,6 +174,7 @@ namespace SUP23_G9.ViewModels
             }
         }
 
+
         //private void LoadKrakenImageProcessing()
         //{
         //    BitmapImage image = new BitmapImage();
