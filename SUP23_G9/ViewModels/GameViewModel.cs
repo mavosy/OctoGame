@@ -18,33 +18,33 @@ namespace SUP23_G9.ViewModels
     {
         private Timer gameTimer;
         private readonly int _speed = 4;
-
-        //public double LeftCoordinates { get; set; }
-        // public double TopCoordinates { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-
         private double mainWindowHeight = Application.Current.MainWindow.ActualHeight;
 
-        public ObservableCollection<double> ShipTopCoordinates { get; } = new ObservableCollection<double>
-        {
-            100,
-            200,
-            300,
-            400,
-            500,
-            600
-        };
-
+        public ObservableCollection<double> ShipTopCoordinates { get; }
 
         public GameViewModel()
         {
+            int numberOfShips = 10;
 
-            //LeftCoordinates = 500;
-            Width = 50;
-            Height = 50;
+            ShipTopCoordinates = new ObservableCollection<double>(GenerateRandomCoordinates(numberOfShips));
 
             StartMovingObject();
+        }
+
+        //Randomiserar fram objektens top position inom fönstret
+        private List<double> GenerateRandomCoordinates(int numberOfShips)
+        {
+            Random random = new Random();
+
+            List<double> coordinates = new List<double>();
+
+            for (int i = 0; i < numberOfShips; i++)
+            {
+                double randomTop = random.Next(0, (int)mainWindowHeight);
+                coordinates.Add(randomTop);
+            }
+
+            return coordinates;
         }
 
         private void StartMovingObject()
@@ -56,21 +56,24 @@ namespace SUP23_G9.ViewModels
 
         private void GameTimerEvent(object sender, ElapsedEventArgs e)
         {
-            MoveObjectDown();
+            MoveObjectsLoop();
         }
 
-        private void MoveObjectDown()
+       // Loopar genom objekten för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till 0
+        private void MoveObjectsLoop()
         {
 
-                for (int i = 0; i < ShipTopCoordinates.Count; i++)
-                {
-                    ShipTopCoordinates[i] += _speed;
+            for (int i = 0; i < ShipTopCoordinates.Count; i++)
+            {
+                ShipTopCoordinates[i] += _speed;
 
-                    if (ShipTopCoordinates[i] > mainWindowHeight)
-                    {
-                        ShipTopCoordinates[i] = 0;
-                    }
+                if (ShipTopCoordinates[i] > mainWindowHeight)
+                {
+                    ShipTopCoordinates[i] = 0;
+                    //Randomsiera om ist för 0?
                 }
             }
         }
     }
+}
+

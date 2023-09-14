@@ -28,11 +28,19 @@
             </ItemsControl>
             <Canvas x:Name="gameArea" Height="450" Width="800">
                 <Characters:Player x:Name="kraken" Canvas.Left="477" Canvas.Top="83" />
+                
                 <Characters:Obstacle Canvas.Left="266" Canvas.Top="{Binding ShipTopCoordinates[1]}" />
-                <Characters:Ship Canvas.Left="439" Canvas.Top="{Binding ShipTopCoordinates[2]}" />
+                <Characters:Ship Canvas.Left="467" Canvas.Top="{Binding ShipTopCoordinates[2]}" />
                 <Characters:Ship Canvas.Left="624" Canvas.Top="{Binding ShipTopCoordinates[3]}" />
-                <Characters:Ship Canvas.Left="28" Canvas.Top="{Binding ShipTopCoordinates[5]}" />
+                <Characters:Ship Canvas.Left="28" Canvas.Top= "{Binding ShipTopCoordinates[4]}" />
+                <Characters:Ship Canvas.Left="417" Canvas.Top="{Binding ShipTopCoordinates[5]}" />
+                <Characters:Ship Canvas.Left="522" Canvas.Top="{Binding ShipTopCoordinates[6]}"/>
+                <Characters:Ship Canvas.Left="362" Canvas.Top="{Binding ShipTopCoordinates[7]}"/>
+                <Characters:Ship Canvas.Left="198" Canvas.Top="{Binding ShipTopCoordinates[8]}"/>
+                <Characters:Ship Canvas.Left="130" Canvas.Top="{Binding ShipTopCoordinates[9]}"/>
+                
             </Canvas>
         </Grid>
     </Border>
 </UserControl>
+
