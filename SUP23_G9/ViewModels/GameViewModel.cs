@@ -44,15 +44,15 @@ namespace SUP23_G9.ViewModels
         private int GenerateRandomTop()
         {
             //Random random = new Random();
-            int maxHeight = 600;
-            return _random.Next((int)mainWindowHeight);
+            int maxHeight = (int)mainWindowHeight;
+            return _random.Next(maxHeight);
         }
 
         private int GenerateRandomLeft()
         {
             //Random random = new Random();
-            int maxWidth = 600;
-            return _random.Next((int)mainWindowWidth);
+            int maxWidth = (int)mainWindowWidth;
+            return _random.Next(maxWidth);
         }
 
         private void StartMovingObject()
