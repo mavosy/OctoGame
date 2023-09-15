@@ -9,7 +9,7 @@
     x:Class="SUP23_G9.Views.GameView"
     d:DataContext="{d:DesignInstance {x:Type vm:GameViewModel}}"
     mc:Ignorable="d"
-    d:DesignHeight="450" d:DesignWidth="800">
+    d:DesignHeight="450" d:DesignWidth="700">
 
     <Border Background="PaleTurquoise"
             BorderBrush="DarkTurquoise"
@@ -24,19 +24,31 @@
                         <UniformGrid Columns="10" Rows="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-            </ItemsControl>-->
-            <Canvas x:Name="gameArea" Height="450" Width="800">
-                <Characters:Player x:Name="kraken" />
-                <Characters:Obstacle Canvas.Left="266" Canvas.Top="{Binding ShipTopCoordinates[1]}" />
-                <Characters:Ship Canvas.Left="467" Canvas.Top="{Binding ShipTopCoordinates[2]}" />
-                <Characters:Ship Canvas.Left="624" Canvas.Top="{Binding ShipTopCoordinates[3]}" />
-                <Characters:Ship Canvas.Left="28" Canvas.Top= "{Binding ShipTopCoordinates[4]}" />
-                <Characters:Ship Canvas.Left="417" Canvas.Top="{Binding ShipTopCoordinates[5]}" />
-                <Characters:Ship Canvas.Left="522" Canvas.Top="{Binding ShipTopCoordinates[6]}"/>
-                <Characters:Ship Canvas.Left="362" Canvas.Top="{Binding ShipTopCoordinates[7]}"/>
-                <Characters:Ship Canvas.Left="198" Canvas.Top="{Binding ShipTopCoordinates[8]}"/>
-                <Characters:Ship Canvas.Left="130" Canvas.Top="{Binding ShipTopCoordinates[9]}"/>
+            </ItemsControl>
+            <Canvas x:Name="gameArea" Height="450" Width="700">
                 
+                <Characters:Player x:Name="kraken" Canvas.Left="477" Canvas.Top="83" />
+
+                <ItemsControl ItemsSource="{Binding Ships}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas Name="gameCanvas" Width="800" Height="450"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Canvas.Left" Value="{Binding Left}" />
+                            <Setter Property="Canvas.Top" Value="{Binding Top}" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Characters:Ship />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+
             </Canvas>
         </Grid>
     </Border>
