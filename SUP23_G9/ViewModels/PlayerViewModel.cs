@@ -23,20 +23,20 @@ namespace SUP23_G9.ViewModels
     public class PlayerViewModel : BaseViewModel
     {
         readonly double _distanceToEdge = 5;
-        readonly int _playerSpeed = 7;
+        readonly int _playerSpeed = 5;
 
         bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;
         DispatcherTimer _timer;
 
         public PlayerViewModel()
         {
-            //LeftCoordinates = 500;
-            //TopCoordinates = 350;
+            LeftCoordinates = 500;
+            TopCoordinates = 350;
             Width = 50;
             Height = 50;
 
             _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromMilliseconds(10);    //sätter ett intervall i millisekunder för hur ofta MovePlayerEvent ska köras
+            _timer.Interval = TimeSpan.FromMilliseconds(10l);    //sätter ett intervall i millisekunder för hur ofta MovePlayerEvent ska köras
             _timer.Tick += MovePlayerEvent;     //kör MovePlayerEvent varje gång interval ska börja om
             _timer.Start();    //startar timer
 
@@ -56,6 +56,7 @@ namespace SUP23_G9.ViewModels
         public ICommand DownKeyDownCommand { get; private set; }
         public ICommand LeftKeyDownCommand { get; private set; }
         public ICommand RightKeyDownCommand { get; private set; }
+
         //public BitmapImage KrakenImage { get; set; }
         //public ScaleTransform FlipXTransform { get; set; } = new ScaleTransform();
 
@@ -111,7 +112,7 @@ namespace SUP23_G9.ViewModels
 
         public bool IsNotAtRightEdge()
         {
-            return LeftCoordinates + Width < Application.Current.MainWindow.Width - 70 - _distanceToEdge;
+            return (LeftCoordinates + Width) < (GlobalStatic._gameAreaRenderedWidth - _distanceToEdge);
         }
 
         public bool IsNotAtTopEdge()
@@ -121,7 +122,7 @@ namespace SUP23_G9.ViewModels
 
         public bool IsNotAtBottomEdge()
         {
-            return TopCoordinates + Height < Application.Current.MainWindow.Height - 93 - _distanceToEdge;
+            return (TopCoordinates + Height) < (GlobalStatic._gameAreaRenderedHeight - _distanceToEdge);
         }
 
         internal void HandleKeyDown(KeyEventArgs e)
