@@ -14,37 +14,45 @@ using System.Windows.Threading;
 
 namespace SUP23_G9.ViewModels
 {
-    class GameViewModel : BaseViewModel
+    public class GameViewModel : BaseViewModel
     {
         private Timer gameTimer;
         private readonly int _speed = 4;
+        private static readonly Random _random = new();
         private double mainWindowHeight = Application.Current.MainWindow.ActualHeight;
+        private double mainWindowWidth = Application.Current.MainWindow.ActualWidth;
 
-        public ObservableCollection<double> ShipTopCoordinates { get; }
+        public ObservableCollection<ShipViewModel> Ships { get; set; }
 
         public GameViewModel()
         {
-            int numberOfShips = 10;
-
-            ShipTopCoordinates = new ObservableCollection<double>(GenerateRandomCoordinates(numberOfShips));
-
+            Ships = new ObservableCollection<ShipViewModel>();
+            CreateRandomShips();
             StartMovingObject();
         }
 
-        //Randomiserar fram objektens top position inom fönstret
-        private List<double> GenerateRandomCoordinates(int numberOfShips)
+        private void CreateRandomShips()
         {
-            Random random = new Random();
-
-            List<double> coordinates = new List<double>();
-
-            for (int i = 0; i < numberOfShips; i++)
+            for (int i = 0; i < 10; i++)
             {
-                double randomTop = random.Next(0, (int)mainWindowHeight);
-                coordinates.Add(randomTop);
+                int randomTop = GenerateRandomTop();
+                int randomLeft = GenerateRandomLeft();
+                Ships.Add(new ShipViewModel { Top = randomTop, Left = randomLeft });
             }
+        }
 
-            return coordinates;
+        private int GenerateRandomTop()
+        {
+            //Random random = new Random();
+            int maxHeight = 600;
+            return _random.Next((int)mainWindowHeight);
+        }
+
+        private int GenerateRandomLeft()
+        {
+            //Random random = new Random();
+            int maxWidth = 600;
+            return _random.Next((int)mainWindowWidth);
         }
 
         private void StartMovingObject()
@@ -59,21 +67,23 @@ namespace SUP23_G9.ViewModels
             MoveObjectsLoop();
         }
 
-       // Loopar genom objekten för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till 0
+        // Loopar genom objekten för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till 0
         private void MoveObjectsLoop()
         {
 
-            for (int i = 0; i < ShipTopCoordinates.Count; i++)
+            foreach (var ship in Ships)
             {
-                ShipTopCoordinates[i] += _speed;
+                ship.Top += _speed;
 
-                if (ShipTopCoordinates[i] > mainWindowHeight)
+                if (ship.Top > 800)
                 {
-                    ShipTopCoordinates[i] = 0;
-                    //Randomsiera om ist för 0?
+
+                    ship.Top = 0;
+                    ship.Left = GenerateRandomLeft();
                 }
             }
         }
     }
 }
+
 

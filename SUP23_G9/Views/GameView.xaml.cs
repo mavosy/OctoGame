@@ -1,4 +1,5 @@
-﻿using SUP23_G9.ViewModels.Base;
+﻿using SUP23_G9.ViewModels;
+using SUP23_G9.ViewModels.Base;
 using SUP23_G9.Views.Components;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace SUP23_G9.Views
         public GameView()
         {
             InitializeComponent();
+
         }
 
         // Timern
