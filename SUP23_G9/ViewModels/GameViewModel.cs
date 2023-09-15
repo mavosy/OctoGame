@@ -19,6 +19,7 @@ namespace SUP23_G9.ViewModels
         private Timer gameTimer;
         private readonly int _speed = 4;
         private static readonly Random _random = new();
+
         private double mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double mainWindowWidth = Application.Current.MainWindow.ActualWidth;
 
@@ -43,14 +44,12 @@ namespace SUP23_G9.ViewModels
 
         private int GenerateRandomTop()
         {
-            //Random random = new Random();
             int maxHeight = (int)mainWindowHeight;
             return _random.Next(maxHeight);
         }
 
         private int GenerateRandomLeft()
         {
-            //Random random = new Random();
             int maxWidth = (int)mainWindowWidth;
             return _random.Next(maxWidth);
         }
@@ -75,7 +74,7 @@ namespace SUP23_G9.ViewModels
             {
                 ship.Top += _speed;
 
-                if (ship.Top > 800)
+                if (ship.Top > mainWindowHeight)
                 {
 
                     ship.Top = 0;

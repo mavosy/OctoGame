@@ -9,7 +9,7 @@
     x:Class="SUP23_G9.Views.GameView"
     d:DataContext="{d:DesignInstance {x:Type vm:GameViewModel}}"
     mc:Ignorable="d"
-    d:DesignHeight="450" d:DesignWidth="800">
+    d:DesignHeight="450" d:DesignWidth="700">
 
     <Border
         Background="White"
@@ -26,7 +26,8 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
-            <Canvas x:Name="gameArea" Height="450" Width="800">
+            <Canvas x:Name="gameArea" Height="450" Width="700">
+                
                 <Characters:Player x:Name="kraken" Canvas.Left="477" Canvas.Top="83" />
 
                 <ItemsControl ItemsSource="{Binding Ships}">

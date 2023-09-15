@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:SUP23_G9.Views"
         d:DataContext="{d:DesignInstance vm:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="850">
+        Title="MainWindow" Height="600" Width="900">
 
     <Grid Background="CadetBlue">
         <Grid.ColumnDefinitions>
