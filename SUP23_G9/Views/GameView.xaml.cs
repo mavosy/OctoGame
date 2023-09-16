@@ -29,13 +29,9 @@ namespace SUP23_G9.Views
     /// </summary>
     public partial class GameView : UserControl
     {
-
         public GameView()
         {
             InitializeComponent();
-            
-
         }
-        // Timern
     }
 }
