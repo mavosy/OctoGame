@@ -1,4 +1,5 @@
 ﻿<UserControl
+    x:Name="gameAreaControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -26,12 +27,12 @@
                 </ItemsControl.ItemsPanel>
             </ItemsControl>-->
             <Canvas x:Name="gameArea" Width="800" Height="450">
-                <Characters:Player x:Name="kraken" />
-                <Characters:Obstacle Canvas.Left="266" Canvas.Top="{Binding ShipTopCoordinates[1]}" />
-                <Characters:Ship Canvas.Left="467" Canvas.Top="{Binding ShipTopCoordinates[2]}" />
-                <Characters:Ship Canvas.Left="624" Canvas.Top="{Binding ShipTopCoordinates[3]}" />
-                <Characters:Ship Canvas.Left="28" Canvas.Top= "{Binding ShipTopCoordinates[4]}" />
-                <Characters:Ship Canvas.Left="417" Canvas.Top="{Binding ShipTopCoordinates[5]}" />
+                <Characters:Player x:Name="kraken"/>
+                <Characters:Obstacle Canvas.Left="266" Canvas.Top="{Binding ShipTopCoordinates[1]}"/>
+                <Characters:Ship Canvas.Left="467" Canvas.Top="{Binding ShipTopCoordinates[2]}"/>
+                <Characters:Ship Canvas.Left="624" Canvas.Top="{Binding ShipTopCoordinates[3]}"/>
+                <Characters:Ship Canvas.Left="28" Canvas.Top= "{Binding ShipTopCoordinates[4]}"/>
+                <Characters:Ship Canvas.Left="417" Canvas.Top="{Binding ShipTopCoordinates[5]}"/>
                 <Characters:Ship Canvas.Left="522" Canvas.Top="{Binding ShipTopCoordinates[6]}"/>
                 <Characters:Ship Canvas.Left="362" Canvas.Top="{Binding ShipTopCoordinates[7]}"/>
                 <Characters:Ship Canvas.Left="198" Canvas.Top="{Binding ShipTopCoordinates[8]}"/>

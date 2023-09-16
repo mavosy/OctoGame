@@ -32,16 +32,6 @@ namespace SUP23_G9.Views
         public GameView()
         {
             InitializeComponent();
-
-            gameArea.SizeChanged += GameArea_SizeChanged;
-            GlobalStatic._gameAreaRenderedWidth = gameArea.ActualWidth;
-            GlobalStatic._gameAreaRenderedHeight = gameArea.ActualHeight;
-        }
-
-        private void GameArea_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            GlobalStatic._gameAreaRenderedWidth = gameArea.ActualWidth;
-            GlobalStatic._gameAreaRenderedHeight = gameArea.ActualHeight;
         }
     }
 }

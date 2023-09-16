@@ -112,7 +112,7 @@ namespace SUP23_G9.ViewModels
 
         public bool IsNotAtRightEdge()
         {
-            return (LeftCoordinates + Width) < (GlobalStatic._gameAreaRenderedWidth - _distanceToEdge);
+            return (LeftCoordinates + Width) < (800 - _distanceToEdge);
         }
 
         public bool IsNotAtTopEdge()
@@ -122,7 +122,7 @@ namespace SUP23_G9.ViewModels
 
         public bool IsNotAtBottomEdge()
         {
-            return (TopCoordinates + Height) < (GlobalStatic._gameAreaRenderedHeight - _distanceToEdge);
+            return (TopCoordinates + Height) < (450 - _distanceToEdge);
         }
 
         internal void HandleKeyDown(KeyEventArgs e)
