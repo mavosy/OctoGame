@@ -85,49 +85,25 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-        public void MovePlayerLeft()
-        {
-            LeftCoordinates -= _playerSpeed;
-        }
+        public void MovePlayerLeft() => LeftCoordinates -= _playerSpeed;
 
-        public void MovePlayerRight()
-        {
-            LeftCoordinates += _playerSpeed;
-        }
+        public void MovePlayerRight() => LeftCoordinates += _playerSpeed;
 
-        public void MovePlayerUp()
-        {
-            TopCoordinates -= _playerSpeed;
-        }
+        public void MovePlayerUp() => TopCoordinates -= _playerSpeed;
 
-        public void MovePlayerDown()
-        {
-            TopCoordinates += _playerSpeed;
-        }
+        public void MovePlayerDown() => TopCoordinates += _playerSpeed;
 
-        public bool IsNotAtLeftEdge()
-        {
-            return LeftCoordinates > _distanceToEdge; 
-        }
+        public bool IsNotAtLeftEdge() => LeftCoordinates > _distanceToEdge;
 
-        public bool IsNotAtRightEdge()
-        {
-            return (LeftCoordinates + Width) < (800 - _distanceToEdge);
-        }
+        public bool IsNotAtRightEdge() => (LeftCoordinates + Width) < (800 - _distanceToEdge);
 
-        public bool IsNotAtTopEdge()
-        {
-            return TopCoordinates > _distanceToEdge;
-        }
+        public bool IsNotAtTopEdge() => TopCoordinates > _distanceToEdge;
 
-        public bool IsNotAtBottomEdge()
-        {
-            return (TopCoordinates + Height) < (450 - _distanceToEdge);
-        }
+        public bool IsNotAtBottomEdge() => (TopCoordinates + Height) < (450 - _distanceToEdge);
 
         internal void HandleKeyDown(KeyEventArgs e)
         {
-            switch (e.Key)   //I KeyEventArgs finns värdet "Key" som helt enkelt är vilken knapp som har tryckts ner, typ P, R, 8, Enter, NumLock etc. Switchar på det och sätter bool till true
+            switch (e.Key)   //I KeyEventArgs finns värdet "Key" som definierar vilken knapp som har tryckts ner, typ P, R, 8, Enter, NumLock etc. Switchar på det och sätter bool till true
             {
                 case Key.J:        //här kan man ange typ vilka tangenter som helst, det ändrar kontrollen till spelet. Kanske ha userInput så man kan ändra själv?
                     _leftButtonIsDown = true;
@@ -184,7 +160,7 @@ namespace SUP23_G9.ViewModels
         //    image.CacheOption = BitmapCacheOption.OnLoad;
         //    image.EndInit();
 
-        //    KrakenImage = image;
+        //    KrakenImage = image;j
         //}
 
 
