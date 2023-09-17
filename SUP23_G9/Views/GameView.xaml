@@ -28,14 +28,12 @@
             <!--<ItemsControl ItemsSource="{Binding Ocean}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="10" Rows="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                        <UniformGrid Columns="10" Rows="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>-->
             <Canvas x:Name="gameArea" Height="450" Width="800">
-
                 <Characters:Player x:Name="player"/>
-
                 <ItemsControl ItemsSource="{Binding Ships}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -44,18 +42,16 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemContainerStyle>
                         <Style>
-                            <Setter Property="Canvas.Left" Value="{Binding Left}" />
-                            <Setter Property="Canvas.Top" Value="{Binding Top}" />
+                            <Setter Property="Canvas.Left" Value="{Binding Left}"/>
+                            <Setter Property="Canvas.Top" Value="{Binding Top}"/>
                         </Style>
                     </ItemsControl.ItemContainerStyle>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Characters:Ship />
+                            <Characters:Ship/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-
-
             </Canvas>
         </Grid>
     </Border>

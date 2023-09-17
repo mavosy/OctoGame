@@ -10,8 +10,10 @@
              Width="{Binding Width}"
              Height="{Binding Height}"
              >
-
+    <UserControl.DataContext>
+        <vm:ShipViewModel/>
+    </UserControl.DataContext>
     <Image Name="pirateShip1" 
-           Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Right.bmp"
+           Source="{Binding ShipImage}"
            />
 </UserControl>

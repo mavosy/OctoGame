@@ -16,21 +16,20 @@ namespace SUP23_G9.ViewModels
 {
     public class GameViewModel : BaseViewModel
     {
-        private Timer gameTimer;
+        private Timer _gameTimer;
         private readonly int _speed = 4;
         private static readonly Random _random = new();
 
-        private double mainWindowHeight = Application.Current.MainWindow.ActualHeight;
-        private double mainWindowWidth = Application.Current.MainWindow.ActualWidth;
-
-        public ObservableCollection<ShipViewModel> Ships { get; set; }
-
+        private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
+        private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
         public GameViewModel()
         {
             Ships = new ObservableCollection<ShipViewModel>();
             CreateRandomShips();
             StartMovingObject();
         }
+
+        public ObservableCollection<ShipViewModel> Ships { get; set; }
 
         private void CreateRandomShips()
         {
@@ -42,23 +41,14 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-        private int GenerateRandomTop()
-        {
-            int maxHeight = (int)mainWindowHeight;
-            return _random.Next(maxHeight);
-        }
-
-        private int GenerateRandomLeft()
-        {
-            int maxWidth = (int)mainWindowWidth;
-            return _random.Next(maxWidth);
-        }
+        private int GenerateRandomTop() => _random.Next((int)_mainWindowHeight);
+        private int GenerateRandomLeft() => _random.Next((int)_mainWindowWidth);
 
         private void StartMovingObject()
         {
-            gameTimer = new Timer(20);
-            gameTimer.Elapsed += GameTimerEvent;
-            gameTimer.Start();
+            _gameTimer = new Timer(20);
+            _gameTimer.Elapsed += GameTimerEvent;
+            _gameTimer.Start();
         }
 
         private void GameTimerEvent(object sender, ElapsedEventArgs e)
@@ -70,21 +60,19 @@ namespace SUP23_G9.ViewModels
         // Loopar genom objekten för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till 0
         private void MoveObjectsLoop()
         {
-
             foreach (var ship in Ships)
             {
                 ship.Top += _speed;
 
-                if (ship.Top > mainWindowHeight)
+                if (ship.Top > _mainWindowHeight)
                 {
-
                     ship.Top = 0;
                     ship.Left = GenerateRandomLeft();
                 }
             }
         }
 
-        private void CollisionCheck()
+        private void CollisionCheck() //laggar otroligt mycket.
         {
             PlayerViewModel playerViewModel = new PlayerViewModel();
 
@@ -95,8 +83,8 @@ namespace SUP23_G9.ViewModels
 
                 if (collisionX && collisionY)
                 {
-                    //MessageBox.Show("num num num");
-
+                    //MessageBox.Show("nom nom nom");
+                    ship.ShipImage = null;
                 }
             }
         }
