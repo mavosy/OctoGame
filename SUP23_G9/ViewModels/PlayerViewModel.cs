@@ -23,7 +23,7 @@ namespace SUP23_G9.ViewModels
     public class PlayerViewModel : BaseViewModel
     {
         readonly double _distanceToEdge = 5;
-        readonly int _playerSpeed = 5;
+        readonly double _playerSpeed = 5;
 
         bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;
         DispatcherTimer _timer;
@@ -35,8 +35,7 @@ namespace SUP23_G9.ViewModels
             Width = 50;
             Height = 50;
 
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromMilliseconds(10l);    //sätter ett intervall i millisekunder för hur ofta MovePlayerEvent ska köras
+            _timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(10) };    //nyar upp timer och sätter ett intervall i millisekunder för hur ofta MovePlayerEvent ska köras
             _timer.Tick += MovePlayerEvent;     //kör MovePlayerEvent varje gång interval ska börja om
             _timer.Start();    //startar timer
 

@@ -14,7 +14,6 @@ namespace SUP23_G9.ViewModels
     {
         private DispatcherTimer _timer;
         private int _remainingSeconds;
-        private string _remainingTime;
 
         public TimerViewModel(int initialSeconds)
         {
@@ -22,20 +21,13 @@ namespace SUP23_G9.ViewModels
             _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             _timer.Tick += TimerTick;
 
-            StartCommand = new RelayCommand(x =>StartTimer());
-            StopCommand = new RelayCommand(x => StopTimer());
+            StartCommand = new RelayCommand( x => StartTimer());
+            StopCommand = new RelayCommand( x => StopTimer());
 
             UpdateRemainingTime();
         }
 
-        public string RemainingTime
-        {
-            get => _remainingTime;
-            set
-            {
-                _remainingTime = value;
-            }
-        }
+        public string RemainingTime { get; set; }
 
         public ICommand StartCommand { get; private set; }
         public ICommand StopCommand { get; private set; }

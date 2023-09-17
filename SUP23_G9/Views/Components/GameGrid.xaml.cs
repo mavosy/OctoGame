@@ -31,7 +31,6 @@ namespace SUP23_G9.Views.Components
             DependencyProperty.Register("X", typeof(int), typeof(GameGrid), new PropertyMetadata(0));
 
 
-
         public int Y
         {
             get { return (int)GetValue(YProperty); }
