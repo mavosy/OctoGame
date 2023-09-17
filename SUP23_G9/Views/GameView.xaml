@@ -25,10 +25,10 @@
                         <UniformGrid Columns="10" Rows="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-            </ItemsControl>
+            </ItemsControl>-->
             <Canvas x:Name="gameArea" Height="450" Width="700">
-                
-                <Characters:Player x:Name="kraken" Canvas.Left="477" Canvas.Top="83" />
+
+                <Characters:Player x:Name="kraken"/>
 
                 <ItemsControl ItemsSource="{Binding Ships}">
                     <ItemsControl.ItemsPanel>
@@ -54,4 +54,3 @@
         </Grid>
     </Border>
 </UserControl>
-
