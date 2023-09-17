@@ -39,13 +39,14 @@ namespace SUP23_G9.ViewModels
             _timer.Tick += MovePlayerEvent;     //kör MovePlayerEvent varje gång interval ska börja om
             _timer.Start();    //startar timer
 
-            //LoadKrakenImageProcessing();
+            FlipImageX = 1.0;
+
+            LoadKrakenImageProcessing();
             UpKeyDownCommand = new RelayCommand(x => MovePlayerUp(), x => IsNotAtTopEdge());
             DownKeyDownCommand = new RelayCommand(x => MovePlayerDown(), x => IsNotAtBottomEdge());
             LeftKeyDownCommand = new RelayCommand(x => MovePlayerLeft(), x => IsNotAtLeftEdge());
             RightKeyDownCommand = new RelayCommand(x => MovePlayerRight(), x => IsNotAtRightEdge());
         }
-
 
         public double LeftCoordinates { get; set; }
         public double TopCoordinates { get; set; }
@@ -55,6 +56,8 @@ namespace SUP23_G9.ViewModels
         public ICommand DownKeyDownCommand { get; private set; }
         public ICommand LeftKeyDownCommand { get; private set; }
         public ICommand RightKeyDownCommand { get; private set; }
+        public BitmapImage PlayerImage { get; set; }
+        public double FlipImageX { get; set; }
 
         //public BitmapImage KrakenImage { get; set; }
         //public ScaleTransform FlipXTransform { get; set; } = new ScaleTransform();
@@ -64,13 +67,13 @@ namespace SUP23_G9.ViewModels
             if (_leftButtonIsDown && IsNotAtLeftEdge())
             {
                 MovePlayerLeft(); //sätter ny x-koordinat till den förra koordinaten MINUS _playerSpeed
-                        //koden gör att Kraken vänder på sig beroende på vilket håll den rör sig åt (vänster eller höger)
+                TurnSpriteBack();
             }
 
             if (_rightButtonIsDown && IsNotAtRightEdge())
             {
                 MovePlayerRight();   //sätter ny x-koordinat till den förra koordinaten PLUS _playerSpeed
-                      //koden gör att Kraken vänder på sig beroende på vilket håll den rör sig åt (vänster eller höger)
+                TurnSpriteHorizontally();
             }
 
             if (_upButtonIsDown && IsNotAtTopEdge())
@@ -150,61 +153,22 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-        //private void LoadKrakenImageProcessing()
-        //{
-        //    BitmapImage image = new BitmapImage();
-        //    image.BeginInit();
-        //    image.UriSource = new Uri("C:\\Users\\OWNER\\source\\repos\\SUP23_G9\\SUP23_G9\\Views\\Components\\Images\\Happy_Kraken_Left.bmp", UriKind.Relative);
-        //    image.DecodePixelWidth = 50;
-        //    image.CacheOption = BitmapCacheOption.OnLoad;
-        //    image.EndInit();
+        private void LoadKrakenImageProcessing()
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = new Uri("pack://application:,,,/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp");
+            //image.DecodePixelWidth = 50;
+            //image.CacheOption = BitmapCacheOption.OnLoad;
+            image.EndInit();
 
-        //    KrakenImage = image;j
-        //}
+            PlayerImage = image;
+        }
+
+        private void TurnSpriteHorizontally() => FlipImageX = -1.0;
+
+        private void TurnSpriteBack() => FlipImageX = 1.0;
 
 
-        //private void TurnSpriteHorizontally()
-        //{
-        //    FlipXTransform.ScaleX = -1.0;
-        //}        
-        //private void TurnSpriteBack()
-        //{
-        //    FlipXTransform.ScaleX = 1.0;
-
-        //}
-
-        //private void TurnSpriteHorizontally()
-        //{
-            
-        //    _flipHorizontally;
-        //}
-
-        //private void ResetImage()
-        //{
-        //    imageControl.RenderTransform = null;
-        //}
-
-        //private void CollisionCheck(Image image1, Image image2)    //Funkar men inte helt felfritt
-        //{
-        //    bool collisionX = Dispatcher.Invoke(() => Canvas.GetLeft(image1) < Canvas.GetLeft(image2) + (image2.Width)) && Dispatcher.Invoke(() => Canvas.GetLeft(image1) + (image1.Width) > Canvas.GetLeft(image2));
-        //    bool collisionY = Dispatcher.Invoke(() => Canvas.GetTop(image1) < Canvas.GetTop(image2) + (image2.Height)) && Dispatcher.Invoke(() => Canvas.GetTop(image1) + (image1.Height) > Canvas.GetTop(image2));
-
-        //    if (collisionX && collisionY)
-        //    {
-        //        //_timer.Stop();
-        //        //_timer.Enabled = false;
-        //        Dispatcher.Invoke(() => image2.Source = null);
-        //        //MessageBox.Show("The pirate ship was dragged down to the dark depths of the ocean, crushed by slimy tendrils and eaten for dinner");
-        //    }
-        //}
-        ///// <summary>
-        ///// Byter en bildkälla i UI till en ny
-        ///// </summary>
-        ///// <param name="image"></param>
-        ///// <param name="newImageURI"></param>
-        //private void ChangeImage(Image image, string newImageURI)
-        //{
-        //    image.Source = new BitmapImage(new Uri(@newImageURI, UriKind.Relative)));   //byter imagesource till ny källa
-        //}
     }
 }

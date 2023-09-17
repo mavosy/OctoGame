@@ -21,6 +21,9 @@ namespace SUP23_G9.Views.Characters
     /// </summary>
     public partial class Player : UserControl
     {
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
         public Player()
         {
             InitializeComponent();
@@ -36,9 +39,6 @@ namespace SUP23_G9.Views.Characters
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             krakenControl.Focus();
-            bool hasKeyboardFocus = krakenControl.IsKeyboardFocused;
-            bool hasLocigalFocus = krakenControl.IsFocused;
-
         }
 
         private void krakenControl_KeyDown(object sender, KeyEventArgs e)

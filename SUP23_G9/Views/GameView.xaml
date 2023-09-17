@@ -10,7 +10,7 @@
     x:Class="SUP23_G9.Views.GameView"
     d:DataContext="{d:DesignInstance {x:Type vm:GameViewModel}}"
     mc:Ignorable="d"
-    d:DesignHeight="450" d:DesignWidth="700">
+    d:DesignHeight="450" d:DesignWidth="800">
 
     <Border Background="PaleTurquoise"
             BorderBrush="DarkTurquoise"
@@ -18,6 +18,12 @@
             CornerRadius="5">
 
         <Grid>
+            <!--<StackPanel>
+                <Label
+                    Content="{Binding Points}"
+                    
+                    />
+            </StackPanel>-->
             <!--Rutnät -->
             <!--<ItemsControl ItemsSource="{Binding Ocean}">
                 <ItemsControl.ItemsPanel>
@@ -26,9 +32,9 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>-->
-            <Canvas x:Name="gameArea" Height="450" Width="700">
+            <Canvas x:Name="gameArea" Height="450" Width="800">
 
-                <Characters:Player x:Name="kraken"/>
+                <Characters:Player x:Name="player"/>
 
                 <ItemsControl ItemsSource="{Binding Ships}">
                     <ItemsControl.ItemsPanel>

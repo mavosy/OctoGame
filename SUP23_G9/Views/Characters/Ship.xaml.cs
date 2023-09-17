@@ -26,7 +26,6 @@ namespace SUP23_G9.Views.Characters
         public Ship()
         {
             InitializeComponent();
-
         }
     }
 }

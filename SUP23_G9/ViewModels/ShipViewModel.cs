@@ -9,6 +9,11 @@ namespace SUP23_G9.ViewModels.Base
 {
     public class ShipViewModel : BaseViewModel
     {
+        public ShipViewModel()
+        {
+            Width = 50;
+            Height = 50;
+        }
         /// <summary>
         /// X-koordinat för skeppen
         /// </summary>
@@ -17,5 +22,8 @@ namespace SUP23_G9.ViewModels.Base
         /// Y-koordinat för skeppen
         /// </summary>
         public double Top { get; set; }
+
+        public int Width { get; set; }
+        public int Height { get; set; }
     }
 }

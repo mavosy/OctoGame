@@ -64,6 +64,7 @@ namespace SUP23_G9.ViewModels
         private void GameTimerEvent(object sender, ElapsedEventArgs e)
         {
             MoveObjectsLoop();
+            CollisionCheck();
         }
 
         // Loopar genom objekten för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till 0
@@ -79,6 +80,23 @@ namespace SUP23_G9.ViewModels
 
                     ship.Top = 0;
                     ship.Left = GenerateRandomLeft();
+                }
+            }
+        }
+
+        private void CollisionCheck()
+        {
+            PlayerViewModel playerViewModel = new PlayerViewModel();
+
+            foreach (var ship in Ships)
+            {
+                bool collisionX = ship.Left < playerViewModel.LeftCoordinates + playerViewModel.Width && ship.Left + ship.Width > playerViewModel.LeftCoordinates;
+                bool collisionY = ship.Top < playerViewModel.TopCoordinates + playerViewModel.Height && ship.Top + ship.Width > playerViewModel.TopCoordinates;
+
+                if (collisionX && collisionY)
+                {
+                    //MessageBox.Show("num num num");
+
                 }
             }
         }

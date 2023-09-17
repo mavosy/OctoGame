@@ -6,12 +6,12 @@
              xmlns:local="clr-namespace:SUP23_G9.Views.Characters"
              xmlns:vm="clr-namespace:SUP23_G9.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Width="{Binding Width}"
+             Height="{Binding Height}"
+             >
 
-    <Image Name="pirateShip2" 
-           Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Right.bmp" 
-           Width="50" 
-           Height="50" 
-    />
-
+    <Image Name="pirateShip1" 
+           Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Right.bmp"
+           />
 </UserControl>

@@ -1,4 +1,5 @@
 ﻿using SUP23_G9.Commands;
+using SUP23_G9.ViewModels.Base;
 using SUP23_G9.Views;
 using System.ComponentModel;
 using System.Windows;
@@ -6,34 +7,17 @@ using System.Windows.Input;
 
 namespace SUP23_G9.ViewModels
 {
-    public class StartViewModel : INotifyPropertyChanged
+    public class StartViewModel : BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        private ICommand _startCommand;
+        public ICommand StartCommand { get; set; }
 
-        public ICommand StartCommand
-        {
-            get { return _startCommand; }
-            set
-            {
-                if (_startCommand != value)
-                {
-                    _startCommand = value;
-                    OnPropertyChanged(nameof(StartCommand));
-                }
-            }
-        }
-
-        // Konstruktor
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
         public StartViewModel()
         {
             StartCommand = new RelayCommand(parameter => StartGame());
-        }
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public void StartGame()
