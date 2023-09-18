@@ -84,7 +84,7 @@ namespace SUP23_G9.ViewModels
                 if (collisionX && collisionY)
                 {
                     //MessageBox.Show("nom nom nom");
-                    ship.ShipImage = null;
+                    //ship.ShipImage = null;
                 }
             }
         }
