@@ -37,7 +37,7 @@ namespace SUP23_G9.ViewModels
             StartMovingObject();
         }
 
-        public int Score { get; set; }
+        //public int Score { get; set; }
 
         public Points GamePoints { get; } = new Points();
   
