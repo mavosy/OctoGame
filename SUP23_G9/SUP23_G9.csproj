@@ -18,6 +18,7 @@
     <None Remove="Views\Components\Images\anchor.png" />
     <None Remove="Views\Components\Images\Happy_Kraken_Left.bmp" />
     <None Remove="Views\Components\Images\Happy_Kraken_Right.bmp" />
+    <None Remove="Views\Components\Images\PirateIsland1.bmp" />
     <None Remove="Views\Components\Images\PirateShip1_Left.bmp" />
     <None Remove="Views\Components\Images\PirateShip1_Right.bmp" />
   </ItemGroup>
@@ -38,6 +39,7 @@
     <Resource Include="Views\Components\Images\Happy_Kraken_Right.bmp">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Views\Components\Images\PirateIsland1.bmp" />
     <Resource Include="Views\Components\Images\PirateShip1_Left.bmp">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
