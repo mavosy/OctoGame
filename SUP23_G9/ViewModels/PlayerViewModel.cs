@@ -168,7 +168,5 @@ namespace SUP23_G9.ViewModels
         private void TurnSpriteHorizontally() => FlipImageX = -1.0;
 
         private void TurnSpriteBack() => FlipImageX = 1.0;
-
-
     }
 }
