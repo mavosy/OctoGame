@@ -30,6 +30,8 @@ namespace SUP23_G9.ViewModels
         public int Width { get; set; }
         public int Height { get; set; }
         public BitmapImage ShipImage { get; set; }
+        public Visibility ShipVisibility { get; set; }
+
         private void LoadShipImageProcessing()
         {
             BitmapImage image = new BitmapImage();
