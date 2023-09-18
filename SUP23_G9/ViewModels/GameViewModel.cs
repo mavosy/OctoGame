@@ -44,14 +44,14 @@ namespace SUP23_G9.ViewModels
 
         private void CreateRandomShips()
         {
-            for (int i = 0; i < 2; i++) //Ships 2st
+            for (int i = 0; i < 10; i++) //Ships 2st
             {
                 int randomTop = GenerateRandomTop();
                 int randomLeft = GenerateRandomLeft();
                 Ships.Add(new ShipViewModel { Top = randomTop, Left = randomLeft });
             }
 
-            for (int i = 0; i < 2; i++) //Obstacles 2st
+            for (int i = 0; i < 5; i++) //Obstacles 2st
             {
                 int randomTop = GenerateRandomTop();
                 int randomLeft = GenerateRandomLeft();
@@ -101,8 +101,11 @@ namespace SUP23_G9.ViewModels
             }
         }
 
+        //Version 2.0 på metoden CollisionCheck() där bläckfisken istället äter upp alla skeppen = skeppen försvinner helt från canvas
         private void CollisionCheck()
         {
+            List<ShipViewModel> shipsRemove = new List<ShipViewModel>();
+
             foreach (var ship in Ships)
             {
                 bool collisionX = ship.Left < GlobalVariabels._playerCoordinatesLeft + 50 && ship.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
@@ -111,8 +114,20 @@ namespace SUP23_G9.ViewModels
                 if (collisionX && collisionY)
                 {
                     //MessageBox.Show("nom nom nom");
+                    shipsRemove.Add(ship);
                 }
             }
+
+            //https://stackoverflow.com/questions/18331723/this-type-of-collectionview-does-not-support-changes-to-its-sourcecollection-fro
+            foreach (var shipRemove in shipsRemove)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Ships.Remove(shipRemove);
+                });
+            }
+
         }
+
     }
 }
