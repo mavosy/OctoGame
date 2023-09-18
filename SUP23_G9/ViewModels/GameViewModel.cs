@@ -32,6 +32,7 @@ namespace SUP23_G9.ViewModels
         {
             Ships = new ObservableCollection<ShipViewModel>();
             Obstacles = new ObservableCollection<ObstacleViewModel>();
+            PlayerLife = 100;
             CreateRandomShips();
             StartMovingObject();
         }
@@ -41,6 +42,7 @@ namespace SUP23_G9.ViewModels
         //public int Score { get => _pointsSystem.Score; }
         public ObservableCollection<ShipViewModel> Ships { get; set; }
         public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
+        public int PlayerLife { get; set; }
 
         private void CreateRandomShips()
         {
@@ -115,7 +117,14 @@ namespace SUP23_G9.ViewModels
                     obstacle.Top = 0;
                     obstacle.Left = GenerateRandomLeft();
 
-                    //_pointsSystem.AddPoints(1);
+                    if (PlayerLife > 0)
+                    {
+                        PlayerLife -= 34;
+                    }
+                    else if (PlayerLife <= 0)
+                    {
+                        //GameOver!!
+                    }
                 }
             }
         }

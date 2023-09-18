@@ -8,6 +8,7 @@
              xmlns:Characters="clr-namespace:SUP23_G9.Views.Characters"
              x:Class="SUP23_G9.Views.GameView"
              d:DataContext="{d:DesignInstance {x:Type vm:GameViewModel}}"
+             d:DesignWidth="1000" d:DesignHeight="600"
              mc:Ignorable="d">
 
     <!-- För Timern istället för datatcontext = new GameViewModel(); i Mainwindow -->
@@ -29,6 +30,18 @@
                        Foreground="Black"/>
         <Canvas x:Name="gameArea">
             <Characters:Player x:Name="player"/>
+            <ProgressBar 
+                Width="200" 
+                Height="30" 
+                Margin="10" 
+                Canvas.Left="400" 
+                Opacity="0.7" 
+                Value="{Binding PlayerLife}" Foreground="#FF940000"
+                BorderBrush="Black"
+                BorderThickness="2"
+                
+                >
+            </ProgressBar>
 
             <ItemsControl ItemsSource="{Binding Ships}">
                 <ItemsControl.ItemsPanel>
@@ -67,7 +80,7 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            
+
         </Canvas>
     </Grid>
 </UserControl>
