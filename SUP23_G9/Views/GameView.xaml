@@ -10,7 +10,20 @@
              d:DataContext="{d:DesignInstance {x:Type vm:GameViewModel}}"
              mc:Ignorable="d">
 
+    <!-- För Timern istället för datatcontext = new GameViewModel(); i Mainwindow -->
+    <UserControl.DataContext>
+        <vm:GameViewModel/>
+    </UserControl.DataContext>
+
     <Grid>
+
+        <!--Timer -->
+        <TextBlock Text="{Binding CountdownTimer.RemainingTime}" 
+                       HorizontalAlignment="Right" 
+                       VerticalAlignment="Top" 
+                       Margin="10" 
+                       FontSize="20" 
+                       Foreground="Black"/>
         <Canvas x:Name="gameArea">
             <Characters:Player x:Name="player"/>
             

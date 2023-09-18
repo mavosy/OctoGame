@@ -10,7 +10,7 @@ using System.Windows.Threading;
 
 namespace SUP23_G9.ViewModels
 {
-    internal class TimerViewModel: BaseViewModel
+    public class TimerViewModel : BaseViewModel
     {
         private DispatcherTimer _timer;
         private int _remainingSeconds;
@@ -21,10 +21,11 @@ namespace SUP23_G9.ViewModels
             _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             _timer.Tick += TimerTick;
 
-            StartCommand = new RelayCommand( x => StartTimer());
-            StopCommand = new RelayCommand( x => StopTimer());
+            StartCommand = new RelayCommand(x => StartTimer());
+            StopCommand = new RelayCommand(x => StopTimer());
 
             UpdateRemainingTime();
+            _timer.Start();
         }
 
         public string RemainingTime { get; set; }
@@ -58,4 +59,3 @@ namespace SUP23_G9.ViewModels
         }
     }
 }
-
