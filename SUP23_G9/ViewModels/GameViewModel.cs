@@ -26,7 +26,7 @@ namespace SUP23_G9.ViewModels
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
         public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(60); // Startar med 1 min.
 
-        private Points _pointsSystem = new Points(); // Poäng
+    
 
         public GameViewModel()
         {
@@ -39,7 +39,8 @@ namespace SUP23_G9.ViewModels
 
         public int Score { get; set; }
 
-        //public int Score { get => _pointsSystem.Score; }
+        public Points GamePoints { get; } = new Points();
+  
         public ObservableCollection<ShipViewModel> Ships { get; set; }
         public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
         public int PlayerLife { get; set; }
@@ -117,6 +118,8 @@ namespace SUP23_G9.ViewModels
                     obstacle.Top = 0;
                     obstacle.Left = GenerateRandomLeft();
 
+                    
+                    GamePoints.DeductPoints(5);  // Tar bort 5 poäng.
                     if (PlayerLife > 0)
                     {
                         PlayerLife -= 34;
@@ -140,8 +143,8 @@ namespace SUP23_G9.ViewModels
                 {
                     ship.Top = 0;
                     ship.Left = GenerateRandomLeft();
-                    Score++;
-                    //_pointsSystem.AddPoints(1);
+                    
+                    GamePoints.AddPoints(10);  // Lägger till 10 poäng.
                 }
             }
         }
