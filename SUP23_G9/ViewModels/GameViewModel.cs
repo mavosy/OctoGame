@@ -24,7 +24,7 @@ namespace SUP23_G9.ViewModels
         private int _shipsEaten;
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(60); // Startar med 1 min.
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(10); // Startar med 1 min.
 
     
 

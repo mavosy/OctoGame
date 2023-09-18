@@ -1,10 +1,12 @@
 ﻿using SUP23_G9.Commands;
 using SUP23_G9.ViewModels.Base;
+using SUP23_G9.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -33,6 +35,7 @@ namespace SUP23_G9.ViewModels
         public ICommand StartCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
 
+        private bool isGameOverDisplayed = false;
         private void TimerTick(object sender, EventArgs e)
         {
             if (_remainingSeconds > 0)
@@ -40,11 +43,32 @@ namespace SUP23_G9.ViewModels
                 _remainingSeconds--;
                 UpdateRemainingTime();
             }
-            else
+            else if (!isGameOverDisplayed)
             {
                 _timer.Stop();
                 RemainingTime = "Time's up!";
+                ShowGameOverWindow();
+                isGameOverDisplayed = true;
             }
+        }
+
+        private void ShowGameOverWindow()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                GameOverView gameOverView = new GameOverView();
+                gameOverView.Show();
+
+                // Stäng det nuvarande fönstret (MainWindow)
+                foreach (Window window in Application.Current.Windows)
+                {
+                    if (window is MainWindow)
+                    {
+                        window.Close();
+                        break; // Stäng bara det första förekomsten av MainWindow
+                    }
+                }
+            });
         }
 
         private void StartTimer() => _timer.Start();
