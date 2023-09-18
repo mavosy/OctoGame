@@ -17,8 +17,6 @@ namespace SUP23_G9.ViewModels
             Width = 50;
             Height = 50;
 
-            ShipVisibility = Visibility.Visible;
-
             LoadShipImageProcessing();
         }
         /// <summary>
@@ -32,7 +30,6 @@ namespace SUP23_G9.ViewModels
         public int Width { get; set; }
         public int Height { get; set; }
         public BitmapImage ShipImage { get; set; }
-        public Visibility ShipVisibility { get; set; }
 
         private void LoadShipImageProcessing()
         {
