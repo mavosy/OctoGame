@@ -35,7 +35,7 @@ namespace SUP23_G9.ViewModels
             BitmapImage image = new BitmapImage();
 
             image.BeginInit();
-            image.UriSource = new Uri("pack://application:,,,/SUP23_G9;component/Views/Components/Images/PirateShip1_Right.bmp");
+            image.UriSource = new Uri("pack://application:,,,/SUP23_G9;component/Views/Components/Images/PirateIsland1.bmp");
             image.DecodePixelWidth = 50;
             image.CacheOption = BitmapCacheOption.OnLoad;
             image.EndInit();
