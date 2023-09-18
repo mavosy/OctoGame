@@ -30,8 +30,8 @@ namespace SUP23_G9.ViewModels
 
         public PlayerViewModel()
         {
-            LeftCoordinates = 500;
-            TopCoordinates = 350;
+            LeftCoordinates = 5;
+            TopCoordinates = 5;
             Width = 50;
             Height = 50;
 
@@ -99,11 +99,11 @@ namespace SUP23_G9.ViewModels
 
         public bool IsNotAtLeftEdge() => LeftCoordinates > _distanceToEdge;
 
-        public bool IsNotAtRightEdge() => (LeftCoordinates + Width) < (800 - _distanceToEdge);
+        public bool IsNotAtRightEdge() => (LeftCoordinates + Width) < (985 - _distanceToEdge); //Det som styr hur långt ut till kanten han kan "simma"
 
         public bool IsNotAtTopEdge() => TopCoordinates > _distanceToEdge;
 
-        public bool IsNotAtBottomEdge() => (TopCoordinates + Height) < (450 - _distanceToEdge);
+        public bool IsNotAtBottomEdge() => (TopCoordinates + Height) < (565 - _distanceToEdge); //Det som styr hur långt ner till kanten han kan "simma"
 
         internal void HandleKeyDown(KeyEventArgs e)
         {

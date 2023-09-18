@@ -7,10 +7,9 @@
         xmlns:local="clr-namespace:SUP23_G9.Views"
         d:DataContext="{d:DesignInstance vm:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="900">
-
-    <Grid Background="CadetBlue">
-        <Grid.ColumnDefinitions>
+        Title="MainWindow" Height="600" Width="1000">
+    <Grid Background="PaleTurquoise">
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20"/>
@@ -19,15 +18,15 @@
             <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
-        </Grid.RowDefinitions>
+        </Grid.RowDefinitions>-->
         <ContentControl Content="{Binding CurrentViewModel}"
                         Grid.Column="1"
                         Grid.Row="1"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"/>
-        <!--<StackPanel VerticalAlignment="Center" Grid.Column="1">
-
-            --><!-- Denna TextBlock visar nedräkningen --><!--
+        <!--<StackPanel VerticalAlignment="Center" Grid.Column="1">-->
+        <!-- Denna TextBlock visar nedräkningen -->
+        <!--
             <TextBlock Text="{Binding RemainingTime}" 
                        FontSize="1" 
                        HorizontalAlignment="Center" 
