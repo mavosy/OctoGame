@@ -9,8 +9,6 @@ namespace SUP23_G9.ViewModels
 {
     public class Points : BaseViewModel
     {
-  
-         
         private int _score;
 
         public int Score

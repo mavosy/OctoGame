@@ -20,12 +20,12 @@
     <UserControl.DataContext>
         <vm:PlayerViewModel/>
     </UserControl.DataContext>
-    <UserControl.InputBindings>
+    <!--<UserControl.InputBindings>
         <KeyBinding Command="{Binding UpKeyDownCommand, UpdateSourceTrigger=PropertyChanged}" Key="W"/>
         <KeyBinding Command="{Binding DownKeyDownCommand, UpdateSourceTrigger=PropertyChanged}" Key="S"/>
         <KeyBinding Command="{Binding LeftKeyDownCommand, UpdateSourceTrigger=PropertyChanged}" Key="A"/>
         <KeyBinding Command="{Binding RightKeyDownCommand, UpdateSourceTrigger=PropertyChanged}" Key="D"/>
-    </UserControl.InputBindings>
+    </UserControl.InputBindings>-->
     <Grid>
         <Image 
             x:Name="playerImage" 

@@ -15,5 +15,12 @@
     </UserControl.DataContext>
     <Image Name="pirateShip1" 
            Source="{Binding ShipImage}"
-           />
+           RenderTransformOrigin="0.5,0.5"
+           >
+        <Image.RenderTransform>
+            <ScaleTransform 
+                ScaleX="{Binding FlipImageX}"
+                ScaleY="1.0"/>
+        </Image.RenderTransform>
+    </Image>
 </UserControl>

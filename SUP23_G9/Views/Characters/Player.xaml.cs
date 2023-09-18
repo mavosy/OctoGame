@@ -29,6 +29,9 @@ namespace SUP23_G9.Views.Characters
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Property som används för att skicka key-event till PlayerViewModel
+        /// </summary>
         private PlayerViewModel ViewModel { get { return DataContext as PlayerViewModel; } }
 
         /// <summary>
@@ -40,13 +43,21 @@ namespace SUP23_G9.Views.Characters
         {
             krakenControl.Focus();
         }
-
+        /// <summary>
+        /// Event handler för KeyDown-eventet, skickar vidare till PlayerViewModel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void krakenControl_KeyDown(object sender, KeyEventArgs e)
         {
             if (ViewModel == null) return;
             ViewModel.HandleKeyDown(e);
         }
-
+        /// <summary>
+        /// Event handler för KeyUp-eventet, skickar vidare till PlayerViewModel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void krakenControl_KeyUp(object sender, KeyEventArgs e)
         {
             if (ViewModel == null) return;

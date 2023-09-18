@@ -19,19 +19,34 @@ using System.Windows.Threading;
 
 namespace SUP23_G9.ViewModels
 {
-
     public class PlayerViewModel : BaseViewModel
     {
-        readonly double _distanceToEdge = 5;
-        readonly double _playerSpeed = 5;
+        #region Field-variabler
+        /// <summary>
+        /// Sätter spelarens minimala avstånd från spelplanens kant
+        /// </summary>
+        private readonly double _distanceToEdge = 5;
+        /// <summary>
+        /// Sätter spelarkaraktärens hastighet
+        /// </summary>
+        private readonly double _playerSpeed = 5;
 
-        bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;
+        private bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;
+
+        /// <summary>
+        /// Timer för att flytta spelaren med jämna interval
+        /// </summary>
         DispatcherTimer _timer;
+        #endregion
 
+        #region Konstruktor
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
         public PlayerViewModel()
         {
-            LeftCoordinates = 400;
-            TopCoordinates = 400;
+            LeftCoordinates = 475;
+            TopCoordinates = 450;
             Width = 50;
             Height = 50;
 
@@ -47,27 +62,55 @@ namespace SUP23_G9.ViewModels
             FlipImageX = 1.0;
 
             LoadKrakenImageProcessing();
-            UpKeyDownCommand = new RelayCommand(x => MovePlayerUp(), x => IsNotAtTopEdge());
-            DownKeyDownCommand = new RelayCommand(x => MovePlayerDown(), x => IsNotAtBottomEdge());
-            LeftKeyDownCommand = new RelayCommand(x => MovePlayerLeft(), x => IsNotAtLeftEdge());
-            RightKeyDownCommand = new RelayCommand(x => MovePlayerRight(), x => IsNotAtRightEdge());
+            //UpKeyDownCommand = new RelayCommand(x => MovePlayerUp(), x => IsNotAtTopEdge());
+            //DownKeyDownCommand = new RelayCommand(x => MovePlayerDown(), x => IsNotAtBottomEdge());
+            //LeftKeyDownCommand = new RelayCommand(x => MovePlayerLeft(), x => IsNotAtLeftEdge());
+            //RightKeyDownCommand = new RelayCommand(x => MovePlayerRight(), x => IsNotAtRightEdge());
         }
+        #endregion
 
-        public double LeftCoordinates { get; set; }
-        public double TopCoordinates { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public ICommand UpKeyDownCommand { get; private set; }
-        public ICommand DownKeyDownCommand { get; private set; }
-        public ICommand LeftKeyDownCommand { get; private set; }
-        public ICommand RightKeyDownCommand { get; private set; }
-        public BitmapImage PlayerImage { get; set; }
-        public double FlipImageX { get; set; }
+        #region Properties
+        /// <summary>
+        /// X-koordinater för spelare
+        /// </summary>
+        public double LeftCoordinates { get; private set; }
+        /// <summary>
+        /// Y-koordinater för spelare
+        /// </summary>
+        public double TopCoordinates { get; private set; }
+        /// <summary>
+        /// Spelarens bredd
+        /// </summary>
+        public int Width { get; private set; }
+        /// <summary>
+        /// Spelarens höjd
+        /// </summary>
+        public int Height { get; private set; }
+        /// <summary>
+        /// Bild för spelarens karaktär
+        /// </summary>
+        public BitmapImage PlayerImage { get; private set; }
+        /// <summary>
+        /// Sätter vilket håll karaktärsbilden är vänd mot i horisontellt led
+        /// </summary>
+        public double FlipImageX { get; private set; }
+        //public ICommand UpKeyDownCommand { get; private set; }
+        //public ICommand DownKeyDownCommand { get; private set; }
+        //public ICommand LeftKeyDownCommand { get; private set; }
+        //public ICommand RightKeyDownCommand { get; private set; } 
+        #endregion
 
+        #region Event handlers
+        /// <summary>
+        /// Event handler för att förflytta spelaren
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MovePlayerEvent(object? sender, EventArgs e)
         {
             GlobalVariabels._playerCoordinatesLeft = LeftCoordinates;
             GlobalVariabels._playerCoordinatesTop = TopCoordinates;
+
             if (_leftButtonIsDown && IsNotAtLeftEdge())
             {
                 MovePlayerLeft();
@@ -91,22 +134,10 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-        public void MovePlayerLeft() => LeftCoordinates -= _playerSpeed;
-
-        public void MovePlayerRight() => LeftCoordinates += _playerSpeed;
-
-        public void MovePlayerUp() => TopCoordinates -= _playerSpeed;
-
-        public void MovePlayerDown() => TopCoordinates += _playerSpeed;
-
-        public bool IsNotAtLeftEdge() => LeftCoordinates > _distanceToEdge;
-
-        public bool IsNotAtRightEdge() => (LeftCoordinates + Width) < (985 - _distanceToEdge); //Det som styr hur långt ut till kanten han kan "simma"
-
-        public bool IsNotAtTopEdge() => TopCoordinates > _distanceToEdge;
-
-        public bool IsNotAtBottomEdge() => (TopCoordinates + Height) < (565 - _distanceToEdge); //Det som styr hur långt ner till kanten han kan "simma"
-
+        /// <summary>
+        /// Event handler för att kontrollera om en viss tangent trycks ner, här sätts med vilka tangenter spelaren styr sin karaktär
+        /// </summary>
+        /// <param name="e"></param>
         internal void HandleKeyDown(KeyEventArgs e)
         {
             switch (e.Key)   //I KeyEventArgs finns värdet "Key" som definierar vilken knapp som har tryckts ner, typ P, R, 8, Enter, NumLock etc. Switchar på det och sätter bool till true
@@ -131,12 +162,15 @@ namespace SUP23_G9.ViewModels
                     break;
             }
         }
-
+        /// <summary>
+        /// Event handler för att kontrollera om en viss tangent släpps, här sätts med vilka tangenter spelaren styr sin karaktär
+        /// </summary>
+        /// <param name="e"></param>
         internal void HandleKeyUp(KeyEventArgs e)
         {
-            switch (e.Key)   //I KeyEventArgs finns värdet "Key" som helt enkelt är vilken knapp som har tryckts ner, typ P, R, 8, Enter, NumLock etc. Switchar på det och sätter bool till true
+            switch (e.Key)
             {
-                case Key.J:        //här kan man ange typ vilka tangenter som helst, det ändrar kontrollen till spelet. Kanske ha userInput så man kan ändra själv?
+                case Key.J:
                     _leftButtonIsDown = false;
                     break;
 
@@ -156,7 +190,51 @@ namespace SUP23_G9.ViewModels
                     break;
             }
         }
+        #endregion
 
+        #region Förflyttningsmetoder
+        /// <summary>
+        /// Flyttar spelaren åt vänster
+        /// </summary>
+        public void MovePlayerLeft() => LeftCoordinates -= _playerSpeed;
+        /// <summary>
+        /// Flyttar spelaren åt höger
+        /// </summary>
+        public void MovePlayerRight() => LeftCoordinates += _playerSpeed;
+        /// <summary>
+        /// Flyttar spelaren uppåt
+        /// </summary>
+        public void MovePlayerUp() => TopCoordinates -= _playerSpeed;
+        /// <summary>
+        /// Flyttar spelaren nedåt
+        /// </summary>
+        public void MovePlayerDown() => TopCoordinates += _playerSpeed;
+        /// <summary>
+        /// Kontrollerar om spelaren är för nära vänstra kanten av spelplanen
+        /// </summary>
+        /// <returns> bool </returns>
+        public bool IsNotAtLeftEdge() => LeftCoordinates > _distanceToEdge;
+        /// <summary>
+        /// Kontrollerar om spelaren är för nära högra kanten av spelplanen
+        /// </summary>
+        /// <returns> bool </returns>
+        public bool IsNotAtRightEdge() => (LeftCoordinates + Width) < (985 - _distanceToEdge);
+        /// <summary>
+        /// Kontrollerar om spelaren är för nära övre kanten av spelplanen
+        /// </summary>
+        /// <returns> bool </returns>
+        public bool IsNotAtTopEdge() => TopCoordinates > _distanceToEdge;
+        /// <summary>
+        /// Kontrollerar om spelaren är för nära nedre kanten av spelplanen
+        /// </summary>
+        /// <returns> bool </returns>
+        public bool IsNotAtBottomEdge() => (TopCoordinates + Height) < (565 - _distanceToEdge);
+        #endregion
+
+        #region Bildprocesseringsmetoder
+        /// <summary>
+        /// Processerar och cachar bild för spelarens karaktär
+        /// </summary>
         private void LoadKrakenImageProcessing()
         {
             BitmapImage image = new BitmapImage();
@@ -168,9 +246,14 @@ namespace SUP23_G9.ViewModels
 
             PlayerImage = image;
         }
-
+        /// <summary>
+        /// Vänder spelarens karaktärsbild åt andra hållet i x-led
+        /// </summary>
         private void TurnSpriteHorizontally() => FlipImageX = -1.0;
-
-        private void TurnSpriteBack() => FlipImageX = 1.0;
+        /// <summary>
+        /// Vänder spelarens karaktärsbild tillbaka
+        /// </summary>
+        private void TurnSpriteBack() => FlipImageX = 1.0; 
+        #endregion
     }
 }

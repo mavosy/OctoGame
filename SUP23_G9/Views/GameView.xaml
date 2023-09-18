@@ -17,9 +17,13 @@
     </UserControl.DataContext>
 
     <Grid>
-        <!--Poäng -->
-       
-        <TextBlock Text="{Binding GamePoints.Score}" FontSize="24" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <!--Poängvisare -->
+        <TextBlock 
+            Text="{Binding GamePoints.Score}" 
+            FontSize="24" 
+            Margin="10" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top"/>
 
         <!--Timer -->
         <TextBlock Text="{Binding CountdownTimer.RemainingTime}" 
@@ -28,20 +32,20 @@
                        Margin="10" 
                        FontSize="20" 
                        Foreground="Black"/>
+        
         <Canvas x:Name="gameArea">
             <Characters:Player x:Name="player"/>
+            <!--Livmätare-->
             <ProgressBar 
                 Width="200" 
                 Height="30" 
                 Margin="10" 
                 Canvas.Left="400" 
                 Opacity="0.7" 
-                Value="{Binding PlayerLife}" Foreground="#FF940000"
+                Value="{Binding PlayerHealth}" Foreground="#FF940000"
                 BorderBrush="Black"
-                BorderThickness="2"
-                
-                >
-            </ProgressBar>
+                BorderThickness="2"/>
+
 
             <ItemsControl ItemsSource="{Binding Ships}">
                 <ItemsControl.ItemsPanel>
