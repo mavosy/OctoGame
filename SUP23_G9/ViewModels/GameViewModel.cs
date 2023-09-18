@@ -25,6 +25,8 @@ namespace SUP23_G9.ViewModels
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
         public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(60); // Startar med 1 min.
 
+        int count = 0; // 
+
         private Points _pointsSystem = new Points(); // Poäng
 
         public int Score
@@ -110,7 +112,7 @@ namespace SUP23_G9.ViewModels
 
                 if (collisionX && collisionY)
                 {
-                    //MessageBox.Show("nom nom nom");
+                    
                 }
             }
         }

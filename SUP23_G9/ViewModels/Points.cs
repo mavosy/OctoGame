@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SUP23_G9.ViewModels
 {
-    internal class Points
+    public class Points
     {
   
          
