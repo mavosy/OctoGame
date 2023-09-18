@@ -33,10 +33,5 @@ namespace SUP23_G9.Views
         {
             InitializeComponent();
         }
-
-        private void player_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

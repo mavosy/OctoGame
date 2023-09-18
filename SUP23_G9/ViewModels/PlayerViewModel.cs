@@ -30,15 +30,20 @@ namespace SUP23_G9.ViewModels
 
         public PlayerViewModel()
         {
-            LeftCoordinates = 5;
-            TopCoordinates = 5;
+            LeftCoordinates = 400;
+            TopCoordinates = 400;
             Width = 50;
             Height = 50;
 
-            _timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(10) };    //nyar upp timer och sätter ett intervall i millisekunder för hur ofta MovePlayerEvent ska köras
-            _timer.Tick += MovePlayerEvent;     //kör MovePlayerEvent varje gång interval ska börja om
-            _timer.Start();    //startar timer
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromMilliseconds(10);
 
+            //kör MovePlayerEvent varje gång interval ska börja om
+            _timer.Tick += MovePlayerEvent;
+            _timer.Start();
+
+
+            //sätter ett startvärde på speglingen av spelarbilden
             FlipImageX = 1.0;
 
             LoadKrakenImageProcessing();
@@ -59,33 +64,30 @@ namespace SUP23_G9.ViewModels
         public BitmapImage PlayerImage { get; set; }
         public double FlipImageX { get; set; }
 
-        //public BitmapImage KrakenImage { get; set; }
-        //public ScaleTransform FlipXTransform { get; set; } = new ScaleTransform();
-
         private void MovePlayerEvent(object? sender, EventArgs e)
         {
             GlobalVariabels._playerCoordinatesLeft = LeftCoordinates;
             GlobalVariabels._playerCoordinatesTop = TopCoordinates;
             if (_leftButtonIsDown && IsNotAtLeftEdge())
             {
-                MovePlayerLeft(); //sätter ny x-koordinat till den förra koordinaten MINUS _playerSpeed
+                MovePlayerLeft();
                 TurnSpriteBack();
             }
 
             if (_rightButtonIsDown && IsNotAtRightEdge())
             {
-                MovePlayerRight();   //sätter ny x-koordinat till den förra koordinaten PLUS _playerSpeed
+                MovePlayerRight();
                 TurnSpriteHorizontally();
             }
 
             if (_upButtonIsDown && IsNotAtTopEdge())
             {
-                MovePlayerUp();       //sätter ny y-koordinat till den förra koordinaten MINUS _playerSpeed
+                MovePlayerUp();
             }
 
             if (_downButtonIsDown && IsNotAtBottomEdge())
             {
-                MovePlayerDown();      //sätter ny x-koordinat till den förra koordinaten PLUS _playerSpeed
+                MovePlayerDown();
             }
         }
 

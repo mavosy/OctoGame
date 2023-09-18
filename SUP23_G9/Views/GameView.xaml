@@ -27,7 +27,7 @@
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Characters:Ship/>
+                        <Characters:Ship Visibility="{Binding ShipVisibility}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
