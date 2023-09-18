@@ -18,6 +18,7 @@ namespace SUP23_G9.ViewModels
     {
         private Timer _gameTimer;
         private readonly int _speed = 4;
+        private readonly int _speedObstacle = 2;
         private static readonly Random _random = new();
 
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
@@ -25,19 +26,28 @@ namespace SUP23_G9.ViewModels
         public GameViewModel()
         {
             Ships = new ObservableCollection<ShipViewModel>();
+            Obstacles = new ObservableCollection<ObstacleViewModel>();
             CreateRandomShips();
             StartMovingObject();
         }
 
         public ObservableCollection<ShipViewModel> Ships { get; set; }
+        public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
 
         private void CreateRandomShips()
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++) //Ships 2st
             {
                 int randomTop = GenerateRandomTop();
                 int randomLeft = GenerateRandomLeft();
                 Ships.Add(new ShipViewModel { Top = randomTop, Left = randomLeft });
+            }
+
+            for (int i = 0; i < 2; i++) //Obstacles 2st
+            {
+                int randomTop = GenerateRandomTop();
+                int randomLeft = GenerateRandomLeft();
+                Obstacles.Add(new ObstacleViewModel { Top = randomTop, Left = randomLeft });
             }
         }
 
@@ -68,6 +78,17 @@ namespace SUP23_G9.ViewModels
                 {
                     ship.Top = 0;
                     ship.Left = GenerateRandomLeft();
+                }
+            }
+
+            foreach (var obstacle in Obstacles)
+            {
+                obstacle.Top += _speedObstacle;
+
+                if (obstacle.Top > _mainWindowHeight)
+                {
+                    obstacle.Top = 0;
+                    obstacle.Left = GenerateRandomLeft();
                 }
             }
         }
