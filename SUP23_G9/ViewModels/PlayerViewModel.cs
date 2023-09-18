@@ -64,6 +64,8 @@ namespace SUP23_G9.ViewModels
 
         private void MovePlayerEvent(object? sender, EventArgs e)
         {
+            GlobalVariabels._playerCoordinatesLeft = LeftCoordinates;
+            GlobalVariabels._playerCoordinatesTop = TopCoordinates;
             if (_leftButtonIsDown && IsNotAtLeftEdge())
             {
                 MovePlayerLeft(); //sätter ny x-koordinat till den förra koordinaten MINUS _playerSpeed

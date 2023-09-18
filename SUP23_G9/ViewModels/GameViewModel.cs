@@ -33,7 +33,7 @@ namespace SUP23_G9.ViewModels
 
         private void CreateRandomShips()
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 4; i++)
             {
                 int randomTop = GenerateRandomTop();
                 int randomLeft = GenerateRandomLeft();
@@ -72,19 +72,16 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-        private void CollisionCheck() //laggar otroligt mycket.
+        private void CollisionCheck()
         {
-            PlayerViewModel playerViewModel = new PlayerViewModel();
-
             foreach (var ship in Ships)
             {
-                bool collisionX = ship.Left < playerViewModel.LeftCoordinates + playerViewModel.Width && ship.Left + ship.Width > playerViewModel.LeftCoordinates;
-                bool collisionY = ship.Top < playerViewModel.TopCoordinates + playerViewModel.Height && ship.Top + ship.Width > playerViewModel.TopCoordinates;
+                bool collisionX = ship.Left < GlobalVariabels._playerCoordinatesLeft + 50 && ship.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
+                bool collisionY = ship.Top < GlobalVariabels._playerCoordinatesTop + 50 && ship.Top + 50 > GlobalVariabels._playerCoordinatesTop;
 
                 if (collisionX && collisionY)
                 {
                     //MessageBox.Show("nom nom nom");
-                    //ship.ShipImage = null;
                 }
             }
         }
