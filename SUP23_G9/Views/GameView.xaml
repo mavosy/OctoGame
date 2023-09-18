@@ -17,8 +17,8 @@
 
     <Grid>
         <!--Poäng -->
-        <TextBlock Text="{Binding Score}" FontSize="24" Margin="10" HorizontalAlignment="left" VerticalAlignment="Top"/>
-
+       
+        <TextBlock Text="{Binding GamePoints.Score}" FontSize="24" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         <!--Timer -->
         <TextBlock Text="{Binding CountdownTimer.RemainingTime}" 
