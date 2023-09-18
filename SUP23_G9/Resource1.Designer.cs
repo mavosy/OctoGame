@@ -113,6 +113,16 @@ namespace SUP23_G9 {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] PirateIsland1 {
+            get {
+                object obj = ResourceManager.GetObject("PirateIsland1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] PirateShip1_Left {
             get {
                 object obj = ResourceManager.GetObject("PirateShip1_Left", resourceCulture);
