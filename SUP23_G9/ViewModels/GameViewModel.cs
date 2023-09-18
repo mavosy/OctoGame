@@ -4,6 +4,7 @@ using SUP23_G9.Views.Components;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,17 +21,13 @@ namespace SUP23_G9.ViewModels
         private readonly int _speed = 4;
         private readonly int _speedObstacle = 2;
         private static readonly Random _random = new();
-
+        private int _shipsEaten;
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
         public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(60); // Startar med 1 min.
 
         private Points _pointsSystem = new Points(); // Poäng
 
-        public int Score
-        {
-            get => _pointsSystem.Score;
-        }
         public GameViewModel()
         {
             Ships = new ObservableCollection<ShipViewModel>();
@@ -39,12 +36,15 @@ namespace SUP23_G9.ViewModels
             StartMovingObject();
         }
 
+        public int Score { get; set; }
+
+        //public int Score { get => _pointsSystem.Score; }
         public ObservableCollection<ShipViewModel> Ships { get; set; }
         public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
 
         private void CreateRandomShips()
         {
-            for (int i = 0; i < 2; i++) //Ships 2st
+            for (int i = 0; i < 10; i++) //Ships 2st
             {
                 int randomTop = GenerateRandomTop();
                 int randomLeft = GenerateRandomLeft();
@@ -72,8 +72,10 @@ namespace SUP23_G9.ViewModels
         private void GameTimerEvent(object sender, ElapsedEventArgs e)
         {
             MoveObjectsLoop();
-            CollisionCheck();
+            ShipCollisionCheck();
+            ObstacleCollisionCheck();
         }
+
 
         // Loopar genom objekten för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till 0
         private void MoveObjectsLoop()
@@ -101,7 +103,24 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-        private void CollisionCheck()
+        public void ObstacleCollisionCheck()
+        {
+            foreach (var obstacle in Obstacles)
+            {
+                bool collisionX = obstacle.Left < GlobalVariabels._playerCoordinatesLeft + 50 && obstacle.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
+                bool collisionY = obstacle.Top < GlobalVariabels._playerCoordinatesTop + 50 && obstacle.Top + 50 > GlobalVariabels._playerCoordinatesTop;
+
+                if (collisionX && collisionY)
+                {
+                    obstacle.Top = 0;
+                    obstacle.Left = GenerateRandomLeft();
+
+                    //_pointsSystem.AddPoints(1);
+                }
+            }
+        }
+
+        public void ShipCollisionCheck()
         {
             foreach (var ship in Ships)
             {
@@ -110,7 +129,10 @@ namespace SUP23_G9.ViewModels
 
                 if (collisionX && collisionY)
                 {
-                    //MessageBox.Show("nom nom nom");
+                    ship.Top = 0;
+                    ship.Left = GenerateRandomLeft();
+                    Score++;
+                    //_pointsSystem.AddPoints(1);
                 }
             }
         }

@@ -29,7 +29,7 @@
                        Foreground="Black"/>
         <Canvas x:Name="gameArea">
             <Characters:Player x:Name="player"/>
-            
+
             <ItemsControl ItemsSource="{Binding Ships}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -44,7 +44,7 @@
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Characters:Ship Visibility="{Binding ShipVisibility}"/>
+                        <Characters:Ship/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
