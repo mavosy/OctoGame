@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Views\Components\Images\anchor.png" />
     <None Remove="Views\Components\Images\Happy_Kraken_Left.bmp" />
     <None Remove="Views\Components\Images\Happy_Kraken_Right.bmp" />
     <None Remove="Views\Components\Images\PirateShip1_Left.bmp" />
@@ -30,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Views\Components\Images\anchor.png" />
     <Resource Include="Views\Components\Images\Happy_Kraken_Left.bmp">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
