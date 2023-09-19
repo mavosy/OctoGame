@@ -29,6 +29,9 @@ namespace SUP23_G9.ViewModels
         #endregion
 
         #region Konstruktor
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
         public GameViewModel()
         {
             Ships = new ObservableCollection<ShipViewModel>();
@@ -40,11 +43,17 @@ namespace SUP23_G9.ViewModels
         }
         #endregion
 
+        #region Properties
         public Points GamePoints { get; } = new Points();
         public ObservableCollection<ShipViewModel> Ships { get; set; }
         public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
+        /// <summary>
+        /// Spelarens livspoäng
+        /// </summary>
         public int PlayerHealth { get; set; }
+        #endregion
 
+        #region Genereringsmetoder för skepp och hinder, och deras koordinater
         private void CreateRandomShips()
         {
             for (int i = 0; i < 10; i++) //Ships 2st
@@ -66,23 +75,23 @@ namespace SUP23_G9.ViewModels
         }
 
         private int GenerateRandomTop() => _random.Next((int)_mainWindowHeight);
-        private int GenerateRandomLeft() => _random.Next((int)_mainWindowWidth);
+        private int GenerateRandomLeft() => _random.Next((int)_mainWindowWidth); 
+        #endregion
 
+        #region Förflyttningsmetoder och -event
         private void StartMovingObject()
         {
             _gameTimer = new Timer(20);
             _gameTimer.Elapsed += GameTimerEvent;
             _gameTimer.Start();
         }
-
         private void GameTimerEvent(object sender, ElapsedEventArgs e)
         {
             MoveShipsLoop();
             MoveObstaclesLoop();
-            ShipCollisionCheck();
+            SetPlayerShipCollisionConsequence();
             SetPlayerObstacleCollisionConsequence();
         }
-
 
         /// <summary>
         /// Loopar genom skeppen för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till 0
@@ -115,10 +124,13 @@ namespace SUP23_G9.ViewModels
                     obstacle.Left = GenerateRandomLeft();
                 }
             }
-        }
+        } 
+        #endregion
 
         #region Kollisionsmetoder
-
+        /// <summary>
+        /// Bestämmer konsekvensen av en krock mellan spelaren och ett hinder
+        /// </summary>
         private void SetPlayerObstacleCollisionConsequence()
         {
             foreach (var obstacle in Obstacles)
@@ -147,7 +159,6 @@ namespace SUP23_G9.ViewModels
                 {
                     return true;
                 }
-            
                 return false;
         }
         /// <summary>
@@ -165,15 +176,14 @@ namespace SUP23_G9.ViewModels
                     break;
             }
         }
-
-        public void ShipCollisionCheck()
+        /// <summary>
+        /// Bestämmer konsekvensen av en krock mellan spelaren och ett skepp
+        /// </summary>
+        public void SetPlayerShipCollisionConsequence()
         {
             foreach (var ship in Ships)
             {
-                bool collisionX = ship.Left < GlobalVariabels._playerCoordinatesLeft + 50 && ship.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
-                bool collisionY = ship.Top < GlobalVariabels._playerCoordinatesTop + 50 && ship.Top + 50 > GlobalVariabels._playerCoordinatesTop;
-
-                if (collisionX && collisionY)
+                if (PlayerCollidesWithShip(ship))
                 {
                     ship.Top = 0;
                     ship.Left = GenerateRandomLeft();
@@ -181,7 +191,23 @@ namespace SUP23_G9.ViewModels
                     GamePoints.AddPoints(10);  // Lägger till 10 poäng.
                 }
             }
-        } 
+        }
+        /// <summary>
+        /// Kontrollerar om spelaren kolliderar med ett givet skepp
+        /// </summary>
+        /// <param name="ship"></param>
+        /// <returns></returns>
+        private bool PlayerCollidesWithShip(ShipViewModel ship)
+        {
+            bool collisionX = ship.Left < GlobalVariabels._playerCoordinatesLeft + 50 && ship.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
+            bool collisionY = ship.Top < GlobalVariabels._playerCoordinatesTop + 50 && ship.Top + 50 > GlobalVariabels._playerCoordinatesTop;
+
+            if (collisionX && collisionY)
+            {
+                return true;
+            }
+            return false;
+        }
         #endregion
     }
 }

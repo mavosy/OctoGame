@@ -9,6 +9,9 @@ namespace SUP23_G9.Views
     public partial class MainWindow : Window
     {
         private GameOverView gameOverView; // Skapa en privat medlemsvariabel för GameOverView
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -27,7 +30,6 @@ namespace SUP23_G9.Views
         {
             // Visa GameOverView och stäng MainWindow
             gameOverView.Show();
-            
         }
     }
 }

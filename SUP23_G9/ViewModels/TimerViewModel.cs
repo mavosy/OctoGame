@@ -14,7 +14,9 @@ namespace SUP23_G9.ViewModels
     {
         private DispatcherTimer _timer;
         private int _remainingSeconds;
-
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
         public TimerViewModel(int initialSeconds)
         {
             _remainingSeconds = initialSeconds;

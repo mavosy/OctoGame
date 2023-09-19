@@ -53,12 +53,9 @@ namespace SUP23_G9.ViewModels
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromMilliseconds(10);
 
-            //kör MovePlayerEvent varje gång interval ska börja om
             _timer.Tick += MovePlayerEvent;
             _timer.Start();
 
-
-            //sätter ett startvärde på speglingen av spelarbilden
             FlipImageX = 1.0;
 
             LoadKrakenImageProcessing();
@@ -71,11 +68,11 @@ namespace SUP23_G9.ViewModels
 
         #region Properties
         /// <summary>
-        /// X-koordinater för spelare
+        /// X-koordinat för spelare
         /// </summary>
         public double LeftCoordinates { get; private set; }
         /// <summary>
-        /// Y-koordinater för spelare
+        /// Y-koordinat för spelare
         /// </summary>
         public double TopCoordinates { get; private set; }
         /// <summary>
@@ -91,7 +88,7 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         public BitmapImage PlayerImage { get; private set; }
         /// <summary>
-        /// Sätter vilket håll karaktärsbilden är vänd mot i horisontellt led
+        /// Sätter vilket håll karaktärsbilden är vänd mot i horisontellt led (1.0=original, -1.0=spegel)
         /// </summary>
         public double FlipImageX { get; private set; }
         //public ICommand UpKeyDownCommand { get; private set; }
@@ -140,9 +137,9 @@ namespace SUP23_G9.ViewModels
         /// <param name="e"></param>
         internal void HandleKeyDown(KeyEventArgs e)
         {
-            switch (e.Key)   //I KeyEventArgs finns värdet "Key" som definierar vilken knapp som har tryckts ner, typ P, R, 8, Enter, NumLock etc. Switchar på det och sätter bool till true
+            switch (e.Key)
             {
-                case Key.J:        //här kan man ange typ vilka tangenter som helst, det ändrar kontrollen till spelet. Kanske ha userInput så man kan ändra själv?
+                case Key.J:
                     _leftButtonIsDown = true;
                     break;
 

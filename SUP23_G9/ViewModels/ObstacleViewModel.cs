@@ -14,7 +14,10 @@ namespace SUP23_G9.ViewModels
     public class ObstacleViewModel : BaseViewModel
     {
         DispatcherTimer _obstacleTimer;
-        int _danceMoveCount;
+
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
         public ObstacleViewModel()
         {
             Width = 50;
@@ -26,7 +29,11 @@ namespace SUP23_G9.ViewModels
             _obstacleTimer.Start();
             LoadObstacleImageProcessing();
         }
-
+        /// <summary>
+        /// Får hindren att vända på sig med jämna intervaller
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ObstacleDanceEvent(object? sender, EventArgs e)
         {
             if (FlipImageX == 1.0)
@@ -40,16 +47,28 @@ namespace SUP23_G9.ViewModels
         }
 
         /// <summary>
-        /// X-koordinat för obstacle
+        /// X-koordinat för hindren
         /// </summary>
         public double Left { get; set; }
         /// <summary>
-        /// Y-koordinat för obstacle
+        /// Y-koordinat för hindren
         /// </summary>
         public double Top { get; set; }
+        /// <summary>
+        /// Hindrens bredd
+        /// </summary>
         public int Width { get; set; }
+        /// <summary>
+        /// Hindrens höjd
+        /// </summary>
         public int Height { get; set; }
+        /// <summary>
+        /// Bild för hindren
+        /// </summary>
         public BitmapImage ObstacleImage { get; set; }
+        /// <summary>
+        /// Sätter vilket håll hindren är vänd mot i horisontellt led (1.0=original, -1.0=spegel)
+        /// </summary>
         public double FlipImageX { get; private set; }
 
         /// <summary>

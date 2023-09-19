@@ -13,9 +13,11 @@
     <UserControl.DataContext>
         <vm:ObstacleViewModel/>
     </UserControl.DataContext>
-    <Image Name="ObstacleImage" 
-           Source="{Binding ObstacleImage}"
-           RenderTransformOrigin="0.5,0.5">
+    <Image 
+        Name="ObstacleImage" 
+        Source="{Binding ObstacleImage}"
+        RenderTransformOrigin="0.5,0.5">
+        <!--Ändrar på bild, tex genom att vända på den-->
         <Image.RenderTransform>
             <ScaleTransform 
                     ScaleX="{Binding FlipImageX}"

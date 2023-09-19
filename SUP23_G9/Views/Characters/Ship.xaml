@@ -17,6 +17,7 @@
            Source="{Binding ShipImage}"
            RenderTransformOrigin="0.5,0.5"
            >
+        <!--Ändrar på bild, tex genom att vända på den-->
         <Image.RenderTransform>
             <ScaleTransform 
                 ScaleX="{Binding FlipImageX}"

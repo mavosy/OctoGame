@@ -14,6 +14,9 @@ namespace SUP23_G9.ViewModels
     public class ShipViewModel : BaseViewModel
     {
         DispatcherTimer _shipTimer;
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
         public ShipViewModel()
         {
             Width = 50;
@@ -27,6 +30,8 @@ namespace SUP23_G9.ViewModels
 
             LoadShipImageProcessing();
         }
+
+        #region Properties
         /// <summary>
         /// X-koordinat för skeppen
         /// </summary>
@@ -35,22 +40,28 @@ namespace SUP23_G9.ViewModels
         /// Y-koordinat för skeppen
         /// </summary>
         public double Top { get; set; }
+        /// <summary>
+        /// Skeppens bredd
+        /// </summary>
         public int Width { get; set; }
+        /// <summary>
+        /// Skeppens höjd
+        /// </summary>
         public int Height { get; set; }
+        /// <summary>
+        /// Bild för skeppen
+        /// </summary>
         public BitmapImage ShipImage { get; set; }
-        public double FlipImageX { get; set; }
+        /// <summary>
+        /// Sätter vilket håll skeppen är vänd mot i horisontellt led (1.0=original, -1.0=spegel)
+        /// </summary>
+        public double FlipImageX { get; set; } 
+        #endregion
 
-        private void ObstacleDanceEvent(object? sender, EventArgs e)
-        {
-            if (FlipImageX == 1.0)
-            {
-                FlipImageX = -1.0;
-            }
-            else if (FlipImageX == -1.0)
-            {
-                FlipImageX = 1.0;
-            }
-        }
+        #region Bildprocesseringsmetoder
+        /// <summary>
+        /// Processerar och cachar bild för skepp
+        /// </summary>
         private void LoadShipImageProcessing()
         {
             BitmapImage image = new BitmapImage();
@@ -63,5 +74,22 @@ namespace SUP23_G9.ViewModels
 
             ShipImage = image;
         }
+        /// <summary>
+        /// Får skeppen att vända på sig med jämna intervaller
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ObstacleDanceEvent(object? sender, EventArgs e)
+        {
+            if (FlipImageX == 1.0)
+            {
+                FlipImageX = -1.0;
+            }
+            else if (FlipImageX == -1.0)
+            {
+                FlipImageX = 1.0;
+            }
+        } 
+        #endregion
     }
 }

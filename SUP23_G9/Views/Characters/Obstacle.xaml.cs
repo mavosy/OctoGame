@@ -20,6 +20,9 @@ namespace SUP23_G9.Views.Characters
     /// </summary>
     public partial class Obstacle : UserControl
     {
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
         public Obstacle()
         {
             InitializeComponent();
