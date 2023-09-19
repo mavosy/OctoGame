@@ -15,9 +15,6 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         public ICommand PlayAgainCommand { get; set; }
 
-        /// <summary>
-        /// Konstruktor
-        /// </summary>
         public GameOverViewModel()
         {
             // Skapa ett nytt RelayCommand för "Spela Igen" knappen

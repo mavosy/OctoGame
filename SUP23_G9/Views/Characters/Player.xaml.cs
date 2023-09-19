@@ -21,9 +21,6 @@ namespace SUP23_G9.Views.Characters
     /// </summary>
     public partial class Player : UserControl
     {
-        /// <summary>
-        /// Konstruktor
-        /// </summary>
         public Player()
         {
             InitializeComponent();
@@ -35,7 +32,7 @@ namespace SUP23_G9.Views.Characters
         private PlayerViewModel ViewModel { get { return DataContext as PlayerViewModel; } }
 
         /// <summary>
-        /// Sätter fokus på spelare
+        /// Sätter fokus på spelare för att möjliggöra KeyDown- och KeyUp-event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -44,7 +41,7 @@ namespace SUP23_G9.Views.Characters
             krakenControl.Focus();
         }
         /// <summary>
-        /// Event handler för KeyDown-eventet, skickar vidare till PlayerViewModel
+        /// Event handler för KeyDown-eventet, skickar vidare information om vilken knapp som trycks nere till PlayerViewModel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -54,7 +51,7 @@ namespace SUP23_G9.Views.Characters
             ViewModel.HandleKeyDown(e);
         }
         /// <summary>
-        /// Event handler för KeyUp-eventet, skickar vidare till PlayerViewModel
+        /// Event handler för KeyUp-eventet, skickar vidare information om vilken knapp som trycks nere till PlayerViewModel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

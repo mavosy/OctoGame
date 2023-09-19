@@ -17,7 +17,6 @@ namespace SUP23_G9.ViewModels
 {
     public class GameViewModel : BaseViewModel
     {
-        #region Field-variabler
         private Timer _gameTimer;
         private readonly int _speed = 4;
         private readonly int _speedObstacle = 2;
@@ -26,12 +25,7 @@ namespace SUP23_G9.ViewModels
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
         public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(60); // Startar med 1 min. 
-        #endregion
 
-        #region Konstruktor
-        /// <summary>
-        /// Konstruktor
-        /// </summary>
         public GameViewModel()
         {
             Ships = new ObservableCollection<ShipViewModel>();
@@ -41,19 +35,15 @@ namespace SUP23_G9.ViewModels
             CreateRandomObstacles();
             StartMovingObject();
         }
-        #endregion
 
-        #region Properties
         public Points GamePoints { get; } = new Points();
         public ObservableCollection<ShipViewModel> Ships { get; set; }
         public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
         /// <summary>
-        /// Spelarens livspoäng
+        /// Spelarens livspoäng, är bundet till ProgressBar i UI
         /// </summary>
-        public int PlayerHealth { get; set; }
-        #endregion
+        public int PlayerHealth { get; private set; }
 
-        #region Genereringsmetoder för skepp och hinder, och deras koordinater
         private void CreateRandomShips()
         {
             for (int i = 0; i < 10; i++) //Ships 2st
@@ -76,15 +66,14 @@ namespace SUP23_G9.ViewModels
 
         private int GenerateRandomTop() => _random.Next((int)_mainWindowHeight);
         private int GenerateRandomLeft() => _random.Next((int)_mainWindowWidth); 
-        #endregion
 
-        #region Förflyttningsmetoder och -event
         private void StartMovingObject()
         {
             _gameTimer = new Timer(20);
             _gameTimer.Elapsed += GameTimerEvent;
             _gameTimer.Start();
         }
+
         private void GameTimerEvent(object sender, ElapsedEventArgs e)
         {
             MoveShipsLoop();
@@ -92,7 +81,6 @@ namespace SUP23_G9.ViewModels
             SetPlayerShipCollisionConsequence();
             SetPlayerObstacleCollisionConsequence();
         }
-
         /// <summary>
         /// Loopar genom skeppen för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till 0
         /// </summary>
@@ -125,12 +113,7 @@ namespace SUP23_G9.ViewModels
                 }
             }
         } 
-        #endregion
 
-        #region Kollisionsmetoder
-        /// <summary>
-        /// Bestämmer konsekvensen av en krock mellan spelaren och ett hinder
-        /// </summary>
         private void SetPlayerObstacleCollisionConsequence()
         {
             foreach (var obstacle in Obstacles)
@@ -145,11 +128,7 @@ namespace SUP23_G9.ViewModels
                 }
             }
         }
-        /// <summary>
-        /// Kontrollerar om spelaren kolliderar med ett givet hinder
-        /// </summary>
-        /// <param name="obstacle"></param>
-        /// <returns>bool</returns>
+
         public bool PlayerCollidesWithObstacle(ObstacleViewModel obstacle)
         {
                 bool collisionX = obstacle.Left < GlobalVariabels._playerCoordinatesLeft + 50 && obstacle.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
@@ -188,7 +167,7 @@ namespace SUP23_G9.ViewModels
                     ship.Top = 0;
                     ship.Left = GenerateRandomLeft();
 
-                    GamePoints.AddPoints(10);  // Lägger till 10 poäng.
+                    GamePoints.AddPoints(10);
                 }
             }
         }
@@ -208,6 +187,5 @@ namespace SUP23_G9.ViewModels
             }
             return false;
         }
-        #endregion
     }
 }

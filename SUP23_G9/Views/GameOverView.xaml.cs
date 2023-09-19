@@ -20,9 +20,6 @@ namespace SUP23_G9.Views
     /// </summary>
     public partial class GameOverView : Window
     {
-        /// <summary>
-        /// Konstruktor för GameOverView
-        /// </summary>
         public GameOverView()
         {
             InitializeComponent();
