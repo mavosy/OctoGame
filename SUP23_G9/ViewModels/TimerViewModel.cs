@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -29,6 +30,9 @@ namespace SUP23_G9.ViewModels
         }
 
         public string RemainingTime { get; set; }
+        
+        public event EventHandler TimeUp; // Skapa en händelse för när tiden tar slut
+
 
         public ICommand StartCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
@@ -44,6 +48,10 @@ namespace SUP23_G9.ViewModels
             {
                 _timer.Stop();
                 RemainingTime = "Time's up!";
+
+                
+                OnTimeUp(); // Trigga händelsen när tiden tar slut
+
             }
         }
 
@@ -56,6 +64,12 @@ namespace SUP23_G9.ViewModels
             int minutes = _remainingSeconds / 60;
             int seconds = _remainingSeconds % 60;
             RemainingTime = $"{minutes:00 min}:{seconds:00 sec}";
+        }
+
+        // Metod för att triggas när tiden tar slut
+        protected virtual void OnTimeUp()
+        {
+            TimeUp?.Invoke(this, EventArgs.Empty);
         }
     }
 }
