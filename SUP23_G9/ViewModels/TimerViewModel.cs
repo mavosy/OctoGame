@@ -47,7 +47,8 @@ namespace SUP23_G9.ViewModels
             else if (_remainingSeconds <= 0 && !_isNotAllowedToRunTimeUpEvents)
             {
                 _isNotAllowedToRunTimeUpEvents = true;
-                _timer.Stop();
+                this.StopTimer();
+
                 RemainingTime = "Time's up!";
 
                 OnTimeUp(); // Trigga händelsen när tiden tar slut
@@ -58,9 +59,9 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-        private void StartTimer() => _timer.Start();
+        public void StartTimer() => _timer.Start();
 
-        private void StopTimer() => _timer.Stop();
+        public void StopTimer() => _timer.Stop();
 
         private void UpdateRemainingTime()
         {

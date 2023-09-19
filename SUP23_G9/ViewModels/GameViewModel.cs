@@ -162,9 +162,6 @@ namespace SUP23_G9.ViewModels
                     break;
             }
         }
-        /// <summary>
-        /// Bestämmer konsekvensen av en krock mellan spelaren och ett skepp
-        /// </summary>
         public void SetPlayerShipCollisionConsequence()
         {
             foreach (var ship in Ships)
@@ -178,11 +175,7 @@ namespace SUP23_G9.ViewModels
                 }
             }
         }
-        /// <summary>
-        /// Kontrollerar om spelaren kolliderar med ett givet skepp
-        /// </summary>
-        /// <param name="ship"></param>
-        /// <returns></returns>
+
         private bool PlayerCollidesWithShip(ShipViewModel ship)
         {
             bool collisionX = ship.Left < GlobalVariabels._playerCoordinatesLeft + 50 && ship.Left + 50 > GlobalVariabels._playerCoordinatesLeft;

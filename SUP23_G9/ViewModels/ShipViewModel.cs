@@ -14,9 +14,7 @@ namespace SUP23_G9.ViewModels
     public class ShipViewModel : BaseViewModel
     {
         DispatcherTimer _shipTimer;
-        /// <summary>
-        /// Konstruktor
-        /// </summary>
+
         public ShipViewModel()
         {
             Width = 50;
@@ -31,7 +29,6 @@ namespace SUP23_G9.ViewModels
             LoadShipImageProcessing();
         }
 
-        #region Properties
         /// <summary>
         /// X-koordinat för skeppen
         /// </summary>
@@ -56,9 +53,7 @@ namespace SUP23_G9.ViewModels
         /// Sätter vilket håll skeppen är vänd mot i horisontellt led (1.0=original, -1.0=spegel)
         /// </summary>
         public double FlipImageX { get; set; } 
-        #endregion
 
-        #region Bildprocesseringsmetoder
         /// <summary>
         /// Processerar och cachar bild för skepp
         /// </summary>
@@ -90,6 +85,5 @@ namespace SUP23_G9.ViewModels
                 FlipImageX = 1.0;
             }
         } 
-        #endregion
     }
 }

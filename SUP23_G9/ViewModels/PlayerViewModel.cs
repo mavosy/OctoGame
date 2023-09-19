@@ -8,29 +8,14 @@ namespace SUP23_G9.ViewModels
 {
     public class PlayerViewModel : BaseViewModel
     {
-        #region Field-variabler
-        /// <summary>
-        /// Sätter spelarens minimala avstånd från spelplanens kant
-        /// </summary>
         private const double distanceToEdge = 5;
-        /// <summary>
-        /// Sätter spelarkaraktärens hastighet
-        /// </summary>
         private const double playerSpeed = 5;
         private const int correctedGameAreaWidth = 985;
         private const int correctedGameAreaHeight = 565;
         private bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;
 
-        /// <summary>
-        /// Timer för att flytta spelaren med jämna interval
-        /// </summary>
         DispatcherTimer _timer;
-        #endregion
 
-        #region Konstruktor
-        /// <summary>
-        /// Konstruktor
-        /// </summary>
         public PlayerViewModel()
         {
             LeftCoordinates = 475;
@@ -48,9 +33,7 @@ namespace SUP23_G9.ViewModels
 
             LoadKrakenImageProcessing();
         }
-        #endregion
 
-        #region Properties
         /// <summary>
         /// X-koordinat för spelarens vänstra kant
         /// </summary>
@@ -75,9 +58,7 @@ namespace SUP23_G9.ViewModels
         /// Sätter vilket håll karaktärsbilden är vänd mot i horisontellt led (1.0=original, -1.0=spegel)
         /// </summary>
         public double FlipImageX { get; private set; }
-        #endregion
 
-        #region Event handlers
         /// <summary>
         /// Event handler för att förflytta spelaren. Uppdaterar även GlobalVariabels med spelarens koordinater.
         /// </summary>
@@ -172,9 +153,7 @@ namespace SUP23_G9.ViewModels
                     break;
             }
         }
-        #endregion
 
-        #region Förflyttningsmetoder
         public void MovePlayerLeft() => LeftCoordinates -= playerSpeed;
         public void MovePlayerRight() => LeftCoordinates += playerSpeed;
         public void MovePlayerUp() => TopCoordinates -= playerSpeed;
@@ -183,9 +162,7 @@ namespace SUP23_G9.ViewModels
         public bool IsNotAtRightEdge() => (LeftCoordinates + Width) < correctedGameAreaWidth - distanceToEdge;
         public bool IsNotAtTopEdge() => TopCoordinates > distanceToEdge;
         public bool IsNotAtBottomEdge() => (TopCoordinates + Height) < correctedGameAreaHeight - distanceToEdge;
-        #endregion
 
-        #region Bildprocesseringsmetoder
         /// <summary>
         /// Laddar in, processerar och cachar bild för spelarens karaktär
         /// </summary>
@@ -208,6 +185,5 @@ namespace SUP23_G9.ViewModels
         /// Vänder spelarens karaktärsbild tillbaka till originalhållet
         /// </summary>
         private void TurnSpriteBack() => FlipImageX = 1.0;
-        #endregion
     }
 }
