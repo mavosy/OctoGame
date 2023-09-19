@@ -29,8 +29,6 @@ namespace SUP23_G9.ViewModels
         private GameOverView? _gameOverView = null;
         private static bool isGameOverViewOpened = false;
 
-        #endregion
-
         public GameViewModel()
         {
             Ships = new ObservableCollection<ShipViewModel>();
@@ -194,8 +192,8 @@ namespace SUP23_G9.ViewModels
             {
                 return true;
             }
+            return false;
         }
-        #endregion
 
         private void CountdownTimer_TimeUp(object sender, EventArgs e)
         {
