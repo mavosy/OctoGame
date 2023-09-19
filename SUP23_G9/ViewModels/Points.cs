@@ -16,6 +16,7 @@ namespace SUP23_G9.ViewModels
             get => _score;
             private set => _score = value;
         }
+        public string DisplayScore => $"{Score} Points";
 
         public void AddPoints(int pointsToAdd)
         {
@@ -33,6 +34,7 @@ namespace SUP23_G9.ViewModels
         public void ResetScore()
         {
             Score = 0;
+            
         }
     }
 }

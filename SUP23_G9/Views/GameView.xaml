@@ -19,19 +19,26 @@
     <Grid>
         <!--Poängvisare -->
         <TextBlock 
-            Text="{Binding GamePoints.Score}" 
-            FontSize="24" 
-            Margin="10" 
+            Text="{Binding GamePoints.DisplayScore}" 
+            
+            FontSize="30" 
+            Margin="20" 
             HorizontalAlignment="Left" 
-            VerticalAlignment="Top"/>
+            VerticalAlignment="Top"
+             Foreground="#FF034A4E"
+             FontFamily="Ravie"/>
 
         <!--Timer -->
         <TextBlock Text="{Binding CountdownTimer.RemainingTime}" 
                        HorizontalAlignment="Right" 
                        VerticalAlignment="Top" 
-                       Margin="10" 
-                       FontSize="20" 
-                       Foreground="Black"/>
+                       Margin="20" 
+                       FontSize="30" 
+                    Foreground="#FF034A4E" 
+                   FontFamily="Ravie" />
+                      
+                    
+                   
         
         <Canvas x:Name="gameArea">
             <Characters:Player x:Name="player"/>
