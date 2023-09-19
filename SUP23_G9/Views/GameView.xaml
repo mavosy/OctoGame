@@ -20,7 +20,6 @@
         <!--Poängvisare -->
         <TextBlock 
             Text="{Binding GamePoints.DisplayScore}" 
-            
             FontSize="30" 
             Margin="20" 
             HorizontalAlignment="Left" 
@@ -29,17 +28,15 @@
              FontFamily="Ravie"/>
 
         <!--Timer -->
-        <TextBlock Text="{Binding CountdownTimer.RemainingTime}" 
-                       HorizontalAlignment="Right" 
-                       VerticalAlignment="Top" 
-                       Margin="20" 
-                       FontSize="30" 
-                    Foreground="#FF034A4E" 
-                   FontFamily="Ravie" />
+        <TextBlock 
+            Text="{Binding CountdownTimer.RemainingTime}" 
+            HorizontalAlignment="Right" 
+            VerticalAlignment="Top" 
+            Margin="20" 
+            FontSize="30" 
+            Foreground="#FF034A4E" 
+            FontFamily="Ravie" />
                       
-                    
-                   
-        
         <Canvas x:Name="gameArea">
             <Characters:Player x:Name="player"/>
             <!--Livmätare-->
@@ -49,10 +46,10 @@
                 Margin="10" 
                 Canvas.Left="400" 
                 Opacity="0.7" 
-                Value="{Binding PlayerHealth}" Foreground="#FF940000"
+                Value="{Binding PlayerHealth}"
+                Foreground="#FF940000"
                 BorderBrush="Black"
                 BorderThickness="2"/>
-
 
             <ItemsControl ItemsSource="{Binding Ships}">
                 <ItemsControl.ItemsPanel>

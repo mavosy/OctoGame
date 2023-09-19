@@ -1,19 +1,6 @@
-﻿using SUP23_G9.Commands;
-using SUP23_G9.ViewModels.Base;
-using SUP23_G9.Views.Characters;
-using SUP23_G9.Views.Components;
+﻿using SUP23_G9.ViewModels.Base;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -25,12 +12,13 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Sätter spelarens minimala avstånd från spelplanens kant
         /// </summary>
-        private readonly double _distanceToEdge = 5;
+        private const double distanceToEdge = 5;
         /// <summary>
         /// Sätter spelarkaraktärens hastighet
         /// </summary>
-        private readonly double _playerSpeed = 5;
-
+        private const double playerSpeed = 5;
+        private const int correctedGameAreaWidth = 985;
+        private const int correctedGameAreaHeight = 565;
         private bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;
 
         /// <summary>
@@ -59,20 +47,16 @@ namespace SUP23_G9.ViewModels
             FlipImageX = 1.0;
 
             LoadKrakenImageProcessing();
-            //UpKeyDownCommand = new RelayCommand(x => MovePlayerUp(), x => IsNotAtTopEdge());
-            //DownKeyDownCommand = new RelayCommand(x => MovePlayerDown(), x => IsNotAtBottomEdge());
-            //LeftKeyDownCommand = new RelayCommand(x => MovePlayerLeft(), x => IsNotAtLeftEdge());
-            //RightKeyDownCommand = new RelayCommand(x => MovePlayerRight(), x => IsNotAtRightEdge());
         }
         #endregion
 
         #region Properties
         /// <summary>
-        /// X-koordinat för spelare
+        /// X-koordinat för spelarens vänstra kant
         /// </summary>
         public double LeftCoordinates { get; private set; }
         /// <summary>
-        /// Y-koordinat för spelare
+        /// Y-koordinat för spelarens övre kant, Y-koordinatens värde blir högre ju längre ner spelaren befinner sig
         /// </summary>
         public double TopCoordinates { get; private set; }
         /// <summary>
@@ -84,29 +68,24 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         public int Height { get; private set; }
         /// <summary>
-        /// Bild för spelarens karaktär
+        /// Bild för spelarens karaktär i spelet. Binder till UI.
         /// </summary>
         public BitmapImage PlayerImage { get; private set; }
         /// <summary>
         /// Sätter vilket håll karaktärsbilden är vänd mot i horisontellt led (1.0=original, -1.0=spegel)
         /// </summary>
         public double FlipImageX { get; private set; }
-        //public ICommand UpKeyDownCommand { get; private set; }
-        //public ICommand DownKeyDownCommand { get; private set; }
-        //public ICommand LeftKeyDownCommand { get; private set; }
-        //public ICommand RightKeyDownCommand { get; private set; } 
         #endregion
 
         #region Event handlers
         /// <summary>
-        /// Event handler för att förflytta spelaren
+        /// Event handler för att förflytta spelaren. Uppdaterar även GlobalVariabels med spelarens koordinater.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MovePlayerEvent(object? sender, EventArgs e)
         {
-            GlobalVariabels._playerCoordinatesLeft = LeftCoordinates;
-            GlobalVariabels._playerCoordinatesTop = TopCoordinates;
+            UpdateGlobalVariabelsWithPlayerCoordinates();
 
             if (_leftButtonIsDown && IsNotAtLeftEdge())
             {
@@ -130,9 +109,15 @@ namespace SUP23_G9.ViewModels
                 MovePlayerDown();
             }
         }
+        
+        private void UpdateGlobalVariabelsWithPlayerCoordinates()
+        {
+            GlobalVariabels._playerCoordinatesLeft = LeftCoordinates;
+            GlobalVariabels._playerCoordinatesTop = TopCoordinates;
+        }
 
         /// <summary>
-        /// Event handler för att kontrollera om en viss tangent trycks ner, här sätts med vilka tangenter spelaren styr sin karaktär
+        /// Event handler för att kontrollera om en viss tangent är nertryckt, här och i "HandleKeyUp()" sätts med vilka tangenter spelaren styr sin karaktär
         /// </summary>
         /// <param name="e"></param>
         internal void HandleKeyDown(KeyEventArgs e)
@@ -160,7 +145,7 @@ namespace SUP23_G9.ViewModels
             }
         }
         /// <summary>
-        /// Event handler för att kontrollera om en viss tangent släpps, här sätts med vilka tangenter spelaren styr sin karaktär
+        /// Event handler för att kontrollera om en viss tangent släpps, här och i "HandleKeyDown()" sätts med vilka tangenter spelaren styr sin karaktär
         /// </summary>
         /// <param name="e"></param>
         internal void HandleKeyUp(KeyEventArgs e)
@@ -190,47 +175,19 @@ namespace SUP23_G9.ViewModels
         #endregion
 
         #region Förflyttningsmetoder
-        /// <summary>
-        /// Flyttar spelaren åt vänster
-        /// </summary>
-        public void MovePlayerLeft() => LeftCoordinates -= _playerSpeed;
-        /// <summary>
-        /// Flyttar spelaren åt höger
-        /// </summary>
-        public void MovePlayerRight() => LeftCoordinates += _playerSpeed;
-        /// <summary>
-        /// Flyttar spelaren uppåt
-        /// </summary>
-        public void MovePlayerUp() => TopCoordinates -= _playerSpeed;
-        /// <summary>
-        /// Flyttar spelaren nedåt
-        /// </summary>
-        public void MovePlayerDown() => TopCoordinates += _playerSpeed;
-        /// <summary>
-        /// Kontrollerar om spelaren är för nära vänstra kanten av spelplanen
-        /// </summary>
-        /// <returns> bool </returns>
-        public bool IsNotAtLeftEdge() => LeftCoordinates > _distanceToEdge;
-        /// <summary>
-        /// Kontrollerar om spelaren är för nära högra kanten av spelplanen
-        /// </summary>
-        /// <returns> bool </returns>
-        public bool IsNotAtRightEdge() => (LeftCoordinates + Width) < (985 - _distanceToEdge);
-        /// <summary>
-        /// Kontrollerar om spelaren är för nära övre kanten av spelplanen
-        /// </summary>
-        /// <returns> bool </returns>
-        public bool IsNotAtTopEdge() => TopCoordinates > _distanceToEdge;
-        /// <summary>
-        /// Kontrollerar om spelaren är för nära nedre kanten av spelplanen
-        /// </summary>
-        /// <returns> bool </returns>
-        public bool IsNotAtBottomEdge() => (TopCoordinates + Height) < (565 - _distanceToEdge);
+        public void MovePlayerLeft() => LeftCoordinates -= playerSpeed;
+        public void MovePlayerRight() => LeftCoordinates += playerSpeed;
+        public void MovePlayerUp() => TopCoordinates -= playerSpeed;
+        public void MovePlayerDown() => TopCoordinates += playerSpeed;
+        public bool IsNotAtLeftEdge() => LeftCoordinates > distanceToEdge;
+        public bool IsNotAtRightEdge() => (LeftCoordinates + Width) < correctedGameAreaWidth - distanceToEdge;
+        public bool IsNotAtTopEdge() => TopCoordinates > distanceToEdge;
+        public bool IsNotAtBottomEdge() => (TopCoordinates + Height) < correctedGameAreaHeight - distanceToEdge;
         #endregion
 
         #region Bildprocesseringsmetoder
         /// <summary>
-        /// Processerar och cachar bild för spelarens karaktär
+        /// Laddar in, processerar och cachar bild för spelarens karaktär
         /// </summary>
         private void LoadKrakenImageProcessing()
         {
@@ -244,13 +201,13 @@ namespace SUP23_G9.ViewModels
             PlayerImage = image;
         }
         /// <summary>
-        /// Vänder spelarens karaktärsbild åt andra hållet i x-led
+        /// Vänder spelarens karaktärsbild åt andra hållet än originalet, i x-led
         /// </summary>
         private void TurnSpriteHorizontally() => FlipImageX = -1.0;
         /// <summary>
-        /// Vänder spelarens karaktärsbild tillbaka
+        /// Vänder spelarens karaktärsbild tillbaka till originalhållet
         /// </summary>
-        private void TurnSpriteBack() => FlipImageX = 1.0; 
+        private void TurnSpriteBack() => FlipImageX = 1.0;
         #endregion
     }
 }
