@@ -15,7 +15,7 @@ namespace SUP23_G9.ViewModels
     {
         private DispatcherTimer _timer;
         private int _remainingSeconds;
-
+        public static bool _isNotAllowedToRunTimeUpEvents;
         public TimerViewModel(int initialSeconds)
         {
             _remainingSeconds = initialSeconds;
@@ -33,7 +33,6 @@ namespace SUP23_G9.ViewModels
         
         public event EventHandler TimeUp; // Skapa en händelse för när tiden tar slut
 
-
         public ICommand StartCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
 
@@ -43,15 +42,19 @@ namespace SUP23_G9.ViewModels
             {
                 _remainingSeconds--;
                 UpdateRemainingTime();
+                _isNotAllowedToRunTimeUpEvents = false;
             }
-            else
+            else if (_remainingSeconds <= 0 && !_isNotAllowedToRunTimeUpEvents)
             {
+                _isNotAllowedToRunTimeUpEvents = true;
                 _timer.Stop();
                 RemainingTime = "Time's up!";
 
-                
                 OnTimeUp(); // Trigga händelsen när tiden tar slut
-
+            }
+            else
+            {
+                return;
             }
         }
 

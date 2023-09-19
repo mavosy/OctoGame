@@ -26,8 +26,9 @@ namespace SUP23_G9.ViewModels
 
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(10); // Startar med 1 min. 
-
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(5); // Startar med 1 min. 
+        private GameOverView? _gameOverView = null;
+        private static bool isGameOverViewOpened = false;
 
         #endregion
 
@@ -200,10 +201,13 @@ namespace SUP23_G9.ViewModels
         private void OpenGameOverView()
         {
             // Anropa ShowGameOverView när tiden tar slut från rätt tråd
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                GameOverView gameOverView = new GameOverView();
-                gameOverView.Show();
+            //Application.Current.Dispatcher.Invoke(() =>
+            //{
+                if (isGameOverViewOpened) return;
+                _gameOverView = new GameOverView();
+                _gameOverView.ContentRendered += delegate { isGameOverViewOpened = true; };
+                _gameOverView.Closed += delegate { isGameOverViewOpened = false; };
+                _gameOverView.Show();
 
                 // Stäng det nuvarande fönstret (MainWindow) om det behövs
                 foreach (Window window in Application.Current.Windows)
@@ -214,7 +218,7 @@ namespace SUP23_G9.ViewModels
                         break; // Stäng bara det första förekomsten av MainWindow
                     }
                 }
-            });
+            //});
         }
 
     }
