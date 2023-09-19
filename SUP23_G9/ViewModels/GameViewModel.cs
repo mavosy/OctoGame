@@ -1,4 +1,5 @@
 ﻿using SUP23_G9.ViewModels.Base;
+using SUP23_G9.Views;
 using SUP23_G9.Views.Characters;
 using SUP23_G9.Views.Components;
 using System;
@@ -24,7 +25,11 @@ namespace SUP23_G9.ViewModels
 
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(60); // Startar med 1 min. 
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(5); // Startar med 1 min. 
+        private GameOverView? _gameOverView = null;
+        private static bool isGameOverViewOpened = false;
+
+        #endregion
 
         public GameViewModel()
         {
@@ -34,7 +39,11 @@ namespace SUP23_G9.ViewModels
             CreateRandomShips();
             CreateRandomObstacles();
             StartMovingObject();
+            CountdownTimer.TimeUp += CountdownTimer_TimeUp;
+
+
         }
+
 
         public Points GamePoints { get; } = new Points();
         public ObservableCollection<ShipViewModel> Ships { get; set; }
@@ -151,7 +160,7 @@ namespace SUP23_G9.ViewModels
                     PlayerHealth -= 34;
                     break;
                 case <= 0:
-                    //Game over
+                    OpenGameOverView();
                     break;
             }
         }
@@ -185,7 +194,37 @@ namespace SUP23_G9.ViewModels
             {
                 return true;
             }
-            return false;
         }
+        #endregion
+
+        private void CountdownTimer_TimeUp(object sender, EventArgs e)
+        {
+                // Anropa ShowGameOverView när tiden tar slut
+                OpenGameOverView();
+        }
+
+        private void OpenGameOverView()
+        {
+            // Anropa ShowGameOverView när tiden tar slut från rätt tråd
+            //Application.Current.Dispatcher.Invoke(() =>
+            //{
+                if (isGameOverViewOpened) return;
+                _gameOverView = new GameOverView();
+                _gameOverView.ContentRendered += delegate { isGameOverViewOpened = true; };
+                _gameOverView.Closed += delegate { isGameOverViewOpened = false; };
+                _gameOverView.Show();
+
+                // Stäng det nuvarande fönstret (MainWindow) om det behövs
+                foreach (Window window in Application.Current.Windows)
+                {
+                    if (window is MainWindow)
+                    {
+                        window.Close();
+                        break; // Stäng bara det första förekomsten av MainWindow
+                    }
+                }
+            //});
+        }
+
     }
 }

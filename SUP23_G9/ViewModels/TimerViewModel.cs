@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -14,9 +15,7 @@ namespace SUP23_G9.ViewModels
     {
         private DispatcherTimer _timer;
         private int _remainingSeconds;
-        /// <summary>
-        /// Konstruktor
-        /// </summary>
+        public static bool _isNotAllowedToRunTimeUpEvents;
         public TimerViewModel(int initialSeconds)
         {
             _remainingSeconds = initialSeconds;
@@ -31,6 +30,8 @@ namespace SUP23_G9.ViewModels
         }
 
         public string RemainingTime { get; set; }
+        
+        public event EventHandler TimeUp; // Skapa en händelse för när tiden tar slut
 
         public ICommand StartCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
@@ -41,11 +42,19 @@ namespace SUP23_G9.ViewModels
             {
                 _remainingSeconds--;
                 UpdateRemainingTime();
+                _isNotAllowedToRunTimeUpEvents = false;
+            }
+            else if (_remainingSeconds <= 0 && !_isNotAllowedToRunTimeUpEvents)
+            {
+                _isNotAllowedToRunTimeUpEvents = true;
+                _timer.Stop();
+                RemainingTime = "Time's up!";
+
+                OnTimeUp(); // Trigga händelsen när tiden tar slut
             }
             else
             {
-                _timer.Stop();
-                RemainingTime = "Time's up!";
+                return;
             }
         }
 
@@ -58,6 +67,12 @@ namespace SUP23_G9.ViewModels
             int minutes = _remainingSeconds / 60;
             int seconds = _remainingSeconds % 60;
             RemainingTime = $"{minutes:00 min}:{seconds:00 sec}";
+        }
+
+        // Metod för att triggas när tiden tar slut
+        protected virtual void OnTimeUp()
+        {
+            TimeUp?.Invoke(this, EventArgs.Empty);
         }
     }
 }
