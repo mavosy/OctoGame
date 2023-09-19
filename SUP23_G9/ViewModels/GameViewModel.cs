@@ -49,7 +49,7 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Spelarens livspoäng, är bundet till ProgressBar i UI
         /// </summary>
-        public int PlayerHealth { get; private set; }
+        public int PlayerHealth { get; set; }
 
         private void CreateRandomShips()
         {
