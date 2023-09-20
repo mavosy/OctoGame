@@ -1,6 +1,8 @@
 ﻿using SUP23_G9.ViewModels.Base;
+using SUP23_G9.Views;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +13,25 @@ namespace SUP23_G9.ViewModels
     {
         private GameViewModel gameViewModel = new GameViewModel();
         private GameOverViewModel gameOverViewModel = new GameOverViewModel();
+        private GameOverView gameOverView = new GameOverView();
         public MainViewModel()
         {
             CurrentViewModel = new GameViewModel();
-            gameViewModel.SwitchToGameOverViewEvent += () => SwitchToGameOverView();
-            gameOverViewModel.SwitchToGameViewEvent += () => SwitchToGameView();
+            gameOverViewModel.SwitchToGameViewEvent += () =>
+            {
+                SwitchToGameView();
+                Debug.WriteLine("SwitchToGameView event handler executed in MainViewModel.");
+            };
+            gameViewModel.SwitchToGameOverViewEvent += () =>
+            {
+                SwitchToGameOverView();
+                Debug.WriteLine("SwitchToGameOverView event handler executed in MainViewModel.");
+            };
+            gameOverView.SwitchToGameViewEvent += () =>
+            {
+                SwitchToGameView();
+                Debug.WriteLine("SwitchToGameView event handler executed in MainViewModel.");
+            };
         }
 
         public BaseViewModel? CurrentViewModel { get; set; }

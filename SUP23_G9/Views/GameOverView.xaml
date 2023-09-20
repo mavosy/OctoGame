@@ -5,11 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SUP23_G9.Views"
              xmlns:vm="clr-namespace:SUP23_G9.ViewModels"
+             d:DataContext="{d:DesignInstance {x:Type vm:GameOverViewModel}}"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="900">
     <UserControl.DataContext>
         <vm:GameOverViewModel/>
     </UserControl.DataContext>
+    
     <Border Background="PaleTurquoise" BorderBrush="DarkTurquoise" BorderThickness="5" CornerRadius="5">
         <Grid>
             <Label Name="lblTitle" Content="Game Over" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="36" Margin="311,98,298,400"/>
@@ -52,6 +54,7 @@
                 </Image.Triggers>
             </Image>
 
+            <Button Name="PlayAgainBtnTest" Command="{Binding PlayAgainCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="294" Margin="0,300,0,0" Click="PlayAgainBtnTest_Click"/>
             <Button Name="PlayAgainBtn" Command="{Binding PlayAgainCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="294" Margin="0,383,0,0">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">

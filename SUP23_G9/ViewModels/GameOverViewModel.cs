@@ -3,6 +3,8 @@ using SUP23_G9.ViewModels.Base;
 using SUP23_G9.Views;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -18,7 +20,7 @@ namespace SUP23_G9.ViewModels
         public GameOverViewModel()
         {
             // Skapa ett nytt RelayCommand för "Spela Igen" knappen
-            PlayAgainCommand = new RelayCommand(parameter => RaiseSwitchToGameViewEvent());
+            PlayAgainCommand = new RelayCommand(parameter => PlayAgain());
         }
 
         public event Action SwitchToGameViewEvent;
@@ -26,6 +28,7 @@ namespace SUP23_G9.ViewModels
         public void RaiseSwitchToGameViewEvent()
         {
             SwitchToGameViewEvent?.Invoke();
+            Debug.WriteLine("SwitchToGameViewEvent raised in GameOverViewModel.");
         }
 
         /// <summary>

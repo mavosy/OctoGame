@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,17 @@ namespace SUP23_G9.Views
         public GameOverView()
         {
             InitializeComponent();
+        }
+        public event Action SwitchToGameViewEvent;
+
+        public void RaiseSwitchToGameViewEvent()
+        {
+            SwitchToGameViewEvent?.Invoke();
+            Debug.WriteLine("SwitchToGameViewEvent raised in GameOverViewModel.");
+        }
+        private void PlayAgainBtnTest_Click(object sender, RoutedEventArgs e)
+        {
+            RaiseSwitchToGameViewEvent();
         }
     }
 }
