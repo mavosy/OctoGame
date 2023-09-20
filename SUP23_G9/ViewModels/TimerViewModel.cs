@@ -47,7 +47,18 @@ namespace SUP23_G9.ViewModels
             else if (_remainingSeconds <= 0 && !_isNotAllowedToRunTimeUpEvents)
             {
                 _isNotAllowedToRunTimeUpEvents = true;
-                this.StopTimer();
+                //PlayerViewModel playerViewModel = new();
+                //ObstacleViewModel obstacleViewModel = new();
+                //ShipViewModel shipViewModel = new();
+                //GameViewModel gameViewModel = new();
+
+                //playerViewModel.StopTimer();
+                //obstacleViewModel.StopTimer();
+                //shipViewModel.StopTimer();
+                //gameViewModel.StopTimer();
+                //this.StopTimer();
+                //MainViewModel mainViewModel = new();
+                //mainViewModel.CreateGameOverWindowOverlay();
 
                 RemainingTime = "Time's up!";
 

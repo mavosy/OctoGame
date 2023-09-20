@@ -14,7 +14,7 @@ namespace SUP23_G9.ViewModels
         private const int correctedGameAreaHeight = 565;
         private bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;
 
-        DispatcherTimer _timer;
+        DispatcherTimer _playerTimer;
 
         public PlayerViewModel()
         {
@@ -23,11 +23,11 @@ namespace SUP23_G9.ViewModels
             Width = 50;
             Height = 50;
 
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromMilliseconds(10);
+            _playerTimer = new DispatcherTimer();
+            _playerTimer.Interval = TimeSpan.FromMilliseconds(10);
 
-            _timer.Tick += MovePlayerEvent;
-            _timer.Start();
+            _playerTimer.Tick += MovePlayerEvent;
+            _playerTimer.Start();
 
             FlipImageX = 1.0;
 
@@ -185,5 +185,11 @@ namespace SUP23_G9.ViewModels
         /// Vänder spelarens karaktärsbild tillbaka till originalhållet
         /// </summary>
         private void TurnSpriteBack() => FlipImageX = 1.0;
+
+        public void StopTimer()
+        {
+            _playerTimer.Stop();
+            _playerTimer.IsEnabled = false;
+        } 
     }
 }

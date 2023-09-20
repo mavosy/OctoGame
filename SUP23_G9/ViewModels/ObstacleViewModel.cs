@@ -79,5 +79,10 @@ namespace SUP23_G9.ViewModels
 
             ObstacleImage = image;
         }
+        public void StopTimer()
+        {
+            _obstacleTimer.Stop();
+            _obstacleTimer.IsEnabled = false;
+        }
     }
 }

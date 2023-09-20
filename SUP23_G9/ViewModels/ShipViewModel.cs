@@ -84,6 +84,11 @@ namespace SUP23_G9.ViewModels
             {
                 FlipImageX = 1.0;
             }
-        } 
+        }
+        public void StopTimer()
+        {
+            _shipTimer.Stop();
+            _shipTimer.IsEnabled = false;
+        }
     }
 }

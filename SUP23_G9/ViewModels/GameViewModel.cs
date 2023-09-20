@@ -38,8 +38,6 @@ namespace SUP23_G9.ViewModels
             CreateRandomObstacles();
             StartMovingObject();
             CountdownTimer.TimeUp += CountdownTimer_TimeUp;
-
-
         }
 
 
@@ -196,25 +194,36 @@ namespace SUP23_G9.ViewModels
 
         private void OpenGameOverView()
         {
+            MainViewModel mainViewModel = new MainViewModel();
+            mainViewModel.SwitchToGameOverView();
             // Anropa ShowGameOverView när tiden tar slut från rätt tråd
             //Application.Current.Dispatcher.Invoke(() =>
             //{
-                if (isGameOverViewOpened) return;
-                _gameOverView = new GameOverView();
-                _gameOverView.ContentRendered += delegate { isGameOverViewOpened = true; };
-                _gameOverView.Closed += delegate { isGameOverViewOpened = false; };
-                _gameOverView.Show();
+            //    if (isGameOverViewOpened) return;
+            //    _gameOverView = new GameOverView();
+            //    _gameOverView.ContentRendered += delegate { isGameOverViewOpened = true; };
+            //    _gameOverView.Closed += delegate { isGameOverViewOpened = false; };
+            //    _gameOverView.Show();
 
-                // Stäng det nuvarande fönstret (MainWindow) om det behövs
-                foreach (Window window in Application.Current.Windows)
-                {
-                    if (window is MainWindow)
-                    {
-                        window.Close();
-                        break; // Stäng bara det första förekomsten av MainWindow
-                    }
-                }
+            //    // Stäng det nuvarande fönstret (MainWindow) om det behövs
+            //    foreach (Window window in Application.Current.Windows)
+            //    {
+            //        if (window is MainWindow)
+            //        {
+            //            window.Close();
+            //            break; // Stäng bara det första förekomsten av MainWindow
+            //        }
+            //    }
             //});
+        }
+        public void StopTimer()
+        {
+            _gameTimer.Stop();
+            bool timerISEnabled = _gameTimer.Enabled;
+            if (!timerISEnabled)
+            {
+                MessageBox.Show("ejsvejs");
+            }
         }
 
     }
