@@ -18,7 +18,7 @@ namespace SUP23_G9.ViewModels
 {
     public class GameViewModel : BaseViewModel
     {
-        private Timer _gameTimer;
+        private DispatcherTimer _gameTimer;
         private readonly int _speed = 4;
         private readonly int _speedObstacle = 2;
         private static readonly Random _random = new();
@@ -38,7 +38,7 @@ namespace SUP23_G9.ViewModels
             CreateRandomObstacles();
             StartMovingObject();
             CountdownTimer.TimeUp += CountdownTimer_TimeUp;
-
+            
             timerViewModel.StopGameTimerEvent += () => StopGameTimer();
         }
 
@@ -76,12 +76,13 @@ namespace SUP23_G9.ViewModels
 
         private void StartMovingObject()
         {
-            _gameTimer = new Timer(20);
-            _gameTimer.Elapsed += GameTimerEvent;
+            _gameTimer = new DispatcherTimer();
+            _gameTimer.Interval = TimeSpan.FromMilliseconds(20);
+            _gameTimer.Tick += GameTimerEvent;
             _gameTimer.Start();
         }
 
-        private void GameTimerEvent(object sender, ElapsedEventArgs e)
+        private void GameTimerEvent(object sender, EventArgs e)
         {
             MoveShipsLoop();
             MoveObstaclesLoop();
@@ -190,6 +191,8 @@ namespace SUP23_G9.ViewModels
 
         private void CountdownTimer_TimeUp(object sender, EventArgs e)
         {
+            CountdownTimer._timer.Stop();
+            CountdownTimer._remainingSeconds = 10;
             // Anropa ShowGameOverView när tiden tar slut
             OpenGameOverView();
         }
@@ -220,6 +223,7 @@ namespace SUP23_G9.ViewModels
             //    }
             //});
         }
+
         public void StopGameTimer()
         {
             _gameTimer.Stop();
