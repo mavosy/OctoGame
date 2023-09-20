@@ -11,9 +11,10 @@ namespace SUP23_G9.ViewModels
     {
         private GameViewModel gameViewModel = new GameViewModel();
         private GameOverViewModel gameOverViewModel = new GameOverViewModel();
+        private StartViewModel startViewModel = new StartViewModel();
         public MainViewModel()
         {
-            CurrentViewModel = new GameViewModel();
+            CurrentViewModel = new StartViewModel();
             gameViewModel.SwitchToGameOverViewEvent += () => SwitchToGameOverView();
             gameOverViewModel.SwitchToGameViewEvent += () => SwitchToGameView();
         }
