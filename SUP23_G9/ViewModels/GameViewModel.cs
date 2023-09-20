@@ -25,9 +25,7 @@ namespace SUP23_G9.ViewModels
 
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(30); // Startar med 1 min. 
-        private GameOverView? _gameOverView = null;
-        private static bool isGameOverViewOpened = false;
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(10); // Startar med 1 min. 
 
         public GameViewModel()
         {
@@ -38,8 +36,6 @@ namespace SUP23_G9.ViewModels
             CreateRandomObstacles();
             StartMovingObject();
             CountdownTimer.TimeUp += CountdownTimer_TimeUp;
-
-
         }
 
 
@@ -150,7 +146,7 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Metod för om spelaren skadas eller dör
         /// </summary>
-        private void PlayerDamaged()
+        public void PlayerDamaged()
         {
             switch (PlayerHealth)
             {
@@ -162,9 +158,6 @@ namespace SUP23_G9.ViewModels
                     break;
             }
         }
-        /// <summary>
-        /// Bestämmer konsekvensen av en krock mellan spelaren och ett skepp
-        /// </summary>
         public void SetPlayerShipCollisionConsequence()
         {
             foreach (var ship in Ships)
@@ -178,11 +171,7 @@ namespace SUP23_G9.ViewModels
                 }
             }
         }
-        /// <summary>
-        /// Kontrollerar om spelaren kolliderar med ett givet skepp
-        /// </summary>
-        /// <param name="ship"></param>
-        /// <returns></returns>
+
         private bool PlayerCollidesWithShip(ShipViewModel ship)
         {
             bool collisionX = ship.Left < GlobalVariabels._playerCoordinatesLeft + 50 && ship.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
@@ -197,31 +186,48 @@ namespace SUP23_G9.ViewModels
 
         private void CountdownTimer_TimeUp(object sender, EventArgs e)
         {
-                // Anropa ShowGameOverView när tiden tar slut
-                OpenGameOverView();
+            // Anropa ShowGameOverView när tiden tar slut
+            OpenGameOverView();
         }
 
-        private void OpenGameOverView()
-        {
-            // Anropa ShowGameOverView när tiden tar slut från rätt tråd
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                if (isGameOverViewOpened) return;
-                _gameOverView = new GameOverView();
-                _gameOverView.ContentRendered += delegate { isGameOverViewOpened = true; };
-                _gameOverView.Closed += delegate { isGameOverViewOpened = false; };
-                _gameOverView.Show();
 
-                // Stäng det nuvarande fönstret (MainWindow) om det behövs
-                foreach (Window window in Application.Current.Windows)
-                {
-                    if (window is MainWindow)
-                    {
-                        window.Close();
-                        break; // Stäng bara det första förekomsten av MainWindow
-                    }
-                }
-            });
+        public event Action SwitchToGameOverViewEvent;
+
+        public void RaiseSwitchToGameOverViewEvent()
+        {
+            SwitchToGameOverViewEvent?.Invoke();
+        }
+        public void OpenGameOverView()
+        {
+            RaiseSwitchToGameOverViewEvent();
+            // Anropa ShowGameOverView när tiden tar slut från rätt tråd
+            //Application.Current.Dispatcher.Invoke(() =>
+            //{
+            //    if (isGameOverViewOpened) return;
+            //    _gameOverView = new GameOverView();
+            //    _gameOverView.ContentRendered += delegate { isGameOverViewOpened = true; };
+            //    _gameOverView.Closed += delegate { isGameOverViewOpened = false; };
+            //    _gameOverView.Show();
+
+            //    // Stäng det nuvarande fönstret (MainWindow) om det behövs
+            //    foreach (Window window in Application.Current.Windows)
+            //    {
+            //        if (window is MainWindow)
+            //        {
+            //            window.Close();
+            //            break; // Stäng bara det första förekomsten av MainWindow
+            //        }
+            //    }
+            //});
+        }
+        public void StopTimer()
+        {
+            _gameTimer.Stop();
+            bool timerIsEnabled = _gameTimer.Enabled;
+            if (!timerIsEnabled)
+            {
+                MessageBox.Show("ejsvejs");
+            }
         }
 
     }

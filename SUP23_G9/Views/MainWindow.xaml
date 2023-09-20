@@ -8,6 +8,9 @@
         d:DataContext="{d:DesignInstance vm:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1000">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
     <Grid Background="PaleTurquoise">
         <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>

@@ -14,7 +14,7 @@ namespace SUP23_G9.ViewModels
     public class TimerViewModel : BaseViewModel
     {
         private DispatcherTimer _timer;
-        private int _remainingSeconds;
+        public int _remainingSeconds;
         public static bool _isNotAllowedToRunTimeUpEvents;
         public TimerViewModel(int initialSeconds)
         {
@@ -42,12 +42,23 @@ namespace SUP23_G9.ViewModels
             {
                 _remainingSeconds--;
                 UpdateRemainingTime();
-                _isNotAllowedToRunTimeUpEvents = false;
+                //_isNotAllowedToRunTimeUpEvents = false;
             }
-            else if (_remainingSeconds <= 0 && !_isNotAllowedToRunTimeUpEvents)
+            else if (_remainingSeconds <= 0 /*&& !_isNotAllowedToRunTimeUpEvents*/)
             {
-                _isNotAllowedToRunTimeUpEvents = true;
-                _timer.Stop();
+                //_isNotAllowedToRunTimeUpEvents = true;
+
+
+                //playerViewModel.StopTimer();
+                //obstacleViewModel.StopTimer();
+                //shipViewModel.StopTimer();
+                //gameViewModel.StopTimer();
+                //this.StopTimer();
+
+                //StartTimer();
+                //MainViewModel mainViewModel = new();
+                //mainViewModel.CreateGameOverWindowOverlay();
+
                 RemainingTime = "Time's up!";
 
                 OnTimeUp(); // Trigga händelsen när tiden tar slut
@@ -58,9 +69,8 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-        private void StartTimer() => _timer.Start();
-
-        private void StopTimer() => _timer.Stop();
+        public void StartTimer() => _timer.Start();
+        public void StopTimer() => _timer.Stop();
 
         private void UpdateRemainingTime()
         {

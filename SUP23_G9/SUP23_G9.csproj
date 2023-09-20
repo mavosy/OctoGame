@@ -8,9 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\**" />
     <Compile Remove="Views\Mobs\**" />
+    <EmbeddedResource Remove="Models\**" />
     <EmbeddedResource Remove="Views\Mobs\**" />
+    <None Remove="Models\**" />
     <None Remove="Views\Mobs\**" />
+    <Page Remove="Models\**" />
     <Page Remove="Views\Mobs\**" />
   </ItemGroup>
 
@@ -21,10 +25,6 @@
     <None Remove="Views\Components\Images\PirateIsland1.bmp" />
     <None Remove="Views\Components\Images\PirateShip1_Left.bmp" />
     <None Remove="Views\Components\Images\PirateShip1_Right.bmp" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup>

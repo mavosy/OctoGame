@@ -15,9 +15,6 @@ namespace SUP23_G9.ViewModels
     {
         DispatcherTimer _obstacleTimer;
 
-        /// <summary>
-        /// Konstruktor
-        /// </summary>
         public ObstacleViewModel()
         {
             Width = 50;
@@ -29,11 +26,7 @@ namespace SUP23_G9.ViewModels
             _obstacleTimer.Start();
             LoadObstacleImageProcessing();
         }
-        /// <summary>
-        /// Får hindren att vända på sig med jämna intervaller
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void ObstacleDanceEvent(object? sender, EventArgs e)
         {
             if (FlipImageX == 1.0)
@@ -85,6 +78,11 @@ namespace SUP23_G9.ViewModels
             image.EndInit();
 
             ObstacleImage = image;
+        }
+        public void StopTimer()
+        {
+            _obstacleTimer.Stop();
+            _obstacleTimer.IsEnabled = false;
         }
     }
 }
