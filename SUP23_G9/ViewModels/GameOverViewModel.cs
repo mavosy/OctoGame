@@ -21,26 +21,36 @@ namespace SUP23_G9.ViewModels
             PlayAgainCommand = new RelayCommand(parameter => PlayAgain());
         }
 
+        public event Action SwitchToGameViewEvent;
+
+        public void RaiseSwitchToGameViewEvent()
+        {
+            SwitchToGameViewEvent?.Invoke();
+        }
+
         /// <summary>
         /// Metod för att knappen spela igen ska fungera
         /// </summary>
         public void PlayAgain()
         {
-            // Skapa en instans av "MainWindow"
-            MainWindow mainWindow = new MainWindow();
+            RaiseSwitchToGameViewEvent();
+            //TimerViewModel._remainingSeconds = 5;
 
-            // Visa MainWindow
-            mainWindow.Show();
+            //// Skapa en instans av "MainWindow"
+            //MainWindow mainWindow = new MainWindow();
 
-            // Stäng det nuvarande fönstret (GameOverView)
-            foreach (Window window in Application.Current.Windows)
-            {
-                if (window is GameOverView)
-                {
-                    window.Close();
-                    break; // Stäng bara det första förekomsten av GameOverView
-                }
-            }
+            //// Visa MainWindow
+            //mainWindow.Show();
+
+            //// Stäng det nuvarande fönstret (GameOverView)
+            //foreach (Window window in Application.Current.Windows)
+            //{
+            //    if (window is GameOverView)
+            //    {
+            //        window.Close();
+            //        break; // Stäng bara det första förekomsten av GameOverView
+            //    }
+            //}
         }
     }
 }

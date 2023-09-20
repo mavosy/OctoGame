@@ -9,10 +9,15 @@ namespace SUP23_G9.ViewModels
 {
     class MainViewModel : BaseViewModel
     {
+        private GameViewModel gameViewModel = new GameViewModel();
+        private GameOverViewModel gameOverViewModel = new GameOverViewModel();
         public MainViewModel()
         {
             CurrentViewModel = new GameViewModel();
+            gameViewModel.SwitchToGameOverViewEvent += () => SwitchToGameOverView();
+            gameOverViewModel.SwitchToGameViewEvent += () => SwitchToGameView();
         }
+
         public BaseViewModel? CurrentViewModel { get; set; }
 
         public void DisposeViewModel() => CurrentViewModel = null;
@@ -20,6 +25,7 @@ namespace SUP23_G9.ViewModels
         /// Byter användargränssnittsfönstret mot GameOverView, genom bindings mellan Main ViewModel och MainWindow
         /// </summary>
         public void SwitchToGameOverView() => CurrentViewModel = new GameOverViewModel();
+
         /// <summary>
         /// Byter användargränssnittsfönstret mot GameView, genom bindings mellan Main ViewModel och MainWindow
         /// </summary>

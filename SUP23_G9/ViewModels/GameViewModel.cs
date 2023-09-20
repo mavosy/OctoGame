@@ -25,9 +25,7 @@ namespace SUP23_G9.ViewModels
 
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(5); // Startar med 1 min. 
-        private GameOverView? _gameOverView = null;
-        private static bool isGameOverViewOpened = false;
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(10); // Startar med 1 min. 
 
         public GameViewModel()
         {
@@ -148,7 +146,7 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Metod för om spelaren skadas eller dör
         /// </summary>
-        private void PlayerDamaged()
+        public void PlayerDamaged()
         {
             switch (PlayerHealth)
             {
@@ -188,14 +186,20 @@ namespace SUP23_G9.ViewModels
 
         private void CountdownTimer_TimeUp(object sender, EventArgs e)
         {
-                // Anropa ShowGameOverView när tiden tar slut
-                OpenGameOverView();
+            // Anropa ShowGameOverView när tiden tar slut
+            OpenGameOverView();
         }
 
-        private void OpenGameOverView()
+
+        public event Action SwitchToGameOverViewEvent;
+
+        public void RaiseSwitchToGameOverViewEvent()
         {
-            MainViewModel mainViewModel = new MainViewModel();
-            mainViewModel.SwitchToGameOverView();
+            SwitchToGameOverViewEvent?.Invoke();
+        }
+        public void OpenGameOverView()
+        {
+            RaiseSwitchToGameOverViewEvent();
             // Anropa ShowGameOverView när tiden tar slut från rätt tråd
             //Application.Current.Dispatcher.Invoke(() =>
             //{
@@ -219,8 +223,8 @@ namespace SUP23_G9.ViewModels
         public void StopTimer()
         {
             _gameTimer.Stop();
-            bool timerISEnabled = _gameTimer.Enabled;
-            if (!timerISEnabled)
+            bool timerIsEnabled = _gameTimer.Enabled;
+            if (!timerIsEnabled)
             {
                 MessageBox.Show("ejsvejs");
             }

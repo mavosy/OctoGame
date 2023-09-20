@@ -10,5 +10,9 @@
             DataType="{x:Type vm:GameViewModel}">
             <views:GameView/>
         </DataTemplate>
+        <DataTemplate
+            DataType="{x:Type vm:GameOverViewModel}">
+            <views:GameOverView/>
+        </DataTemplate>
     </Application.Resources>
 </Application>
