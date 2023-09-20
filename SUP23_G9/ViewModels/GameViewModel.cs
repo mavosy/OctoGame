@@ -204,8 +204,8 @@ namespace SUP23_G9.ViewModels
         private void OpenGameOverView()
         {
             // Anropa ShowGameOverView när tiden tar slut från rätt tråd
-            //Application.Current.Dispatcher.Invoke(() =>
-            //{
+            Application.Current.Dispatcher.Invoke(() =>
+            {
                 if (isGameOverViewOpened) return;
                 _gameOverView = new GameOverView();
                 _gameOverView.ContentRendered += delegate { isGameOverViewOpened = true; };
@@ -221,7 +221,7 @@ namespace SUP23_G9.ViewModels
                         break; // Stäng bara det första förekomsten av MainWindow
                     }
                 }
-            //});
+            });
         }
 
     }
