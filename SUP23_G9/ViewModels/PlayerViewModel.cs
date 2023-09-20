@@ -10,9 +10,13 @@ namespace SUP23_G9.ViewModels
     {
         private const double distanceToEdge = 5;
         private const double playerSpeed = 5;
+
         private const int correctedGameAreaWidth = 985;
         private const int correctedGameAreaHeight = 565;
+
         private bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;
+
+        private TimerViewModel timerViewModel = new TimerViewModel();
 
         DispatcherTimer _playerTimer;
 
@@ -32,6 +36,7 @@ namespace SUP23_G9.ViewModels
             FlipImageX = 1.0;
 
             LoadKrakenImageProcessing();
+            timerViewModel.StopPlayerTimerEvent += () => StopPlayerTimer();
         }
 
         /// <summary>
@@ -186,10 +191,9 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         private void TurnSpriteBack() => FlipImageX = 1.0;
 
-        public void StopTimer()
+        public void StopPlayerTimer()
         {
             _playerTimer.Stop();
-            _playerTimer.IsEnabled = false;
-        } 
+        }
     }
 }

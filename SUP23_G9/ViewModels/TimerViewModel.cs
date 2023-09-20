@@ -16,6 +16,10 @@ namespace SUP23_G9.ViewModels
         private DispatcherTimer _timer;
         public int _remainingSeconds;
         public static bool _isNotAllowedToRunTimeUpEvents;
+        public TimerViewModel()
+        {
+            
+        }
         public TimerViewModel(int initialSeconds)
         {
             _remainingSeconds = initialSeconds;
@@ -60,7 +64,11 @@ namespace SUP23_G9.ViewModels
                 //mainViewModel.CreateGameOverWindowOverlay();
 
                 RemainingTime = "Time's up!";
-
+                RaiseStopPlayerTimerEvent();
+                RaiseStopShipTimerEvent();
+                RaiseStopObstacleTimerEvent();
+                RaiseStopGameTimerEvent();
+                this.StopTimer();
                 OnTimeUp(); // Trigga händelsen när tiden tar slut
             }
             else
@@ -68,6 +76,18 @@ namespace SUP23_G9.ViewModels
                 return;
             }
         }
+
+        public event Action StopPlayerTimerEvent;
+        public void RaiseStopPlayerTimerEvent() => StopPlayerTimerEvent?.Invoke();
+
+        public event Action StopShipTimerEvent;
+        public void RaiseStopShipTimerEvent() => StopShipTimerEvent?.Invoke();
+                    
+        public event Action StopObstacleTimerEvent;
+        public void RaiseStopObstacleTimerEvent() => StopObstacleTimerEvent?.Invoke();
+        
+        public event Action StopGameTimerEvent;
+        public void RaiseStopGameTimerEvent() => StopGameTimerEvent?.Invoke();
 
         public void StartTimer() => _timer.Start();
         public void StopTimer() => _timer.Stop();

@@ -15,6 +15,8 @@ namespace SUP23_G9.ViewModels
     {
         DispatcherTimer _shipTimer;
 
+        private TimerViewModel timerViewModel = new TimerViewModel();
+
         public ShipViewModel()
         {
             Width = 50;
@@ -27,6 +29,8 @@ namespace SUP23_G9.ViewModels
             _shipTimer.Start();
 
             LoadShipImageProcessing();
+
+            timerViewModel.StopShipTimerEvent += () => StopShipTimer();
         }
 
         /// <summary>
@@ -85,10 +89,9 @@ namespace SUP23_G9.ViewModels
                 FlipImageX = 1.0;
             }
         }
-        public void StopTimer()
+        public void StopShipTimer()
         {
             _shipTimer.Stop();
-            _shipTimer.IsEnabled = false;
         }
     }
 }

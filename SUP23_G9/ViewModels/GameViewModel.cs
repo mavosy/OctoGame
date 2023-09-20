@@ -23,6 +23,8 @@ namespace SUP23_G9.ViewModels
         private readonly int _speedObstacle = 2;
         private static readonly Random _random = new();
 
+        private TimerViewModel timerViewModel = new TimerViewModel();
+
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
         public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(10); // Startar med 1 min. 
@@ -36,6 +38,8 @@ namespace SUP23_G9.ViewModels
             CreateRandomObstacles();
             StartMovingObject();
             CountdownTimer.TimeUp += CountdownTimer_TimeUp;
+
+            timerViewModel.StopGameTimerEvent += () => StopGameTimer();
         }
 
 
@@ -190,13 +194,9 @@ namespace SUP23_G9.ViewModels
             OpenGameOverView();
         }
 
-
         public event Action SwitchToGameOverViewEvent;
+        public void RaiseSwitchToGameOverViewEvent() => SwitchToGameOverViewEvent?.Invoke();
 
-        public void RaiseSwitchToGameOverViewEvent()
-        {
-            SwitchToGameOverViewEvent?.Invoke();
-        }
         public void OpenGameOverView()
         {
             RaiseSwitchToGameOverViewEvent();
@@ -220,15 +220,9 @@ namespace SUP23_G9.ViewModels
             //    }
             //});
         }
-        public void StopTimer()
+        public void StopGameTimer()
         {
             _gameTimer.Stop();
-            bool timerIsEnabled = _gameTimer.Enabled;
-            if (!timerIsEnabled)
-            {
-                MessageBox.Show("ejsvejs");
-            }
         }
-
     }
 }

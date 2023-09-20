@@ -15,6 +15,8 @@ namespace SUP23_G9.ViewModels
     {
         DispatcherTimer _obstacleTimer;
 
+        private TimerViewModel timerViewModel = new TimerViewModel();
+
         public ObstacleViewModel()
         {
             Width = 50;
@@ -25,6 +27,8 @@ namespace SUP23_G9.ViewModels
             _obstacleTimer.Tick += ObstacleDanceEvent;
             _obstacleTimer.Start();
             LoadObstacleImageProcessing();
+
+            timerViewModel.StopObstacleTimerEvent += () => StopObstacleTimer();
         }
 
         private void ObstacleDanceEvent(object? sender, EventArgs e)
@@ -79,10 +83,9 @@ namespace SUP23_G9.ViewModels
 
             ObstacleImage = image;
         }
-        public void StopTimer()
+        public void StopObstacleTimer()
         {
             _obstacleTimer.Stop();
-            _obstacleTimer.IsEnabled = false;
         }
     }
 }
