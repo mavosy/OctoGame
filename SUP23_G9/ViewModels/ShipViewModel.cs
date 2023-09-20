@@ -25,7 +25,7 @@ namespace SUP23_G9.ViewModels
 
             _shipTimer = new DispatcherTimer();
             _shipTimer.Interval = TimeSpan.FromSeconds(2);
-            _shipTimer.Tick += ObstacleDanceEvent;
+            _shipTimer.Tick += ShipDanceEvent;
             _shipTimer.Start();
 
             LoadShipImageProcessing();
@@ -78,8 +78,10 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ObstacleDanceEvent(object? sender, EventArgs e)
+        private void ShipDanceEvent(object? sender, EventArgs e)
         {
+            
+
             if (FlipImageX == 1.0)
             {
                 FlipImageX = -1.0;
@@ -88,6 +90,8 @@ namespace SUP23_G9.ViewModels
             {
                 FlipImageX = 1.0;
             }
+
+
         }
         public void StopShipTimer()
         {

@@ -13,7 +13,7 @@ namespace SUP23_G9.ViewModels
 {
     public class TimerViewModel : BaseViewModel
     {
-        private DispatcherTimer _timer;
+        public DispatcherTimer _timer;
         public int _remainingSeconds;
         public static bool _isNotAllowedToRunTimeUpEvents;
         public TimerViewModel()
@@ -39,7 +39,6 @@ namespace SUP23_G9.ViewModels
 
         public ICommand StartCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
-
         private void TimerTick(object sender, EventArgs e)
         {
             if (_remainingSeconds > 0)
@@ -52,13 +51,6 @@ namespace SUP23_G9.ViewModels
             {
                 //_isNotAllowedToRunTimeUpEvents = true;
 
-
-                //playerViewModel.StopTimer();
-                //obstacleViewModel.StopTimer();
-                //shipViewModel.StopTimer();
-                //gameViewModel.StopTimer();
-                //this.StopTimer();
-
                 //StartTimer();
                 //MainViewModel mainViewModel = new();
                 //mainViewModel.CreateGameOverWindowOverlay();
@@ -69,7 +61,9 @@ namespace SUP23_G9.ViewModels
                 RaiseStopObstacleTimerEvent();
                 RaiseStopGameTimerEvent();
                 this.StopTimer();
+
                 OnTimeUp(); // Trigga händelsen när tiden tar slut
+
             }
             else
             {
@@ -100,7 +94,7 @@ namespace SUP23_G9.ViewModels
         }
 
         // Metod för att triggas när tiden tar slut
-        protected virtual void OnTimeUp()
+        public void OnTimeUp()
         {
             TimeUp?.Invoke(this, EventArgs.Empty);
         }
