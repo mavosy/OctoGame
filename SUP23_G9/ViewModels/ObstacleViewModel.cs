@@ -33,6 +33,7 @@ namespace SUP23_G9.ViewModels
 
         private void ObstacleDanceEvent(object? sender, EventArgs e)
         {
+            _obstacleTimer.IsEnabled=false;
             if (FlipImageX == 1.0)
             {
                 FlipImageX = -1.0;
@@ -41,6 +42,7 @@ namespace SUP23_G9.ViewModels
             {
                 FlipImageX = 1.0;
             }
+            _obstacleTimer.IsEnabled = true;
         }
 
         /// <summary>

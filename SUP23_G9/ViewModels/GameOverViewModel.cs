@@ -18,7 +18,7 @@ namespace SUP23_G9.ViewModels
         public GameOverViewModel()
         {
             // Skapa ett nytt RelayCommand för "Spela Igen" knappen
-            PlayAgainCommand = new RelayCommand(parameter => PlayAgain());
+            PlayAgainCommand = new RelayCommand(parameter => RaiseSwitchToGameViewEvent());
         }
 
         public event Action SwitchToGameViewEvent;

@@ -29,6 +29,6 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Byter användargränssnittsfönstret mot GameView, genom bindings mellan Main ViewModel och MainWindow
         /// </summary>
-        public void SwitchToGameView() => CurrentViewModel = gameViewModel;/*new GameViewModel();*/
+        public void SwitchToGameView() => CurrentViewModel = new GameViewModel();
     }
 }
