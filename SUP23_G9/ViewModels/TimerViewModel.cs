@@ -98,5 +98,25 @@ namespace SUP23_G9.ViewModels
         {
             TimeUp?.Invoke(this, EventArgs.Empty);
         }
+
+        public void ResetTimer(int newInitialSeconds = -1) // Reset Metod
+        {
+            // Stoppa timern
+            _timer.Stop();
+
+            // Sätt tillbaka de nödvändiga värdena
+            if (newInitialSeconds != -1)
+            {
+                _remainingSeconds = newInitialSeconds;
+            }
+            else
+            {
+                _remainingSeconds = _remainingSeconds; // Eller sätt till ett förbestämt värde om du har ett.
+            }
+            UpdateRemainingTime();
+
+            // Starta om timern
+            _timer.Start();
+        }
     }
 }
