@@ -13,24 +13,20 @@ namespace SUP23_G9.ViewModels
 {
     public class ShipViewModel : BaseViewModel
     {
-        DispatcherTimer _shipTimer;
-
-        private TimerViewModel timerViewModel = new TimerViewModel();
+        //DispatcherTimer _shipTimer;
 
         public ShipViewModel()
         {
             Width = 50;
             Height = 50;
-            FlipImageX = 1.0;
+            //FlipImageX = 1.0;
 
-            _shipTimer = new DispatcherTimer();
-            _shipTimer.Interval = TimeSpan.FromSeconds(2);
-            _shipTimer.Tick += ShipDanceEvent;
-            _shipTimer.Start();
+            //_shipTimer = new DispatcherTimer();
+            //_shipTimer.Interval = TimeSpan.FromSeconds(2);
+            //_shipTimer.Tick += ShipDanceEvent;
+            //_shipTimer.Start();
 
             LoadShipImageProcessing();
-
-            timerViewModel.StopShipTimerEvent += () => StopShipTimer();
         }
 
         /// <summary>
@@ -56,7 +52,7 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Sätter vilket håll skeppen är vänd mot i horisontellt led (1.0=original, -1.0=spegel)
         /// </summary>
-        public double FlipImageX { get; set; } 
+        //public double FlipImageX { get; set; } 
 
         /// <summary>
         /// Processerar och cachar bild för skepp
@@ -78,24 +74,20 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ShipDanceEvent(object? sender, EventArgs e)
-        {
-            
-
-            if (FlipImageX == 1.0)
-            {
-                FlipImageX = -1.0;
-            }
-            else if (FlipImageX == -1.0)
-            {
-                FlipImageX = 1.0;
-            }
-
-
-        }
-        public void StopShipTimer()
-        {
-            _shipTimer.Stop();
-        }
+        //private void ShipDanceEvent(object? sender, EventArgs e)
+        //{
+        //    if (FlipImageX == 1.0)
+        //    {
+        //        FlipImageX = -1.0;
+        //    }
+        //    else if (FlipImageX == -1.0)
+        //    {
+        //        FlipImageX = 1.0;
+        //    }
+        //}
+        //public void StopShipTimer()
+        //{
+        //    _shipTimer.Stop();
+        //}
     }
 }

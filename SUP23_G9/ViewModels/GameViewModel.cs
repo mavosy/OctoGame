@@ -23,11 +23,9 @@ namespace SUP23_G9.ViewModels
         private readonly int _speedObstacle = 2;
         private static readonly Random _random = new();
 
-        private TimerViewModel timerViewModel = new TimerViewModel();
-
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(10); // Startar med 1 min. 
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(5); // Startar med 1 min. 
 
         public GameViewModel()
         {
@@ -38,10 +36,7 @@ namespace SUP23_G9.ViewModels
             CreateRandomObstacles();
             StartMovingObject();
             CountdownTimer.TimeUp += CountdownTimer_TimeUp;
-            
-            timerViewModel.StopGameTimerEvent += () => StopGameTimer();
         }
-
 
         public Points GamePoints { get; } = new Points();
         public ObservableCollection<ShipViewModel> Ships { get; set; }
@@ -139,28 +134,24 @@ namespace SUP23_G9.ViewModels
 
         public bool PlayerCollidesWithObstacle(ObstacleViewModel obstacle)
         {
-                bool collisionX = obstacle.Left < GlobalVariabels._playerCoordinatesLeft + 50 && obstacle.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
-                bool collisionY = obstacle.Top < GlobalVariabels._playerCoordinatesTop + 50 && obstacle.Top + 50 > GlobalVariabels._playerCoordinatesTop;
+            bool collisionX = obstacle.Left < GlobalVariabels._playerCoordinatesLeft + 50 && obstacle.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
+            bool collisionY = obstacle.Top < GlobalVariabels._playerCoordinatesTop + 50 && obstacle.Top + 50 > GlobalVariabels._playerCoordinatesTop;
 
-                if (collisionX && collisionY)
-                {
-                    return true;
-                }
-                return false;
+            if (collisionX && collisionY)
+            {
+                return true;
+            }
+            return false;
         }
         /// <summary>
         /// Metod för om spelaren skadas eller dör
         /// </summary>
         public void PlayerDamaged()
         {
-            switch (PlayerHealth)
+            PlayerHealth -= 34;
+            if (PlayerHealth <= 0)
             {
-                case > 0:
-                    PlayerHealth -= 34;
-                    break;
-                case <= 0:
-                    OpenGameOverView();
-                    break;
+                OpenGameOverView();
             }
         }
         public void SetPlayerShipCollisionConsequence()
@@ -176,7 +167,7 @@ namespace SUP23_G9.ViewModels
                 }
             }
         }
-
+        //TODO ändra så det inte är fasta värden på width/height här (50)
         private bool PlayerCollidesWithShip(ShipViewModel ship)
         {
             bool collisionX = ship.Left < GlobalVariabels._playerCoordinatesLeft + 50 && ship.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
@@ -192,26 +183,20 @@ namespace SUP23_G9.ViewModels
         private void CountdownTimer_TimeUp(object sender, EventArgs e)
         {
             CountdownTimer._timer.Stop();
-            CountdownTimer._remainingSeconds = 10;
             // Anropa ShowGameOverView när tiden tar slut
             OpenGameOverView();
         }
 
-        public event Action SwitchToGameOverViewEvent;
+        public Action SwitchToGameOverViewEvent { get; set; }
         public void RaiseSwitchToGameOverViewEvent() => SwitchToGameOverViewEvent?.Invoke();
 
         public void OpenGameOverView()
         {
             RaiseSwitchToGameOverViewEvent();
+
             // Anropa ShowGameOverView när tiden tar slut från rätt tråd
             //Application.Current.Dispatcher.Invoke(() =>
             //{
-            //    if (isGameOverViewOpened) return;
-            //    _gameOverView = new GameOverView();
-            //    _gameOverView.ContentRendered += delegate { isGameOverViewOpened = true; };
-            //    _gameOverView.Closed += delegate { isGameOverViewOpened = false; };
-            //    _gameOverView.Show();
-
             //    // Stäng det nuvarande fönstret (MainWindow) om det behövs
             //    foreach (Window window in Application.Current.Windows)
             //    {

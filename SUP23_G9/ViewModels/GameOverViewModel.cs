@@ -15,20 +15,18 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// ICommand för "Spela Igen" knappen
         /// </summary>
-        public ICommand PlayAgainCommand { get; set; }
-
         public GameOverViewModel()
         {
-            // Skapa ett nytt RelayCommand för "Spela Igen" knappen
             PlayAgainCommand = new RelayCommand(parameter => PlayAgain());
         }
-
-        public event Action SwitchToGameViewEvent;
+        public ICommand PlayAgainCommand { get; set; }
+        public string ID { get; } = Guid.NewGuid().ToString();
+        public Action SwitchToGameViewEvent { get; set; }
 
         public void RaiseSwitchToGameViewEvent()
         {
+            Debug.WriteLine($"Invoking from GameOverViewModel with ID: {InstanceID}");
             SwitchToGameViewEvent?.Invoke();
-            Debug.WriteLine("SwitchToGameViewEvent raised in GameOverViewModel.");
         }
 
         /// <summary>

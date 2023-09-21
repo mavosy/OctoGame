@@ -11,6 +11,6 @@ namespace SUP23_G9.ViewModels.Base
 
     public abstract class BaseViewModel
     {
-
+        public string InstanceID { get; } = Guid.NewGuid().ToString();
     }
 }

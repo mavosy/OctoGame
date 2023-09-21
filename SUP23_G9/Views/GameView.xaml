@@ -11,13 +11,11 @@
              d:DesignWidth="1000" d:DesignHeight="600"
              mc:Ignorable="d">
 
-    <!-- För Timern istället för datatcontext = new GameViewModel(); i Mainwindow -->
     <UserControl.DataContext>
         <vm:GameViewModel/>
     </UserControl.DataContext>
 
     <Grid>
-        <!--Poängvisare -->
         <TextBlock 
             Text="{Binding GamePoints.DisplayScore}" 
             FontSize="30" 
@@ -27,7 +25,6 @@
              Foreground="#FF034A4E"
              FontFamily="Ravie"/>
 
-        <!--Timer -->
         <TextBlock 
             Text="{Binding CountdownTimer.RemainingTime}" 
             HorizontalAlignment="Right" 
@@ -39,8 +36,9 @@
                       
         <Canvas x:Name="gameArea">
             <Characters:Player x:Name="player"/>
-            <!--Livmätare-->
-            <ProgressBar 
+            
+            <ProgressBar
+                Name="healthBar"
                 Width="200" 
                 Height="30" 
                 Margin="10" 
@@ -88,7 +86,6 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-
         </Canvas>
     </Grid>
 </UserControl>

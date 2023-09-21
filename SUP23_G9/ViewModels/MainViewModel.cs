@@ -9,42 +9,32 @@ using System.Threading.Tasks;
 
 namespace SUP23_G9.ViewModels
 {
-    class MainViewModel : BaseViewModel
+    public class MainViewModel : BaseViewModel
     {
-        private GameViewModel gameViewModel = new GameViewModel();
-        private GameOverViewModel gameOverViewModel = new GameOverViewModel();
-        private GameOverView gameOverView = new GameOverView();
         public MainViewModel()
         {
-            CurrentViewModel = new GameViewModel();
-            gameOverViewModel.SwitchToGameViewEvent += () =>
-            {
-                SwitchToGameView();
-                Debug.WriteLine("SwitchToGameView event handler executed in MainViewModel.");
-            };
-            gameViewModel.SwitchToGameOverViewEvent += () =>
-            {
-                SwitchToGameOverView();
-                Debug.WriteLine("SwitchToGameOverView event handler executed in MainViewModel.");
-            };
-            gameOverView.SwitchToGameViewEvent += () =>
-            {
-                SwitchToGameView();
-                Debug.WriteLine("SwitchToGameView event handler executed in MainViewModel.");
-            };
+            SwitchToGameView();
         }
-
+        public string ID { get; } = Guid.NewGuid().ToString();
         public BaseViewModel? CurrentViewModel { get; set; }
 
-        public void DisposeViewModel() => CurrentViewModel = null;
         /// <summary>
-        /// Byter användargränssnittsfönstret mot GameOverView, genom bindings mellan Main ViewModel och MainWindow
+        /// Byter användargränssnittsfönstret till GameView, genom bindings mellan Main ViewModel och MainWindow
         /// </summary>
-        public void SwitchToGameOverView() => CurrentViewModel = new GameOverViewModel();
+        public void SwitchToGameView()
+        {
+            CurrentViewModel = new GameViewModel();
+            (CurrentViewModel as GameViewModel).SwitchToGameOverViewEvent = SwitchToGameOverView;
+        }
+        /// <summary>
+        /// Byter användargränssnittsfönstret till GameOverView, genom bindings mellan Main ViewModel och MainWindow
+        /// </summary>
+        public void SwitchToGameOverView()
+        {
+            CurrentViewModel = new GameOverViewModel();
 
-        /// <summary>
-        /// Byter användargränssnittsfönstret mot GameView, genom bindings mellan Main ViewModel och MainWindow
-        /// </summary>
-        public void SwitchToGameView() => CurrentViewModel = new GameViewModel();
+            Debug.WriteLine($"Setting up GameOverViewModel with ID: {CurrentViewModel.InstanceID}");
+            (CurrentViewModel as GameOverViewModel).SwitchToGameViewEvent = SwitchToGameView;
+        }
     }
 }

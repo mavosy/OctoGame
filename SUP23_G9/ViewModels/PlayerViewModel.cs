@@ -16,8 +16,6 @@ namespace SUP23_G9.ViewModels
 
         private bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;
 
-        private TimerViewModel timerViewModel = new TimerViewModel();
-
         DispatcherTimer _playerTimer;
 
         public PlayerViewModel()
@@ -36,7 +34,6 @@ namespace SUP23_G9.ViewModels
             FlipImageX = 1.0;
 
             LoadKrakenImageProcessing();
-            timerViewModel.StopPlayerTimerEvent += () => StopPlayerTimer();
         }
 
         /// <summary>

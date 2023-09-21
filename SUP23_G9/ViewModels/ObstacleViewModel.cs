@@ -13,37 +13,34 @@ namespace SUP23_G9.ViewModels
 {
     public class ObstacleViewModel : BaseViewModel
     {
-        DispatcherTimer _obstacleTimer;
-
-        private TimerViewModel timerViewModel = new TimerViewModel();
+        //DispatcherTimer _obstacleTimer;
 
         public ObstacleViewModel()
         {
             Width = 50;
             Height = 50;
-            FlipImageX = 1.0;
-            _obstacleTimer = new DispatcherTimer();
-            _obstacleTimer.Interval = TimeSpan.FromSeconds(1);
-            _obstacleTimer.Tick += ObstacleDanceEvent;
-            _obstacleTimer.Start();
+            //FlipImageX = 1.0;
+            //_obstacleTimer = new DispatcherTimer();
+            //_obstacleTimer.Interval = TimeSpan.FromSeconds(1);
+            //_obstacleTimer.Tick += ObstacleDanceEvent;
+            //_obstacleTimer.Start();
             LoadObstacleImageProcessing();
 
-            timerViewModel.StopObstacleTimerEvent += () => StopObstacleTimer();
         }
 
-        private void ObstacleDanceEvent(object? sender, EventArgs e)
-        {
-            _obstacleTimer.IsEnabled=false;
-            if (FlipImageX == 1.0)
-            {
-                FlipImageX = -1.0;
-            }
-            else if (FlipImageX == -1.0)
-            {
-                FlipImageX = 1.0;
-            }
-            _obstacleTimer.IsEnabled = true;
-        }
+        //private void ObstacleDanceEvent(object? sender, EventArgs e)
+        //{
+        //    _obstacleTimer.IsEnabled=false;
+        //    if (FlipImageX == 1.0)
+        //    {
+        //        FlipImageX = -1.0;
+        //    }
+        //    else if (FlipImageX == -1.0)
+        //    {
+        //        FlipImageX = 1.0;
+        //    }
+        //    _obstacleTimer.IsEnabled = true;
+        //}
 
         /// <summary>
         /// X-koordinat för hindren
@@ -68,7 +65,7 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Sätter vilket håll hindren är vänd mot i horisontellt led (1.0=original, -1.0=spegel)
         /// </summary>
-        public double FlipImageX { get; private set; }
+        //public double FlipImageX { get; private set; }
 
         /// <summary>
         /// Processerar och cachar bild för hinder
@@ -85,9 +82,9 @@ namespace SUP23_G9.ViewModels
 
             ObstacleImage = image;
         }
-        public void StopObstacleTimer()
-        {
-            _obstacleTimer.Stop();
-        }
+        //public void StopObstacleTimer()
+        //{
+        //    _obstacleTimer.Stop();
+        //}
     }
 }

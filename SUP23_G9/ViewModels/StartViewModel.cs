@@ -12,9 +12,6 @@ namespace SUP23_G9.ViewModels
 
         public ICommand StartCommand { get; set; }
 
-        /// <summary>
-        /// Konstruktor
-        /// </summary>
         public StartViewModel()
         {
             StartCommand = new RelayCommand(parameter => StartGame());

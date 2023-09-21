@@ -15,13 +15,31 @@
     </UserControl.DataContext>
     <Image Name="pirateShip1" 
            Source="{Binding ShipImage}"
-           RenderTransformOrigin="0.5,0.5"
-           >
-        <!--Ändrar på bild, tex genom att vända på den-->
+           RenderTransformOrigin="0.5,0.5">
         <Image.RenderTransform>
+            <ScaleTransform
+                x:Name="sailTransform"
+                ScaleX="1.0"/>
+        </Image.RenderTransform>
+        <!--<Image.Triggers>
+            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                <BeginStoryboard>
+                    <Storyboard Duration="0:0:2" RepeatBehavior="Forever">
+                        <DoubleAnimation
+                            Storyboard.TargetName="sailTransform"
+                            Storyboard.TargetProperty="ScaleX"
+                            From="1.0"
+                            To="-1.0">
+                        </DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Image.Triggers>-->
+        <!--Ändrar på bild, tex genom att vända på den-->
+        <!--<Image.RenderTransform>
             <ScaleTransform 
                 ScaleX="{Binding FlipImageX}"
                 ScaleY="1.0"/>
-        </Image.RenderTransform>
+        </Image.RenderTransform>-->
     </Image>
 </UserControl>
