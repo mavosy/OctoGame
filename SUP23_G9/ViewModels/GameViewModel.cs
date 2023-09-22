@@ -22,10 +22,12 @@ namespace SUP23_G9.ViewModels
         private readonly int _speed = 4;
         private readonly int _speedObstacle = 2;
         private static readonly Random _random = new();
+        public int PointResult { get; set; }
 
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(10); // Startar med 1 min. 
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(30); // Startar med 1 min.
+        
 
         public GameViewModel()
         {
@@ -39,6 +41,7 @@ namespace SUP23_G9.ViewModels
         }
 
         public Points GamePoints { get; } = new Points();
+
         public ObservableCollection<ShipViewModel> Ships { get; set; }
         public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
         /// <summary>
@@ -128,6 +131,7 @@ namespace SUP23_G9.ViewModels
 
                     GamePoints.DeductPoints(5);
                     PlayerDamaged();
+                    PointResult -= 5;
                 }
             }
         }
@@ -164,6 +168,8 @@ namespace SUP23_G9.ViewModels
                     ship.Left = GenerateRandomLeft();
 
                     GamePoints.AddPoints(10);
+                    PointResult += 10;
+
                 }
             }
         }
@@ -192,6 +198,7 @@ namespace SUP23_G9.ViewModels
 
         public void OpenGameOverView()
         {
+
             RaiseSwitchToGameOverViewEvent();
 
             // Anropa ShowGameOverView när tiden tar slut från rätt tråd

@@ -23,6 +23,9 @@ namespace SUP23_G9.ViewModels
         public string ID { get; } = Guid.NewGuid().ToString();
         public Action SwitchToGameViewEvent { get; set; }
 
+        public GameViewModel GameviewmodelTest = new GameViewModel();
+
+        
         public void RaiseSwitchToGameViewEvent()
         {
             Debug.WriteLine($"Invoking from GameOverViewModel with ID: {InstanceID}");
@@ -53,5 +56,7 @@ namespace SUP23_G9.ViewModels
             //    }
             //}
         }
+
+
     }
 }

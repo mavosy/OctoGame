@@ -10,11 +10,13 @@ namespace SUP23_G9.ViewModels
     public class Points : BaseViewModel
     {
         private int _score;
+
         public int Score
         {
             get => _score;
             private set => _score = value;
         }
+
         public string DisplayScore => $"{Score} Points";
 
         public void AddPoints(int pointsToAdd) => Score += pointsToAdd;
