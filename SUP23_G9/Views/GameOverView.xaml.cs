@@ -25,6 +25,7 @@ namespace SUP23_G9.Views
         public GameOverView()
         {
             InitializeComponent();
+           
         }
     }
 }

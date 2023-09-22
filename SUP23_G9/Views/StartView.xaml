@@ -5,14 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SUP23_G9.ViewModels"
         mc:Ignorable="d"
-        Title="StartView" Height="600" Width="900">
+        Title="StartView" Height="700" Width="1000">
     <Window.DataContext>
         <local:StartViewModel />
     </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="Border" x:Key="InfoButtonBorder">
+            <Setter Property="Background" Value="#FF1F1F1F"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Margin" Value="20"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="InfoButton">
+            <Setter Property="Foreground" Value="Gray"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            
+        </Style>
+    </Window.Resources>
     <Border Background="PaleTurquoise" BorderBrush="DarkTurquoise" BorderThickness="5" CornerRadius="5">
         <Grid>
-            <Label Name="lblTitle" Content="Happy Kraken's &#xA;Pirate Buffet" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="50" Margin="0,57,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="557" />
-            <Image Name="player" Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp" Margin="128,247,662,227">
+
+            <Label Name="lblTitle" Content="Happy Kraken's &#xA;Pirate Buffet" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="50" Margin="166,25,166,377" Width="557" HorizontalContentAlignment="Center" />
+            <Image Name="player" Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp" Height="90" Width="90" Margin="176,237,710,332">
                 <Image.Triggers>
                     <!-- Trigger för att starta animationen när fönstret laddas -->
                     <EventTrigger RoutedEvent="FrameworkElement.Loaded">
@@ -31,7 +48,7 @@
                     </EventTrigger>
                 </Image.Triggers>
             </Image>
-            <Image Name="pirateShip1" Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Left.bmp" Margin="660,254,144,234">
+            <Image Name="pirateShip1" Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Left.bmp" Height="90" Width="90" Margin="728,248,172,336">
                 <Image.Triggers>
                     <!-- Trigger för att starta animationen när fönstret laddas -->
                     <EventTrigger RoutedEvent="FrameworkElement.Loaded">
@@ -51,7 +68,7 @@
                 </Image.Triggers>
             </Image>
 
-            <Button Name="StartBtn" Command="{Binding StartCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="178" Margin="5,314,0,0">
+            <Button Name="StartBtn" Command="{Binding StartCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="178" Margin="0,265,0,0">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="#FF0BE6EC" BorderBrush="#FF00928F" BorderThickness="5" CornerRadius="20">
@@ -61,6 +78,20 @@
                 </Button.Template>
                 <TextBlock Text="Start" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="36"/>
             </Button>
+            <Border Style="{StaticResource InfoButtonBorder}" Margin="557,399,273,115">
+                <TextBlock Text="I" Style="{StaticResource InfoButton}"/>
+            </Border>
+            <Border Style="{StaticResource InfoButtonBorder}" Margin="492,464,338,50">
+                <TextBlock Text="J" Style="{StaticResource InfoButton}"/>
+            </Border>
+            <Border Style="{StaticResource InfoButtonBorder}" Margin="557,464,273,50">
+                <TextBlock Text="K" Style="{StaticResource InfoButton}"/>
+            </Border>
+            <Border Style="{StaticResource InfoButtonBorder}" Margin="622,464,208,50">
+                <TextBlock Text="L" Style="{StaticResource InfoButton}"/>
+            </Border>
+            <Label Name="lblInstructions" Content="Hur du styr Kraken:" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="30" Margin="10,473,439,50" HorizontalContentAlignment="Center" />
+
         </Grid>
     </Border>
 </Window>
