@@ -8,37 +8,59 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Width="{Binding Width}"
-             Height="{Binding Height}"
-             >
+             Height="{Binding Height}">
+
     <UserControl.DataContext>
         <vm:ObstacleViewModel/>
     </UserControl.DataContext>
+
     <Image 
         Name="obstacleImage" 
         Source="{Binding ObstacleImage}"
         RenderTransformOrigin="0.5,0.5">
+
         <Image.RenderTransform>
             <ScaleTransform
                 x:Name="flipTransform"
                 ScaleX="1"/>
         </Image.RenderTransform>
-        <!--<Image.Triggers>
-            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-                <BeginStoryboard>
-                    <Storyboard Duration="0:0:1" RepeatBehavior="Forever" AutoReverse="True">
-                        <DoubleAnimationUsingKeyFrames
-                            Storyboard.TargetName="flipTransform"
-                            Storyboard.TargetProperty="ScaleX">
-                            <DiscreteDoubleKeyFrame Value="-1.0" KeyTime="0:0:0:5"/>
-                        </DoubleAnimationUsingKeyFrames>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-        </Image.Triggers>-->
-        <!--<Image.RenderTransform>
-            <ScaleTransform 
-                    ScaleX="{Binding FlipImageX}"
-                    ScaleY="1.0"/>
-        </Image.RenderTransform>-->
+
+        <Image.Style>
+            <Style TargetType="Image">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsAnimating}" Value="True">
+                        <DataTrigger.EnterActions>
+                            <BeginStoryboard>
+                                <Storyboard RepeatBehavior="Forever">
+                                    <!-- Flippar snabbt åt vänster -->
+                                    <DoubleAnimation 
+                                        Storyboard.TargetProperty="(Image.RenderTransform).(ScaleTransform.ScaleX)"
+                                        From="1.0"
+                                        To="-1.0"
+                                        Duration="0:0:0.005"/>
+
+                                    <!-- Håller skeppet vänd åt vänster i 1 sekund -->
+                                    <DoubleAnimation 
+                                        Storyboard.TargetProperty="(Image.RenderTransform).(ScaleTransform.ScaleX)"
+                                        From="-1.0"
+                                        To="-1.0"
+                                        Duration="0:0:2"
+                                        BeginTime="0:0:0.10"/>
+
+                                    <!-- Flippar tillbaka till ursprungliga positionen efter fördröjningen -->
+                                    <DoubleAnimation 
+                                        Storyboard.TargetProperty="(Image.RenderTransform).(ScaleTransform.ScaleX)"
+                                        From="-1.0"
+                                        To="1.0"
+                                        Duration="0:0:0.005"
+                                        BeginTime="0:0:1.10"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.EnterActions>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Image.Style>
+
     </Image>
 </UserControl>
