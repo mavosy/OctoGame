@@ -13,10 +13,16 @@ namespace SUP23_G9.ViewModels
     {
         public MainViewModel()
         {
-            SwitchToGameView();
+            SwitchToStartView();
         }
         public string ID { get; } = Guid.NewGuid().ToString();
         public BaseViewModel? CurrentViewModel { get; set; }
+
+        public void SwitchToStartView()
+        {
+            CurrentViewModel = new StartViewModel();
+            (CurrentViewModel as StartViewModel).SwitchToGameViewEvent = SwitchToGameView;
+        }
 
         /// <summary>
         /// Byter användargränssnittsfönstret till GameView, genom bindings mellan Main ViewModel och MainWindow

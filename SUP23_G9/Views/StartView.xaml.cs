@@ -23,7 +23,6 @@ namespace SUP23_G9.Views
         public StartView()
         {
             InitializeComponent();
-            DataContext = new StartViewModel();
         }
     }
 }
