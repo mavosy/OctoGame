@@ -60,7 +60,6 @@
                     </EventTrigger>
                 </Image.Triggers>
             </Image>
-
             <Button Name="PlayAgainBtn" Command="{Binding PlayAgainCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="294" Margin="0,383,0,0">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
