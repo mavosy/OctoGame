@@ -14,6 +14,14 @@
     <Border Background="PaleTurquoise" BorderBrush="DarkTurquoise" BorderThickness="5" CornerRadius="5">
         <Grid>
             <Label Name="lblTitle" Content="Game Over" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="36" Margin="311,98,298,400"/>
+            <Label Name="lblFinalScore" 
+       Content="{Binding FinalScore }" 
+       Foreground="#FF034A4E" 
+       FontFamily="Ravie" 
+       FontSize="28" 
+       HorizontalAlignment="Center" 
+       VerticalAlignment="Top" 
+       Margin="0,160,0,0"/>
             <Image Name="player" Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp" Margin="128,247,662,227">
                 <Image.Triggers>
                     <!-- Trigger för att starta animationen när fönstret laddas -->

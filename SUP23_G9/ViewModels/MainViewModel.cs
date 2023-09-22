@@ -21,7 +21,7 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Byter användargränssnittsfönstret till GameView, genom bindings mellan Main ViewModel och MainWindow
         /// </summary>
-        public void SwitchToGameView()
+        public void SwitchToGameView()// Behövdes för Score
         {
             CurrentViewModel = new GameViewModel();
             (CurrentViewModel as GameViewModel).SwitchToGameOverViewEvent = SwitchToGameOverView;
@@ -29,12 +29,17 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Byter användargränssnittsfönstret till GameOverView, genom bindings mellan Main ViewModel och MainWindow
         /// </summary>
-        public void SwitchToGameOverView()
-        {
-            CurrentViewModel = new GameOverViewModel();
 
+        private void OnGameOver(int finalScore)// För Score
+        {
+            SwitchToGameOverView(finalScore);
+        }
+        public void SwitchToGameOverView(int finalScore)// För Score
+        {
+            CurrentViewModel = new GameOverViewModel(finalScore);
             Debug.WriteLine($"Setting up GameOverViewModel with ID: {CurrentViewModel.InstanceID}");
             (CurrentViewModel as GameOverViewModel).SwitchToGameViewEvent = SwitchToGameView;
+        
         }
     }
 }
