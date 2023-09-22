@@ -7,10 +7,8 @@
              xmlns:vm="clr-namespace:SUP23_G9.ViewModels"
              d:DataContext="{d:DesignInstance {x:Type vm:GameOverViewModel}}"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="900">
-    <!--<UserControl.DataContext>
-        <vm:GameOverViewModel/>
-    </UserControl.DataContext>-->
+             d:DesignHeight="600" d:DesignWidth="1000">
+
     <Border Background="PaleTurquoise" BorderBrush="DarkTurquoise" BorderThickness="5" CornerRadius="5">
         <Grid>
             <Label Name="lblTitle" Content="Game Over" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="36" Margin="311,98,298,400"/>
