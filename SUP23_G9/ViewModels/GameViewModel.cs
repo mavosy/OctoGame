@@ -19,7 +19,7 @@ namespace SUP23_G9.ViewModels
     public class GameViewModel : BaseViewModel
     {
         private Timer _gameTimer;
-        private readonly int _speed = 4;
+        private readonly int _speed = 3;
         private readonly int _speedObstacle = 2;
         private static readonly Random _random = new();
 
@@ -51,14 +51,42 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         public int PlayerHealth { get; set; }
 
+
         private void CreateRandomShips()
         {
-            for (int i = 0; i < 10; i++) //Ships 2st
+            for (int i = 0; i < 50; i++) // Skapa 10 skepp
             {
-                int randomTop = GenerateRandomTop();
-                int randomLeft = GenerateRandomLeft();
-                Ships.Add(new ShipViewModel { Top = randomTop, Left = randomLeft });
+                int randomTop;
+                int randomLeft;
+                ShipViewModel newShip;
+
+                do
+                {
+                    randomTop = GenerateRandomTop();
+                    randomLeft = GenerateRandomLeft();
+                    newShip = new ShipViewModel { Top = randomTop, Left = randomLeft };
+                }
+                while (NewShipCollidesWithExistingShips(newShip)); //Sålänge (while) som villkoret är true så kommer koden i do köras - körs tills fått rätt värden som ej krockar.
+                                                                   //inspo från battleship videos del 6 ca 13:30
+
+                Ships.Add(newShip); //Om false så läggs de nya skeppen till
             }
+        }
+
+    private bool NewShipCollidesWithExistingShips(ShipViewModel newShip)
+        {
+            foreach (var existingShip in Ships)
+            {
+                bool collisionX = newShip.Left < existingShip.Left + 55 && newShip.Left + 55 > existingShip.Left; //Skrev 55 för att få lite extra marginal
+                bool collisionY = newShip.Top < existingShip.Top + 55 && newShip.Top + 55 > existingShip.Top;
+
+                if (collisionX && collisionY)
+                {
+                    return true; 
+                }
+            }
+
+            return false; 
         }
 
         private void CreateRandomObstacles()
@@ -71,8 +99,8 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-        private int GenerateRandomTop() => _random.Next((int)_mainWindowHeight);
-        private int GenerateRandomLeft() => _random.Next((int)_mainWindowWidth); 
+        private int GenerateRandomTop() => _random.Next((int)_mainWindowHeight - 50);
+        private int GenerateRandomLeft() => _random.Next((int)_mainWindowWidth - 50); 
 
         private void StartMovingObject()
         {
@@ -99,11 +127,51 @@ namespace SUP23_G9.ViewModels
 
                 if (ship.Top > _mainWindowHeight)
                 {
-                    ship.Top = 0;
-                    ship.Left = GenerateRandomLeft();
+
+                    ResetShipPosition(ship);
                 }
             }
         }
+
+        private void ResetShipPosition(ShipViewModel ship)
+        {
+            int newLeft = GenerateRandomLeft();
+
+            while(IsCollisionWithExistingShips(newLeft, -10))
+            {
+                newLeft = GenerateRandomLeft();
+            }
+
+            ship.Top = 0;
+            ship.Left = newLeft;
+        }
+
+        private bool IsCollisionWithExistingShips(int left, int top)
+        {
+            foreach (var existingShip in Ships) //Måste göra ny kollisonskoll mellan existerande skepp och det nya värdet som genereras
+            {
+                bool collisionX = left < existingShip.Left + 55 && left + 55 > existingShip.Left;
+                bool collisionY = top < existingShip.Top + 55 && top + 55 > existingShip.Top;
+
+                if (collisionX && collisionY)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        //Den gamla koden
+
+        //    if (ship.Top > _mainWindowHeight)
+        //    {
+        //        ship.Top = 0;
+        //        ship.Left = GenerateRandomLeft();
+        //    }
+        //}
+
+
         /// <summary>
         /// Loopar genom hinder för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till 0
         /// </summary>
@@ -164,17 +232,55 @@ namespace SUP23_G9.ViewModels
         }
         public void SetPlayerShipCollisionConsequence()
         {
+            //foreach (var ship in Ships)
+            //{
+            //    if (PlayerCollidesWithShip(ship))
+            //    {
+            //        ship.Top = 0;
+            //        ship.Left = GenerateRandomLeft();
+
+            //        GamePoints.AddPoints(10);
+            //    }
+            //}
+
+            //Dela upp denna också?
+
             foreach (var ship in Ships)
             {
                 if (PlayerCollidesWithShip(ship))
                 {
-                    ship.Top = 0;
-                    ship.Left = GenerateRandomLeft();
+                    int newLeft = GenerateRandomLeft();
 
-                    GamePoints.AddPoints(10);
+                    while (true)
+                    {
+                        bool collides = false;
+                        foreach (var existingShip in Ships)
+                        {
+                            bool collisionX = newLeft < existingShip.Left + 55 && newLeft + 55 > existingShip.Left;
+                            bool collisionY = 0 < existingShip.Top + 55 && 0 + 55 > existingShip.Top;
+
+                            if (collisionX && collisionY)
+                            {
+                                collides = true;
+                                break; 
+                            }
+                        }
+
+                        if (!collides)
+                        {
+                            ship.Top = 0;
+                            ship.Left = newLeft;
+
+                            GamePoints.AddPoints(10);
+                            break; 
+                        }
+
+                        newLeft = GenerateRandomLeft(); 
+                    }
                 }
             }
         }
+
 
         private bool PlayerCollidesWithShip(ShipViewModel ship)
         {
