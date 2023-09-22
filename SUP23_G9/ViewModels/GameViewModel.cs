@@ -13,6 +13,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace SUP23_G9.ViewModels
 {
@@ -193,14 +194,25 @@ namespace SUP23_G9.ViewModels
             OpenGameOverView();
         }
 
-        public Action SwitchToGameOverViewEvent { get; set; }
-        public void RaiseSwitchToGameOverViewEvent() => SwitchToGameOverViewEvent?.Invoke();
-
+      
+        public Action<int> SwitchToGameOverViewEvent { get; set; }
+        public void RaiseSwitchToGameOverViewEvent(int finalScore) => SwitchToGameOverViewEvent?.Invoke(finalScore);
+     
         public void OpenGameOverView()
         {
 
-            RaiseSwitchToGameOverViewEvent();
+            int finalScore = GamePoints.GetScore();
+           
+            if (finalScore <= 0) 
+            {
+                GameOverEvent?.Invoke(finalScore);
+            }
 
+
+            RaiseSwitchToGameOverViewEvent(finalScore);
+           
+
+        var gameOverViewModel = new GameOverViewModel(finalScore);
             // Anropa ShowGameOverView när tiden tar slut från rätt tråd
             //Application.Current.Dispatcher.Invoke(() =>
             //{
@@ -215,7 +227,8 @@ namespace SUP23_G9.ViewModels
             //    }
             //});
         }
-
+        public event Action<int> GameOverEvent;
+        
         public void StopGameTimer()
         {
             _gameTimer.Stop();

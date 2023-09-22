@@ -29,6 +29,10 @@ namespace SUP23_G9.ViewModels
                 Score = 0;
         }
 
+        public int GetScore()
+        {
+            return Score;
+        }
         public void ResetScore() => Score = 0;
     }
 }

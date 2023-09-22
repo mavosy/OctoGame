@@ -15,9 +15,13 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// ICommand för "Spela Igen" knappen
         /// </summary>
-        public GameOverViewModel()
+
+        public int FinalScore { get; private set; }
+        public GameOverViewModel(int finalScore)
         {
             PlayAgainCommand = new RelayCommand(parameter => PlayAgain());
+            PlayAgainCommand = new RelayCommand(parameter => PlayAgain());
+            FinalScore = finalScore; // Antar att du har en FinalScore egenskap i GameOverViewModel
         }
         public ICommand PlayAgainCommand { get; set; }
         public string ID { get; } = Guid.NewGuid().ToString();
