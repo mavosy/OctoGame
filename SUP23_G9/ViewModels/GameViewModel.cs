@@ -76,6 +76,7 @@ namespace SUP23_G9.ViewModels
         private void StartMovingObject()
         {
             _gameTimer = new DispatcherTimer();
+            Debug.WriteLine($"Setting up GameViewModel with ID: {this.InstanceID}");
             _gameTimer.Interval = TimeSpan.FromMilliseconds(20);
             _gameTimer.Tick += GameTimerEvent;
             _gameTimer.Start();
