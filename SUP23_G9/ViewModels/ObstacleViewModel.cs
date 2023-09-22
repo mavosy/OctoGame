@@ -13,34 +13,28 @@ namespace SUP23_G9.ViewModels
 {
     public class ObstacleViewModel : BaseViewModel
     {
-        //DispatcherTimer _obstacleTimer;
+       
 
         public ObstacleViewModel()
         {
             Width = 50;
             Height = 50;
-            //FlipImageX = 1.0;
-            //_obstacleTimer = new DispatcherTimer();
-            //_obstacleTimer.Interval = TimeSpan.FromSeconds(1);
-            //_obstacleTimer.Tick += ObstacleDanceEvent;
-            //_obstacleTimer.Start();
             LoadObstacleImageProcessing();
 
         }
 
-        //private void ObstacleDanceEvent(object? sender, EventArgs e)
-        //{
-        //    _obstacleTimer.IsEnabled=false;
-        //    if (FlipImageX == 1.0)
-        //    {
-        //        FlipImageX = -1.0;
-        //    }
-        //    else if (FlipImageX == -1.0)
-        //    {
-        //        FlipImageX = 1.0;
-        //    }
-        //    _obstacleTimer.IsEnabled = true;
-        //}
+        private bool _isAnimating = true;
+
+        public bool IsAnimating
+        {
+            get { return _isAnimating; }
+            set
+            {
+                _isAnimating = value;
+                OnPropertyChanged(nameof(IsAnimating));
+            }
+        }
+
 
         /// <summary>
         /// X-koordinat för hindren
@@ -82,9 +76,5 @@ namespace SUP23_G9.ViewModels
 
             ObstacleImage = image;
         }
-        //public void StopObstacleTimer()
-        //{
-        //    _obstacleTimer.Stop();
-        //}
     }
 }
