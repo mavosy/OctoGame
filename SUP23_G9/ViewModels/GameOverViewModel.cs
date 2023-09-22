@@ -20,14 +20,13 @@ namespace SUP23_G9.ViewModels
         public GameOverViewModel(int finalScore)
         {
             PlayAgainCommand = new RelayCommand(parameter => PlayAgain());
-            PlayAgainCommand = new RelayCommand(parameter => PlayAgain());
             FinalScore = finalScore; // Antar att du har en FinalScore egenskap i GameOverViewModel
         }
         public ICommand PlayAgainCommand { get; set; }
         public string ID { get; } = Guid.NewGuid().ToString();
         public Action SwitchToGameViewEvent { get; set; }
 
-        public GameViewModel GameviewmodelTest = new GameViewModel();
+        //public GameViewModel GameviewmodelTest = new GameViewModel();
 
 
         public void RaiseSwitchToGameViewEvent()
