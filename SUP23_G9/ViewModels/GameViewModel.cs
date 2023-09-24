@@ -139,7 +139,7 @@ namespace SUP23_G9.ViewModels
         private void StartMovingObject()
         {
             _gameTimer = new DispatcherTimer();
-            Debug.WriteLine($"Setting up GameViewModel with ID: {this.InstanceID}");
+            Debug.WriteLine($"Setting up timer in GameViewModel with ID: {InstanceID}");
             _gameTimer.Interval = TimeSpan.FromMilliseconds(20);
             _gameTimer.Tick += GameTimerEvent;
             _gameTimer.Start();
@@ -317,7 +317,7 @@ namespace SUP23_G9.ViewModels
             isGameActive = false; // sätt detta till false när spelet är över.
 
         }
-        //TODO ändra så det inte är fasta värden på width/height här (50)
+
         private bool PlayerCollidesWithShip(ShipViewModel ship)
         {
             bool collisionX = ship.Left < GlobalVariabels._playerCoordinatesLeft + 50 && ship.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
@@ -339,26 +339,23 @@ namespace SUP23_G9.ViewModels
             OpenGameOverView();
         }
 
-      
         public event Action<int> GameOverEvent;
         public Action<int> SwitchToGameOverViewEvent { get; set; }
         public void RaiseSwitchToGameOverViewEvent(int finalScore) => SwitchToGameOverViewEvent?.Invoke(finalScore);
      
         public void OpenGameOverView()
         {
-
             int finalScore = GamePoints.GetScore();
            
-            if (finalScore <= 0) 
+            if (finalScore <= 0)
             {
                 GameOverEvent?.Invoke(finalScore);
             }
 
-
             RaiseSwitchToGameOverViewEvent(finalScore);
            
-
             var gameOverViewModel = new GameOverViewModel(finalScore);
+            Debug.WriteLine($"Initializing GameOverViewModel in GameView(for final score) with ID: {gameOverViewModel.InstanceID}");
         }
         public event Action<int> GameOverEvent;
         public void StopAllTimersAndObjects()
