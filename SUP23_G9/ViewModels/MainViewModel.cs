@@ -14,13 +14,15 @@ namespace SUP23_G9.ViewModels
         public MainViewModel()
         {
             SwitchToStartView();
+            Debug.WriteLine($"Initializing MainViewModel with ID: {InstanceID}");
         }
-        public string ID { get; } = Guid.NewGuid().ToString();
+
         public BaseViewModel? CurrentViewModel { get; set; }
 
         public void SwitchToStartView()
         {
             CurrentViewModel = new StartViewModel();
+            Debug.WriteLine($"Initializing StartViewModel in MainViewModel with ID: {CurrentViewModel.InstanceID}");
             (CurrentViewModel as StartViewModel).SwitchToGameViewEvent = SwitchToGameView;
         }
 
@@ -30,6 +32,7 @@ namespace SUP23_G9.ViewModels
         public void SwitchToGameView()// Behövdes för Score
         {
             CurrentViewModel = new GameViewModel();
+            Debug.WriteLine($"Initializing GameViewModel in MainViewModel with ID: {CurrentViewModel.InstanceID}");
             (CurrentViewModel as GameViewModel).SwitchToGameOverViewEvent = SwitchToGameOverView;
         }
         /// <summary>
@@ -43,7 +46,7 @@ namespace SUP23_G9.ViewModels
         public void SwitchToGameOverView(int finalScore)// För Score
         {
             CurrentViewModel = new GameOverViewModel(finalScore);
-            Debug.WriteLine($"Setting up GameOverViewModel with ID: {CurrentViewModel.InstanceID}");
+            Debug.WriteLine($"Initializing GameOverViewModel in MainViewModel with ID: {CurrentViewModel.InstanceID}");
             (CurrentViewModel as GameOverViewModel).SwitchToGameViewEvent = SwitchToGameView;
         
         }
