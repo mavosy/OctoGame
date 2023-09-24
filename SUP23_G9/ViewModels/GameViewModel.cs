@@ -24,7 +24,8 @@ namespace SUP23_G9.ViewModels
         private readonly int _speedObstacle = 2;
         private static readonly Random _random = new();
         public int PointResult { get; set; }
-
+        private bool isGameActive = true;   // Nytt boolskt fält som indikerar om spelet är aktivt eller inte.
+        public PlayerViewModel PlayerViewModel { get; private set; }// en ny instans av PlayerViewModel inom din GameViewModel
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
         public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(30); // Startar med 1 min.
@@ -32,6 +33,7 @@ namespace SUP23_G9.ViewModels
 
         public GameViewModel()
         {
+            this.PlayerViewModel = new PlayerViewModel();//
             Ships = new ObservableCollection<ShipViewModel>();
             Obstacles = new ObservableCollection<ObstacleViewModel>();
             PlayerHealth = 100;
@@ -182,6 +184,7 @@ namespace SUP23_G9.ViewModels
 
         private void SetPlayerObstacleCollisionConsequence()
         {
+            if (!isGameActive) return; // Om spelet inte är aktivt, gör ingenting och avbryt metoden.
             foreach (var obstacle in Obstacles)
             {
                 if (PlayerCollidesWithObstacle(obstacle))
@@ -220,6 +223,7 @@ namespace SUP23_G9.ViewModels
         }
         public void SetPlayerShipCollisionConsequence()
         {
+            if (!isGameActive) return; // Om spelet inte är aktivt, gör ingenting och avbryt metoden.
             foreach (var ship in Ships)
             {
                 if (PlayerCollidesWithShip(ship))
@@ -255,9 +259,19 @@ namespace SUP23_G9.ViewModels
                 }
             }
         }
+        public void StartGame()
+        {
+            isGameActive = true; // sätt detta till true när spelet startar om.
 
-    //TODO ändra så det inte är fasta värden på width/height här (50)
-    private bool PlayerCollidesWithShip(ShipViewModel ship)
+        }
+
+        public void StopGame()
+        {
+            isGameActive = false; // sätt detta till false när spelet är över.
+
+        }
+        //TODO ändra så det inte är fasta värden på width/height här (50)
+        private bool PlayerCollidesWithShip(ShipViewModel ship)
         {
             bool collisionX = ship.Left < GlobalVariabels._playerCoordinatesLeft + 50 && ship.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
             bool collisionY = ship.Top < GlobalVariabels._playerCoordinatesTop + 50 && ship.Top + 50 > GlobalVariabels._playerCoordinatesTop;
@@ -273,6 +287,8 @@ namespace SUP23_G9.ViewModels
         {
             CountdownTimer._timer.Stop();
             // Anropa ShowGameOverView när tiden tar slut
+            this.StopGame(); // Stoppa spelet.
+            StopAllTimersAndObjects();
             OpenGameOverView();
         }
 
@@ -310,7 +326,22 @@ namespace SUP23_G9.ViewModels
             //});
         }
         public event Action<int> GameOverEvent;
-        
+        public void StopAllTimersAndObjects()
+        {
+            // Stoppa Game Timer
+            _gameTimer?.Stop();
+
+            // Stoppa Player Timer
+            this.PlayerViewModel.StopPlayerTimer();
+            // Stoppa Countdown Timer
+            CountdownTimer._timer?.Stop();
+
+        }
+        public void SomeMethodWhereGameEndsOrUserExits()
+        {
+            this.StopAllTimersAndObjects(); // Stoppar alla timers och objekt.
+                                            // Övrig kod för att hantera spelavslut eller användaravslut.
+        }
         public void StopGameTimer()
         {
             _gameTimer.Stop();
