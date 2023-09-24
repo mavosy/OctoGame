@@ -23,13 +23,10 @@ namespace SUP23_G9.ViewModels
         private readonly int _speed = 4;
         private readonly int _speedObstacle = 2;
         private static readonly Random _random = new();
-        public int PointResult { get; set; }
 
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(30); // Startar med 1 min.
         
-
         public GameViewModel()
         {
             Ships = new ObservableCollection<ShipViewModel>();
@@ -39,10 +36,12 @@ namespace SUP23_G9.ViewModels
             CreateRandomObstacles();
             StartMovingObject();
             CountdownTimer.TimeUp += CountdownTimer_TimeUp;
+            Debug.WriteLine($"Initializing new instance of GameViewModel (with timer) with ID: {InstanceID}");
         }
 
+        public int PointResult { get; set; }
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(30); // Startar med 1 min.
         public Points GamePoints { get; } = new Points();
-
         public ObservableCollection<ShipViewModel> Ships { get; set; }
         public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
         /// <summary>
@@ -149,17 +148,6 @@ namespace SUP23_G9.ViewModels
             }
             return false;
         }
-        /// <summary>
-        /// Metod för om spelaren skadas eller dör
-        /// </summary>
-        public void PlayerDamaged()
-        {
-            PlayerHealth -= 34;
-            if (PlayerHealth <= 0)
-            {
-                OpenGameOverView();
-            }
-        }
         public void SetPlayerShipCollisionConsequence()
         {
             foreach (var ship in Ships)
@@ -188,14 +176,20 @@ namespace SUP23_G9.ViewModels
             return false;
         }
 
-        private void CountdownTimer_TimeUp(object sender, EventArgs e)
+        /// <summary>
+        /// Metod för om spelaren skadas eller dör
+        /// </summary>
+        public void PlayerDamaged()
         {
-            CountdownTimer._timer.Stop();
-            // Anropa ShowGameOverView när tiden tar slut
-            OpenGameOverView();
+            PlayerHealth -= 34;
+            if (PlayerHealth <= 0)
+            {
+                OpenGameOverView();
+            }
         }
 
       
+        public event Action<int> GameOverEvent;
         public Action<int> SwitchToGameOverViewEvent { get; set; }
         public void RaiseSwitchToGameOverViewEvent(int finalScore) => SwitchToGameOverViewEvent?.Invoke(finalScore);
      
@@ -213,23 +207,15 @@ namespace SUP23_G9.ViewModels
             RaiseSwitchToGameOverViewEvent(finalScore);
            
 
-        var gameOverViewModel = new GameOverViewModel(finalScore);
-            // Anropa ShowGameOverView när tiden tar slut från rätt tråd
-            //Application.Current.Dispatcher.Invoke(() =>
-            //{
-            //    // Stäng det nuvarande fönstret (MainWindow) om det behövs
-            //    foreach (Window window in Application.Current.Windows)
-            //    {
-            //        if (window is MainWindow)
-            //        {
-            //            window.Close();
-            //            break; // Stäng bara det första förekomsten av MainWindow
-            //        }
-            //    }
-            //});
+            var gameOverViewModel = new GameOverViewModel(finalScore);
         }
-        public event Action<int> GameOverEvent;
-        
+
+        private void CountdownTimer_TimeUp(object sender, EventArgs e)
+        {
+            CountdownTimer._timer.Stop();
+            // Anropa ShowGameOverView när tiden tar slut
+            OpenGameOverView();
+        }
         public void StopGameTimer()
         {
             _gameTimer.Stop();
