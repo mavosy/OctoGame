@@ -1,5 +1,6 @@
 ﻿using SUP23_G9.ViewModels.Base;
 using System;
+using System.Diagnostics;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -34,6 +35,8 @@ namespace SUP23_G9.ViewModels
             FlipImageX = 1.0;
 
             LoadKrakenImageProcessing();
+
+            Debug.WriteLine($"Initializing new instance of PlayerViewModel(with timer) with ID: {InstanceID}");
         }
 
         /// <summary>
