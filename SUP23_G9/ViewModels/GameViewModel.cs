@@ -54,8 +54,11 @@ namespace SUP23_G9.ViewModels
             CreateRandomObstacles();
             StartMovingObject();
             CountdownTimer.TimeUp += CountdownTimer_TimeUp;
+            Debug.WriteLine($"Initializing new instance of GameViewModel (with timer) with ID: {InstanceID}");
         }
 
+        public int PointResult { get; set; }
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(30); // Startar med 1 min.
         public Points GamePoints { get; } = new Points();
         public ObservableCollection<ShipViewModel> Ships { get; set; }
         public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
@@ -337,6 +340,7 @@ namespace SUP23_G9.ViewModels
         }
 
       
+        public event Action<int> GameOverEvent;
         public Action<int> SwitchToGameOverViewEvent { get; set; }
         public void RaiseSwitchToGameOverViewEvent(int finalScore) => SwitchToGameOverViewEvent?.Invoke(finalScore);
      
@@ -354,20 +358,7 @@ namespace SUP23_G9.ViewModels
             RaiseSwitchToGameOverViewEvent(finalScore);
            
 
-        var gameOverViewModel = new GameOverViewModel(finalScore);
-            // Anropa ShowGameOverView när tiden tar slut från rätt tråd
-            //Application.Current.Dispatcher.Invoke(() =>
-            //{
-            //    // Stäng det nuvarande fönstret (MainWindow) om det behövs
-            //    foreach (Window window in Application.Current.Windows)
-            //    {
-            //        if (window is MainWindow)
-            //        {
-            //            window.Close();
-            //            break; // Stäng bara det första förekomsten av MainWindow
-            //        }
-            //    }
-            //});
+            var gameOverViewModel = new GameOverViewModel(finalScore);
         }
         public event Action<int> GameOverEvent;
         public void StopAllTimersAndObjects()

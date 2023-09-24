@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,17 +14,14 @@ namespace SUP23_G9.ViewModels
 {
     public class ObstacleViewModel : BaseViewModel
     {
-       
+        private bool _isAnimating = true;
 
         public ObstacleViewModel()
         {
             Width = 50;
             Height = 50;
             LoadObstacleImageProcessing();
-
         }
-
-        private bool _isAnimating = true;
 
         public bool IsAnimating
         {
@@ -34,7 +32,6 @@ namespace SUP23_G9.ViewModels
                 OnPropertyChanged(nameof(IsAnimating));
             }
         }
-
 
         /// <summary>
         /// X-koordinat för hindren
@@ -56,10 +53,6 @@ namespace SUP23_G9.ViewModels
         /// Bild för hindren
         /// </summary>
         public BitmapImage ObstacleImage { get; set; }
-        /// <summary>
-        /// Sätter vilket håll hindren är vänd mot i horisontellt led (1.0=original, -1.0=spegel)
-        /// </summary>
-        //public double FlipImageX { get; private set; }
 
         /// <summary>
         /// Processerar och cachar bild för hinder
