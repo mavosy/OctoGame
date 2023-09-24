@@ -54,7 +54,7 @@ namespace SUP23_G9.ViewModels
 
         private void CreateRandomShips()
         {
-            for (int i = 0; i < 50; i++) // Skapa 10 skepp
+            for (int i = 0; i < 20; i++) // Skapa 10 skepp
             {
                 int randomTop;
                 int randomLeft;
@@ -91,7 +91,7 @@ namespace SUP23_G9.ViewModels
 
         private void CreateRandomObstacles()
         {
-            for (int i = 0; i < 2; i++) //Obstacles 2st
+            for (int i = 0; i < 6; i++) //Obstacles 2st
             {
                 int randomTop = GenerateRandomTop();
                 int randomLeft = GenerateRandomLeft();
@@ -220,14 +220,21 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         public void PlayerDamaged()
         {
-            switch (PlayerHealth)
+            //switch (PlayerHealth)
+            //{
+            //    case > 0:
+            //        PlayerHealth -= 34;
+            //        break;
+            //    case <= 0:
+            //        OpenGameOverView();
+            //        break;
+            //}
+
+            PlayerHealth -= 25; //Jämnt tal annars reagerar ej, 100 - 25 - 25 -25 -25 blir noll ej 34
+
+            if (PlayerHealth <= 0)
             {
-                case > 0:
-                    PlayerHealth -= 34;
-                    break;
-                case <= 0:
-                    OpenGameOverView();
-                    break;
+                OpenGameOverView();
             }
         }
         public void SetPlayerShipCollisionConsequence()
