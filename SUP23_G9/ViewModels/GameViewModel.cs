@@ -28,7 +28,7 @@ namespace SUP23_G9.ViewModels
         public PlayerViewModel PlayerViewModel { get; private set; }// en ny instans av PlayerViewModel inom din GameViewModel
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(10); // Startar med 1 min.
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(30); // Startar med 1 min.
         
 
         public GameViewModel()
@@ -54,7 +54,7 @@ namespace SUP23_G9.ViewModels
 
         private void CreateRandomShips()
         {
-            for (int i = 0; i < 50; i++) // Skapa 10 skepp
+            for (int i = 0; i < 15; i++) // Skapa 10 skepp
             {
                 int randomTop;
                 int randomLeft;
@@ -62,7 +62,7 @@ namespace SUP23_G9.ViewModels
 
                 do
                 {
-                    randomTop = GenerateRandomTop();
+                    randomTop = GenerateRandomTop() - 600;
                     randomLeft = GenerateRandomLeft();
                     newShip = new ShipViewModel { Top = randomTop, Left = randomLeft };
                 }
@@ -91,9 +91,9 @@ namespace SUP23_G9.ViewModels
 
         private void CreateRandomObstacles()
         {
-            for (int i = 0; i < 2; i++) //Obstacles 2st
+            for (int i = 0; i < 5; i++) //Obstacles 2st
             {
-                int randomTop = GenerateRandomTop();
+                int randomTop = GenerateRandomTop() - 600;
                 int randomLeft = GenerateRandomLeft();
                 Obstacles.Add(new ObstacleViewModel { Top = randomTop, Left = randomLeft });
             }
@@ -117,6 +117,7 @@ namespace SUP23_G9.ViewModels
             MoveObstaclesLoop();
             SetPlayerShipCollisionConsequence();
             SetPlayerObstacleCollisionConsequence();
+            Debug.WriteLine($"Moving objects with GameViewModel with ID: {InstanceID}");
         }
         /// <summary>
         /// Loopar genom skeppen för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till 0
