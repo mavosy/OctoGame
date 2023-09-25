@@ -91,7 +91,28 @@
             <Border Style="{StaticResource InfoButtonBorder}" Margin="622,464,208,50">
                 <TextBlock Text="L" Style="{StaticResource InfoButton}"/>
             </Border>
-            <Label Name="lblInstructions" Content="Hur du styr Kraken:" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="30" Margin="0,407,450,124" HorizontalContentAlignment="Center" />
+            <Label Name="lblInstructions" Content="Hur du styr Kraken:" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="30" Margin="0,397,450,134" HorizontalContentAlignment="Center" />
+            <Label Name="lblInstructionsObstacle" Content="Undvik:" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="30" Margin="44,490,752,41" HorizontalContentAlignment="Center" />
+
+            <Image Name="obstacle" Source="/SUP23_G9;component/Views/Components/Images/PirateIsland1.bmp" Margin="233,467,687,53" Height="80" Width="80">
+                <Image.Triggers>
+                    <!-- Trigger för att starta animationen när fönstret laddas -->
+                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                <!-- Animation som ändrar bildens Margin (position) -->
+                                <ThicknessAnimation
+                                    Storyboard.TargetName="obstacle"
+                                    Storyboard.TargetProperty="Margin"
+                                    From="233,467,687,53"
+                                    To="265,467,655,53"
+                                    Duration="0:0:1" />
+                                <!-- Varaktighet av animationen -->
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Image.Triggers>
+            </Image>
 
         </Grid>
     </Border>
