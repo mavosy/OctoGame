@@ -12,7 +12,7 @@
     <Border Background="PaleTurquoise" BorderBrush="DarkTurquoise" BorderThickness="5" CornerRadius="5">
         
         <Grid>
-            <Label Name="lblTitle" Content="Game Over" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="36" Margin="311,98,298,400"/>
+            <Label Name="lblTitle" Content="Game Over" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="36" Margin="358,81,349,417"/>
             <StackPanel Orientation="Horizontal" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Top" 
@@ -65,7 +65,8 @@
                     </EventTrigger>
                 </Image.Triggers>
             </Image>
-            <Button Name="PlayAgainBtn" Command="{Binding PlayAgainCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="294" Margin="0,383,0,0">
+            <!-- Knapp nedan Fungerar inte felfritt-->
+            <!--<Button Name="PlayAgainBtn" Command="{Binding PlayAgainCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="294" Margin="0,383,0,0">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="#FF0BE6EC" BorderBrush="#FF00928F" BorderThickness="5" CornerRadius="20">
@@ -74,7 +75,7 @@
                     </ControlTemplate>
                 </Button.Template>
                 <TextBlock Text="Spela Igen" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="36"/>
-            </Button>
+            </Button>-->
         </Grid>
     </Border>
 </UserControl>
