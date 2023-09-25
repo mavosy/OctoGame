@@ -33,7 +33,7 @@ namespace SUP23_G9.ViewModels
 
         public GameViewModel()
         {
-            this.PlayerViewModel = new PlayerViewModel();//
+            //this.PlayerViewModel = new PlayerViewModel();
             Ships = new ObservableCollection<ShipViewModel>();
             Obstacles = new ObservableCollection<ObstacleViewModel>();
             PlayerHealth = 100;
@@ -332,7 +332,7 @@ namespace SUP23_G9.ViewModels
             _gameTimer?.Stop();
 
             // Stoppa Player Timer
-            this.PlayerViewModel.StopPlayerTimer();
+            //this.PlayerViewModel.StopPlayerTimer();
             // Stoppa Countdown Timer
             CountdownTimer._timer?.Stop();
 
