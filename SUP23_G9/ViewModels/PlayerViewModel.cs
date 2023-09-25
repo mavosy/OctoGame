@@ -1,5 +1,6 @@
 ﻿using SUP23_G9.ViewModels.Base;
 using System;
+using System.Diagnostics;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -34,6 +35,7 @@ namespace SUP23_G9.ViewModels
             FlipImageX = 1.0;
 
             LoadKrakenImageProcessing();
+            Debug.WriteLine($"New playerViewModel with ID: {InstanceID}");
         }
 
         /// <summary>
@@ -69,7 +71,7 @@ namespace SUP23_G9.ViewModels
         private void MovePlayerEvent(object? sender, EventArgs e)
         {
             UpdateGlobalVariabelsWithPlayerCoordinates();
-
+            Debug.WriteLine($"Event körs fortfarande från instans med ID: {InstanceID}");
             if (_leftButtonIsDown && IsNotAtLeftEdge())
             {
                 MovePlayerLeft();
