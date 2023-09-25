@@ -22,8 +22,12 @@ namespace SUP23_G9.ViewModels
     public class GameViewModel : BaseViewModel
     {
         private DispatcherTimer _gameTimer;
-        private readonly int _speed = 4;
-        private readonly int _speedObstacle = 2;
+
+        //private readonly int _speed = 4;
+        //private readonly int _speedObstacle = 2;
+        private int _speed = 4;
+        private int _speedObstacle = 2;
+
         private static readonly Random _random = new();
         public int PointResult { get; set; }
         private bool isGameActive = true;   // Nytt boolskt fält som indikerar om spelet är aktivt eller inte.
@@ -31,13 +35,18 @@ namespace SUP23_G9.ViewModels
         private double _mainWindowHeight = System.Windows.Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = System.Windows.Application.Current.MainWindow.ActualWidth;
 
+        //Ny timer för generate obstacles
+        private DispatcherTimer _spawnObstaclesTimer;
+        private int obstaclesSpawnCounter = 0;
+
         BitmapImage _fullHeart;
         BitmapImage _emptyHeart;
 
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(45); // Startar med 1 min.
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(120); // Startar med 1 min.
         public BitmapImage Heart1 { get; set; }
         public BitmapImage Heart2 { get; set; }
         public BitmapImage Heart3 { get; set; }
+
 
         public GameViewModel()
         {
@@ -54,6 +63,9 @@ namespace SUP23_G9.ViewModels
             CreateRandomObstacles();
             StartMovingObject();
             CountdownTimer.TimeUp += CountdownTimer_TimeUp;
+
+            //Generate obstacles timer
+            spawnObstacleTimer();
         }
 
         public Points GamePoints { get; } = new Points();
@@ -64,6 +76,31 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         public int PlayerHealth { get; set; }
 
+        /// <summary>
+        /// Timer för att generera nya obstacles
+        /// </summary>
+        private void spawnObstacleTimer()
+        {
+            _spawnObstaclesTimer = new DispatcherTimer();
+            _spawnObstaclesTimer.Interval = TimeSpan.FromSeconds(1); //Timer tick/varje sek
+            _spawnObstaclesTimer.Tick += CountdownTimer_SpawnObstacles;
+            _spawnObstaclesTimer.Start();
+        }
+
+        /// <summary>
+        /// Skapar nya objekt av typen Obstacle var 10:e sekund
+        /// </summary>
+        private void CountdownTimer_SpawnObstacles(object? sender, EventArgs e)
+        {
+            obstaclesSpawnCounter++;
+
+            if (obstaclesSpawnCounter % 10 == 0)
+            {
+                CreateRandomObstacles();
+                _speedObstacle++;
+                _speed++;
+            }
+        }
 
         /// <summary>
         /// Skapar nya objekt av typen ShipViewModel
@@ -115,7 +152,7 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         private void CreateRandomObstacles()
         {
-            for (int i = 0; i < 5; i++) //Obstacles 2st
+            for (int i = 0; i < 3; i++) //Obstacles 2st
             {
                 int randomTop = GenerateRandomTop() - 600;
                 int randomLeft = GenerateRandomLeft();
