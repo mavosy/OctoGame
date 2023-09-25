@@ -26,7 +26,7 @@
     </UserControl.Resources>
 
     <Border Background="PaleTurquoise" BorderBrush="DarkTurquoise" BorderThickness="5" CornerRadius="5">
-        <Grid>
+        <Grid Height="600" Width="1000">
             <Label Name="lblTitle" Content="Happy Kraken's &#xA;Pirate Buffet" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="50" Margin="216,25,216,412" Width="557" HorizontalContentAlignment="Center" />
             <Image Name="player" Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp" Margin="183,237,717,255">
                 <Image.Triggers>
