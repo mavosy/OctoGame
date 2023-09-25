@@ -130,6 +130,12 @@
   <data name="KrakenLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Views\Components\Images\KrakenLeft.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="LifeHeartEmpty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Views\Components\Images\LifeHeartEmpty.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LifeHeartFull" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Views\Components\Images\LifeHeartFull.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="PermanentMarker_Regular" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\PermanentMarker-Regular.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
