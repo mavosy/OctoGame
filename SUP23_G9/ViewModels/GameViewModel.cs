@@ -12,8 +12,10 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using static System.Formats.Asn1.AsnWriter;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SUP23_G9.ViewModels
 {
@@ -26,10 +28,17 @@ namespace SUP23_G9.ViewModels
         public int PointResult { get; set; }
         private bool isGameActive = true;   // Nytt boolskt fält som indikerar om spelet är aktivt eller inte.
         public PlayerViewModel PlayerViewModel { get; private set; }// en ny instans av PlayerViewModel inom din GameViewModel
-        private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
-        private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
+        private double _mainWindowHeight = System.Windows.Application.Current.MainWindow.ActualHeight;
+        private double _mainWindowWidth = System.Windows.Application.Current.MainWindow.ActualWidth;
+
+        BitmapImage _fullHeart;
+        BitmapImage _emptyHeart;
+
+
         public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(45); // Startar med 1 min.
-        
+        public BitmapImage Heart1 { get; set; }
+        public BitmapImage Heart2 { get; set; }
+        public BitmapImage Heart3 { get; set; }
 
         public GameViewModel()
         {
@@ -37,6 +46,11 @@ namespace SUP23_G9.ViewModels
             Ships = new ObservableCollection<ShipViewModel>();
             Obstacles = new ObservableCollection<ObstacleViewModel>();
             PlayerHealth = 100;
+            LoadEmptyHeartImageProcessing();
+            LoadFullHeartImageProcessing();
+            Heart1 = _fullHeart;
+            Heart2 = _fullHeart;
+            Heart3 = _fullHeart;
             CreateRandomShips();
             CreateRandomObstacles();
             StartMovingObject();
@@ -346,6 +360,29 @@ namespace SUP23_G9.ViewModels
         public void StopGameTimer()
         {
             _gameTimer.Stop();
+        }
+        private void LoadFullHeartImageProcessing()
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = new Uri("pack://application:,,,/SUP23_G9;component/Views/Components/Images/LifeHeartFull.png");
+            image.DecodePixelWidth = 50;
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.EndInit();
+
+            _fullHeart = image;
+        }
+
+        private void LoadEmptyHeartImageProcessing()
+        {
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = new Uri("pack://application:,,,/SUP23_G9;component/Views/Components/Images/LifeHeartEmpty.png");
+            image.DecodePixelWidth = 50;
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.EndInit();
+
+            _emptyHeart = image;
         }
     }
 }

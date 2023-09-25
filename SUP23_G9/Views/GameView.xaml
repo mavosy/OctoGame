@@ -33,21 +33,9 @@
             FontSize="30" 
             Foreground="#FF034A4E" 
             FontFamily="Ravie" />
-                      
+
         <Canvas x:Name="gameArea">
             <Characters:Player x:Name="player"/>
-            
-            <ProgressBar
-                Name="healthBar"
-                Width="200" 
-                Height="30" 
-                Margin="10" 
-                Canvas.Left="400" 
-                Opacity="0.7" 
-                Value="{Binding PlayerHealth}"
-                Foreground="#FF940000"
-                BorderBrush="Black"
-                BorderThickness="2"/>
 
             <ItemsControl ItemsSource="{Binding Ships}">
                 <ItemsControl.ItemsPanel>
@@ -86,6 +74,9 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+            <Image Height="35" Canvas.Left="447" Source="{Binding Heart1}" Stretch="Fill" Canvas.Top="10" Width="35" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Image Height="35" Canvas.Left="518" Source="{Binding Heart2}" Stretch="Fill" Canvas.Top="10" Width="35" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Image Height="35" Canvas.Left="482" Source="{Binding Heart3}" Stretch="Fill" Canvas.Top="10" Width="36" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </Canvas>
     </Grid>
 </UserControl>
