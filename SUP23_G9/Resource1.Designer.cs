@@ -103,6 +103,26 @@ namespace SUP23_G9 {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] LifeHeartEmpty {
+            get {
+                object obj = ResourceManager.GetObject("LifeHeartEmpty", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] LifeHeartFull {
+            get {
+                object obj = ResourceManager.GetObject("LifeHeartFull", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] PermanentMarker_Regular {
             get {
                 object obj = ResourceManager.GetObject("PermanentMarker_Regular", resourceCulture);
