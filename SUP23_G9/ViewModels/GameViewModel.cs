@@ -365,7 +365,7 @@ namespace SUP23_G9.ViewModels
         {
             BitmapImage image = new BitmapImage();
             image.BeginInit();
-            image.UriSource = new Uri("pack://application:,,,/SUP23_G9;component/Views/Components/Images/LifeHeartFull.png");
+            image.UriSource = new Uri("pack://application:,,,/SUP23_G9;component/Views/Components/Images/LifeHeartFull.bmp");
             image.DecodePixelWidth = 50;
             image.CacheOption = BitmapCacheOption.OnLoad;
             image.EndInit();
@@ -377,7 +377,7 @@ namespace SUP23_G9.ViewModels
         {
             BitmapImage image = new BitmapImage();
             image.BeginInit();
-            image.UriSource = new Uri("pack://application:,,,/SUP23_G9;component/Views/Components/Images/LifeHeartEmpty.png");
+            image.UriSource = new Uri("pack://application:,,,/SUP23_G9;component/Views/Components/Images/LifeHeartEmpty.bmp");
             image.DecodePixelWidth = 50;
             image.CacheOption = BitmapCacheOption.OnLoad;
             image.EndInit();

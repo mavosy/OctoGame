@@ -22,8 +22,8 @@
     <None Remove="Views\Components\Images\anchor.png" />
     <None Remove="Views\Components\Images\Happy_Kraken_Left.bmp" />
     <None Remove="Views\Components\Images\Happy_Kraken_Right.bmp" />
-    <None Remove="Views\Components\Images\LifeHeartEmpty.png" />
-    <None Remove="Views\Components\Images\LifeHeartFull.png" />
+    <None Remove="Views\Components\Images\LifeHeartEmpty.bmp" />
+    <None Remove="Views\Components\Images\LifeHeartFull.bmp" />
     <None Remove="Views\Components\Images\PirateIsland1.bmp" />
     <None Remove="Views\Components\Images\PirateShip1_Left.bmp" />
     <None Remove="Views\Components\Images\PirateShip1_Right.bmp" />
@@ -41,8 +41,8 @@
     <Resource Include="Views\Components\Images\Happy_Kraken_Right.bmp">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Views\Components\Images\LifeHeartEmpty.png" />
-    <Resource Include="Views\Components\Images\LifeHeartFull.png" />
+    <Resource Include="Views\Components\Images\LifeHeartEmpty.bmp" />
+    <Resource Include="Views\Components\Images\LifeHeartFull.bmp" />
     <Resource Include="Views\Components\Images\PirateIsland1.bmp" />
     <Resource Include="Views\Components\Images\PirateShip1_Left.bmp">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
