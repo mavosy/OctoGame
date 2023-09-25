@@ -28,7 +28,7 @@ namespace SUP23_G9.ViewModels
         public PlayerViewModel PlayerViewModel { get; private set; }// en ny instans av PlayerViewModel inom din GameViewModel
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(10); // Startar med 1 min.
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(60); // Startar med 1 min.
         
 
         public GameViewModel()
@@ -54,7 +54,7 @@ namespace SUP23_G9.ViewModels
 
         private void CreateRandomShips()
         {
-            for (int i = 0; i < 50; i++) // Skapa 10 skepp
+            for (int i = 0; i < 10; i++) // Skapa 10 skepp
             {
                 int randomTop;
                 int randomLeft;
@@ -91,7 +91,7 @@ namespace SUP23_G9.ViewModels
 
         private void CreateRandomObstacles()
         {
-            for (int i = 0; i < 2; i++) //Obstacles 2st
+            for (int i = 0; i < 12; i++) //Obstacles 2st
             {
                 int randomTop = GenerateRandomTop();
                 int randomLeft = GenerateRandomLeft();

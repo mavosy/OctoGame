@@ -12,7 +12,7 @@
     <Border Background="PaleTurquoise" BorderBrush="DarkTurquoise" BorderThickness="5" CornerRadius="5">
         
         <Grid>
-            <Label Name="lblTitle" Content="Game Over" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="36" Margin="311,98,298,400"/>
+            <Label Name="lblTitle" Content="Game Over" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="36" Margin="356,85,356,413"/>
             <StackPanel Orientation="Horizontal" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Top" 
