@@ -34,7 +34,6 @@ namespace SUP23_G9.ViewModels
         BitmapImage _fullHeart;
         BitmapImage _emptyHeart;
 
-
         public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(45); // Startar med 1 min.
         public BitmapImage Heart1 { get; set; }
         public BitmapImage Heart2 { get; set; }
@@ -58,7 +57,6 @@ namespace SUP23_G9.ViewModels
         }
 
         public Points GamePoints { get; } = new Points();
-
         public ObservableCollection<ShipViewModel> Ships { get; set; }
         public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
         /// <summary>
@@ -66,9 +64,13 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         public int PlayerHealth { get; set; }
 
+
+        /// <summary>
+        /// Skapar nya objekt av typen ShipViewModel
+        /// </summary>
         private void CreateRandomShips()
         {
-            for (int i = 0; i < 10; i++) // Skapa 10 skepp
+            for (int i = 0; i < 20; i++) // Skapa 10 skepp
             {
                 int randomTop;
                 int randomLeft;
@@ -87,6 +89,10 @@ namespace SUP23_G9.ViewModels
             }
         }
 
+
+        /// <summary>
+        /// Kontrollerar att det nya objektet av ShipViewModel ej kolliderar med något annat objekt i listan
+        /// </summary>
         private bool NewShipCollidesWithExistingShips(ShipViewModel newShip)
         {
             foreach (var existingShip in Ships)
@@ -103,6 +109,10 @@ namespace SUP23_G9.ViewModels
             return false;
         }
 
+
+        /// <summary>
+        /// Skapar nya objekt av typen Obstacles
+        /// </summary>
         private void CreateRandomObstacles()
         {
             for (int i = 0; i < 5; i++) //Obstacles 2st
@@ -113,7 +123,14 @@ namespace SUP23_G9.ViewModels
             }
         }
 
+        /// <summary>
+        /// Randomsierar fram ett värde inom mainwindow Height
+        /// </summary>
         private int GenerateRandomTop() => _random.Next((int)_mainWindowHeight);
+
+        /// <summary>
+        /// Randomsierar fram ett värde inom mainwindow Width
+        /// </summary>
         private int GenerateRandomLeft() => _random.Next((int)_mainWindowWidth); 
 
         private void StartMovingObject()
@@ -134,7 +151,7 @@ namespace SUP23_G9.ViewModels
             Debug.WriteLine($"Moving objects with GameViewModel with ID: {InstanceID}");
         }
         /// <summary>
-        /// Loopar genom skeppen för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till 0
+        /// Loopar genom skeppen för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till -10
         /// </summary>
         private void MoveShipsLoop()
         {
@@ -150,6 +167,9 @@ namespace SUP23_G9.ViewModels
             }
         }
 
+        /// <summary>
+        /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande objekt i canvas vid repositionering, om true så genereras nytt värde 
+        /// </summary>
         private void ResetShipPosition(ShipViewModel ship)
         {
             int newLeft = GenerateRandomLeft();
@@ -163,6 +183,9 @@ namespace SUP23_G9.ViewModels
             ship.Left = newLeft;
         }
 
+        /// <summary>
+        /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande objekt i canvas vid repositionering
+        /// </summary>
         private bool IsCollisionWithExistingShips(int left, int top)
         {
             foreach (var existingShip in Ships) //Måste göra ny kollisonskoll mellan existerande skepp och det nya värdet som genereras
@@ -200,6 +223,7 @@ namespace SUP23_G9.ViewModels
         private void SetPlayerObstacleCollisionConsequence()
         {
             if (!isGameActive) return; // Om spelet inte är aktivt, gör ingenting och avbryt metoden.
+
             foreach (var obstacle in Obstacles)
             {
                 if (PlayerCollidesWithObstacle(obstacle))
@@ -245,44 +269,40 @@ namespace SUP23_G9.ViewModels
                 OpenGameOverView();
             }
         }
+
+        /// <summary>
+        /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande objekt i canvas vid repositionering efter att spelaren krockar med ett skepp
+        /// </summary>
         public void SetPlayerShipCollisionConsequence()
         {
-            if (!isGameActive) return; // Om spelet inte är aktivt, gör ingenting och avbryt metoden.
+            if (!isGameActive) return;
+
             foreach (var ship in Ships)
             {
                 if (PlayerCollidesWithShip(ship))
                 {
-                    int newLeft = GenerateRandomLeft();
-
-                    while (true)
-                    {
-                        bool collides = false;
-                        foreach (var existingShip in Ships)
-                        {
-                            bool collisionX = newLeft < existingShip.Left + 55 && newLeft + 55 > existingShip.Left;
-                            bool collisionY = 0 < existingShip.Top + 55 && 0 + 55 > existingShip.Top;
-
-                            if (collisionX && collisionY)
-                            {
-                                collides = true;
-                                break;
-                            }
-                        }
-
-                        if (!collides)
-                        {
-                            ship.Top = 0;
-                            ship.Left = newLeft;
-
-                            GamePoints.AddPoints(10);
-                            break;
-                        }
-
-                        newLeft = GenerateRandomLeft();
-                    }
+                    PlayerShipCollision(ship);
                 }
             }
         }
+
+        /// <summary>
+        /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande objekt i canvas vid repositionering efter att spelaren krockar med ett skepp
+        /// </summary>
+        private void PlayerShipCollision(ShipViewModel ship)
+        {
+            int newLeft = GenerateRandomLeft();
+
+            while(IsCollisionWithExistingShips(newLeft, 0))
+            {
+                newLeft = GenerateRandomLeft();
+            }
+
+            ship.Top = 0;
+            ship.Left = newLeft;
+            GamePoints.AddPoints(10);
+        }
+
         public void StartGame()
         {
             isGameActive = true; // sätt detta till true när spelet startar om.
