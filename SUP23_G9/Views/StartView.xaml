@@ -26,9 +26,9 @@
     </UserControl.Resources>
 
     <Border Background="PaleTurquoise" BorderBrush="DarkTurquoise" BorderThickness="5" CornerRadius="5">
-        <Grid Width="1000" Height="600">
+        <Grid Height="600" Width="1000">
             <Label Name="lblTitle" Content="Happy Kraken's &#xA;Pirate Buffet" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="50" Margin="216,25,216,412" Width="557" HorizontalContentAlignment="Center" />
-            <Image Name="player" Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp" Margin="183,237,717,255">
+            <Image Name="player" Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp" Margin="136,210,774,300" Width="90" Height="90">
                 <Image.Triggers>
                     <!-- Trigger för att starta animationen när fönstret laddas -->
                     <EventTrigger RoutedEvent="FrameworkElement.Loaded">
@@ -48,7 +48,7 @@
                 </Image.Triggers>
             </Image>
 
-            <Image Name="pirateShip1" Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Left.bmp" Margin="728,248,172,256">
+            <Image Name="pirateShip1" Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Left.bmp" Height="80" Width="80" Margin="753,209,167,311">
                 <Image.Triggers>
                     <!-- Trigger för att starta animationen när fönstret laddas -->
                     <EventTrigger RoutedEvent="FrameworkElement.Loaded">
@@ -68,7 +68,7 @@
                 </Image.Triggers>
             </Image>
 
-            <Button Name="StartBtn" Command="{Binding StartCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="178" Margin="0,265,0,0">
+            <Button Name="StartBtn" Command="{Binding StartCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="178" Margin="0,245,0,0">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="#FF0BE6EC" BorderBrush="#FF00928F" BorderThickness="5" CornerRadius="20">
@@ -79,19 +79,19 @@
                 <TextBlock Text="Start" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="36"/>
             </Button>
 
-            <Border Style="{StaticResource InfoButtonBorder}" Margin="557,399,273,115">
-                <TextBlock Text="I" Style="{StaticResource InfoButton}"/>
+            <Border Style="{StaticResource InfoButtonBorder}" Margin="612,376,328,164">
+                <TextBlock Text="I" Style="{StaticResource InfoButton}" Margin="0,2,0,-2"/>
             </Border>
-            <Border Style="{StaticResource InfoButtonBorder}" Margin="492,464,338,50">
-                <TextBlock Text="J" Style="{StaticResource InfoButton}"/>
+            <Border Style="{StaticResource InfoButtonBorder}" Margin="547,441,393,99">
+                <TextBlock Text="J" Style="{StaticResource InfoButton}" Margin="0,2,0,-2"/>
             </Border>
-            <Border Style="{StaticResource InfoButtonBorder}" Margin="557,464,273,50">
-                <TextBlock Text="K" Style="{StaticResource InfoButton}"/>
+            <Border Style="{StaticResource InfoButtonBorder}" Margin="612,441,328,99">
+                <TextBlock Text="K" Style="{StaticResource InfoButton}" Margin="0,2,0,-2"/>
             </Border>
-            <Border Style="{StaticResource InfoButtonBorder}" Margin="622,464,208,50">
-                <TextBlock Text="L" Style="{StaticResource InfoButton}"/>
+            <Border Style="{StaticResource InfoButtonBorder}" Margin="677,441,263,99">
+                <TextBlock Text="L" Style="{StaticResource InfoButton}" Margin="0,2,0,-2"/>
             </Border>
-            <Label Name="lblInstructions" Content="Hur du styr Kraken:" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="30" Margin="0,407,450,124" HorizontalContentAlignment="Center" />
+            <Label Name="lblInstructions" Content="Hur du styr Kraken:" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="30" Margin="0,411,450,120" HorizontalContentAlignment="Center" />
 
         </Grid>
     </Border>

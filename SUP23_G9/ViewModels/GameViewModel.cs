@@ -54,12 +54,12 @@ namespace SUP23_G9.ViewModels
 
         private void CreateRandomShips()
         {
-            for (int i = 0; i < 50; i++) // Skapa 10 skepp
+            for (int i = 0; i < 10; i++) // Skapa 10 skepp
             {
                 int randomTop;
                 int randomLeft;
                 ShipViewModel newShip;
-
+                
                 do
                 {
                     randomTop = GenerateRandomTop();
