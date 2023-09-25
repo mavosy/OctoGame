@@ -28,7 +28,7 @@ namespace SUP23_G9.ViewModels
         public PlayerViewModel PlayerViewModel { get; private set; }// en ny instans av PlayerViewModel inom din GameViewModel
         private double _mainWindowHeight = Application.Current.MainWindow.ActualHeight;
         private double _mainWindowWidth = Application.Current.MainWindow.ActualWidth;
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(30); // Startar med 1 min.
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(45); // Startar med 1 min.
         
 
         public GameViewModel()
