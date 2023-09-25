@@ -75,8 +75,8 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
             <Image Height="35" Canvas.Left="447" Source="{Binding Heart1}" Stretch="Fill" Canvas.Top="10" Width="35" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Image Height="35" Canvas.Left="518" Source="{Binding Heart2}" Stretch="Fill" Canvas.Top="10" Width="35" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Image Height="35" Canvas.Left="482" Source="{Binding Heart3}" Stretch="Fill" Canvas.Top="10" Width="36" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Image Height="35" Canvas.Left="482" Source="{Binding Heart2}" Stretch="Fill" Canvas.Top="10" Width="36" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Image Height="35" Canvas.Left="518" Source="{Binding Heart3}" Stretch="Fill" Canvas.Top="10" Width="35" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </Canvas>
     </Grid>
 </UserControl>

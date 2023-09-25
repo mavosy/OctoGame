@@ -231,8 +231,17 @@ namespace SUP23_G9.ViewModels
         public void PlayerDamaged()
         {
             PlayerHealth -= 34;
+            if (PlayerHealth <= 66)
+            {
+                Heart3 = _emptyHeart;
+            }
+            if (PlayerHealth <= 32)
+            {
+                Heart2 = _emptyHeart;
+            }
             if (PlayerHealth <= 0)
             {
+                Heart1 = _emptyHeart;
                 OpenGameOverView();
             }
         }
