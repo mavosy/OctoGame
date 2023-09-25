@@ -22,22 +22,34 @@ namespace SUP23_G9.ViewModels
     public class GameViewModel : BaseViewModel
     {
         private DispatcherTimer _gameTimer;
-        private readonly int _speed = 4;
-        private readonly int _speedObstacle = 2;
+        private int _speed = 4;
+        private int _speedObstacle = 2;
         private static readonly Random _random = new();
-        public int PointResult { get; set; }
-        private bool isGameActive = true;   // Nytt boolskt fält som indikerar om spelet är aktivt eller inte.
-        public PlayerViewModel PlayerViewModel { get; private set; }// en ny instans av PlayerViewModel inom din GameViewModel
-        private double _mainWindowHeight = System.Windows.Application.Current.MainWindow.ActualHeight;
-        private double _mainWindowWidth = System.Windows.Application.Current.MainWindow.ActualWidth;
 
         BitmapImage _fullHeart;
         BitmapImage _emptyHeart;
+        public int PointResult { get; set; }
+        private bool isGameActive = true;   // Nytt boolskt fält som indikerar om spelet är aktivt eller inte.
+        public PlayerViewModel PlayerViewModel { get; private set; }// en ny instans av PlayerViewModel inom din GameViewModel
 
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(45); // Startar med 1 min.
+        private double _mainWindowHeight = System.Windows.Application.Current.MainWindow.ActualHeight;
+        private double _mainWindowWidth = System.Windows.Application.Current.MainWindow.ActualWidth;
+
+        private DispatcherTimer _spawnObstaclesTimer;
+        private int obstaclesSpawnCounter = 0;
+
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(120); // Startar med 1 min.
         public BitmapImage Heart1 { get; set; }
         public BitmapImage Heart2 { get; set; }
         public BitmapImage Heart3 { get; set; }
+
+        public Points GamePoints { get; } = new Points();
+        public ObservableCollection<ShipViewModel> Ships { get; set; }
+        public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
+        /// <summary>
+        /// Spelarens livspoäng, är bundet till ProgressBar i UI
+        /// </summary>
+        public int PlayerHealth { get; set; }
 
         public GameViewModel()
         {
@@ -53,24 +65,49 @@ namespace SUP23_G9.ViewModels
             CreateRandomShips();
             CreateRandomObstacles();
             StartMovingObject();
+
+            CountdownTimer.StartTimer();
             CountdownTimer.TimeUp += CountdownTimer_TimeUp;
+
+            /// <summary>
+            /// Separat timer för skapandet av nya Obstacles
+            /// </summary>
+            spawnObstacleTimer();
+
         }
 
-        public Points GamePoints { get; } = new Points();
-        public ObservableCollection<ShipViewModel> Ships { get; set; }
-        public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
         /// <summary>
-        /// Spelarens livspoäng, är bundet till ProgressBar i UI
+        /// Separat timer för skapandet av nya Obstacles
         /// </summary>
-        public int PlayerHealth { get; set; }
+        private void spawnObstacleTimer()
+        {
+            _spawnObstaclesTimer = new DispatcherTimer();
+            _spawnObstaclesTimer.Interval = TimeSpan.FromSeconds(1); // Timer ticks every second.
+            _spawnObstaclesTimer.Tick += CountdownTimer_SpawnObstacles;
+            _spawnObstaclesTimer.Start();
+        }
 
+        /// <summary>
+        /// Skapar nya objekt av typen Obstacle var 10:e sekund
+        /// </summary>
+        private void CountdownTimer_SpawnObstacles(object? sender, EventArgs e)
+        {
+            obstaclesSpawnCounter++;
+
+            if (obstaclesSpawnCounter % 10 == 0)
+            {
+                CreateRandomObstacles();
+                _speedObstacle++;
+                _speed++;
+            }
+        }
 
         /// <summary>
         /// Skapar nya objekt av typen ShipViewModel
         /// </summary>
         private void CreateRandomShips()
         {
-            for (int i = 0; i < 20; i++) // Skapa 10 skepp
+            for (int i = 0; i < 15; i++) // Skapa 10 skepp
             {
                 int randomTop;
                 int randomLeft;
@@ -78,7 +115,7 @@ namespace SUP23_G9.ViewModels
 
                 do
                 {
-                    randomTop = GenerateRandomTop() - 600;
+                    randomTop = GenerateRandomTop() - 200;
                     randomLeft = GenerateRandomLeft();
                     newShip = new ShipViewModel { Top = randomTop, Left = randomLeft };
                 }
@@ -115,9 +152,9 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         private void CreateRandomObstacles()
         {
-            for (int i = 0; i < 5; i++) //Obstacles 2st
+            for (int i = 0; i < 3; i++) //Obstacles 2st
             {
-                int randomTop = GenerateRandomTop() - 600;
+                int randomTop = GenerateRandomTop() - 500;
                 int randomLeft = GenerateRandomLeft();
                 Obstacles.Add(new ObstacleViewModel { Top = randomTop, Left = randomLeft });
             }
@@ -144,6 +181,7 @@ namespace SUP23_G9.ViewModels
 
         private void GameTimerEvent(object sender, EventArgs e)
         {
+
             MoveShipsLoop();
             MoveObstaclesLoop();
             SetPlayerShipCollisionConsequence();
@@ -249,6 +287,7 @@ namespace SUP23_G9.ViewModels
             }
             return false;
         }
+
         /// <summary>
         /// Metod för om spelaren skadas eller dör
         /// </summary>
