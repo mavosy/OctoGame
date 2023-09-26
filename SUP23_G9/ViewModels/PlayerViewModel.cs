@@ -123,6 +123,7 @@ namespace SUP23_G9.ViewModels
                     break;
             }
         }
+
         /// <summary>
         /// Här och i "HandleKeyDown()" sätts med vilka tangenter spelaren styr sin karaktär
         /// </summary>
