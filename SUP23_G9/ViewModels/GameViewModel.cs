@@ -21,20 +21,18 @@ namespace SUP23_G9.ViewModels
 {
     public class GameViewModel : BaseViewModel
     {
+        #region Fields and Constants
         private DispatcherTimer _gameTimer;
+        private DispatcherTimer _increaseObstaclesTimer;
 
-        //private readonly int _speed = 4;
-        //private readonly int _speedObstacle = 2;
-        private int _speed = 4;
+        private int _obstaclesIncreasedCounter = 0;
+        private int _speedShip = 4;
         private int _speedObstacle = 2;
 
         private static readonly Random _random = new();
         private double _mainWindowHeight = System.Windows.Application.Current.MainWindow.ActualHeight;   //TODO Skulle behöva se över dessa och hitta ett MVVM-sätt att hämta höjd och bredd
         private double _mainWindowWidth = System.Windows.Application.Current.MainWindow.ActualWidth;
 
-        //Ny timer för generate obstacles
-        private DispatcherTimer _spawnObstaclesTimer;
-        private int obstaclesSpawnCounter = 0;
 
         BitmapImage _fullHeart;
         BitmapImage _emptyHeart;
@@ -57,20 +55,18 @@ namespace SUP23_G9.ViewModels
 
             PlayerVM = new PlayerViewModel();
 
-            //StartMovingObject();
             SetGameTimer();
             CountdownTimer.TimeUp += CountdownTimer_TimeUp;
 
             Debug.WriteLine($"New GameViewModel with ID: {InstanceID}");
 
-            //Generate obstacles timer
-            spawnObstacleTimer();
+            SetIncreaseObstaclesTimer();
         }
 
         #region Properties
         public int PointResult { get; set; }
         public Points GamePoints { get; } = new Points();
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(10); // Startar med 1 min.
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(60); // Startar med 1 min.
         public PlayerViewModel PlayerVM { get; set; }
         public ObservableCollection<ShipViewModel> Ships { get; set; }
         public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
@@ -81,28 +77,17 @@ namespace SUP23_G9.ViewModels
         #endregion
 
         /// <summary>
-        /// Timer för att generera nya obstacles
-        /// </summary>
-        private void spawnObstacleTimer()
-        {
-            _spawnObstaclesTimer = new DispatcherTimer();
-            _spawnObstaclesTimer.Interval = TimeSpan.FromSeconds(1); //Timer tick/varje sek
-            _spawnObstaclesTimer.Tick += CountdownTimer_SpawnObstacles;
-            _spawnObstaclesTimer.Start();
-        }
-
-        /// <summary>
         /// Skapar nya objekt av typen Obstacle var 10:e sekund
         /// </summary>
-        private void CountdownTimer_SpawnObstacles(object? sender, EventArgs e)
+        private void CountdownTimer_IncreaseObstacles(object? sender, EventArgs e)
         {
-            obstaclesSpawnCounter++;
+            _obstaclesIncreasedCounter++;
 
-            if (obstaclesSpawnCounter % 10 == 0)
+            if (_obstaclesIncreasedCounter % 10 == 0)
             {
                 CreateRandomObstacles();
                 _speedObstacle++;
-                _speed++;
+                _speedShip++;
             }
         }
 
@@ -141,31 +126,7 @@ namespace SUP23_G9.ViewModels
         }
 
         private int GenerateRandomTop() => _random.Next((int)_mainWindowHeight);
-        private int GenerateRandomLeft() => _random.Next((int)_mainWindowWidth); 
-
-        //private void StartMovingObject()
-        //{
-        //    _gameTimer = new DispatcherTimer();
-        //    Debug.WriteLine($"Setting up GameViewModel with ID: {InstanceID}");
-        //    _gameTimer.Interval = TimeSpan.FromMilliseconds(20);
-        //    _gameTimer.Tick += GameTimerEvent;
-        //    _gameTimer.Start();
-        //}
-
-        private void SetGameTimer()
-        {
-            _gameTimer = new DispatcherTimer();
-            _gameTimer.Interval = TimeSpan.FromMilliseconds(20);
-        }
-
-        public void GameTimerEvent(object sender, EventArgs e)
-        {
-            MoveShipsLoop();
-            MoveObstaclesLoop();
-            SetPlayerShipCollisionConsequence();
-            SetPlayerObstacleCollisionConsequence();
-            Debug.WriteLine($"GameViewModel event fire with ID: {InstanceID}");
-        }
+        private int GenerateRandomLeft() => _random.Next((int)_mainWindowWidth);
 
         /// <summary>
         /// Loopar genom skeppen för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till -10
@@ -256,8 +217,6 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         public void SetPlayerShipCollisionConsequence()
         {
-            if (!_isGameActive) return;
-
             foreach (var ship in Ships)
             {
                 if (PlayerCollidesWithShip(ship))
@@ -287,8 +246,6 @@ namespace SUP23_G9.ViewModels
 
         private void SetPlayerObstacleCollisionConsequence()
         {
-            if (!_isGameActive) return; // Om spelet inte är aktivt, gör ingenting och avbryt metoden.
-
             foreach (var obstacle in Obstacles)
             {
                 if (PlayerCollidesWithObstacle(obstacle))
@@ -348,32 +305,52 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-        //public void StartGame()
-        //{
-        //    _isGameActive = true;
-        //}
-
-        //public void StopGame()
-        //{
-        //    _isGameActive = false;
-        //}
-
+        public void GameTimerEvent(object sender, EventArgs e)
+        {
+            MoveShipsLoop();
+            MoveObstaclesLoop();
+            SetPlayerShipCollisionConsequence();
+            SetPlayerObstacleCollisionConsequence();
+            Debug.WriteLine($"GameViewModel event fire with ID: {InstanceID}");
+        }
         public void StartTimers()
         {
             StartGameTimer();
             StartCountdownTimer();
+            StartIncreaseObstaclesTimer();
             PlayerVM.StartPlayerTimer();
-            //RaiseStartPlayerTimerDelegate();
         }
 
         public void StopTimers()
         {
             StopGameTimer();
             StopCountdownTimer();
+            StopIncreaseObstaclesTimer();
             PlayerVM.StopPlayerTimer();
-            //RaiseStopPlayerTimerDelegate();
         }
 
+        private void SetIncreaseObstaclesTimer()
+        {
+            _increaseObstaclesTimer = new DispatcherTimer();
+            _increaseObstaclesTimer.Interval = TimeSpan.FromSeconds(1); //Timer tick/varje sek
+        }
+
+        private void StartIncreaseObstaclesTimer()
+        {
+            _increaseObstaclesTimer.Tick += CountdownTimer_IncreaseObstacles;
+            _increaseObstaclesTimer.Start();
+        }
+        private void StopIncreaseObstaclesTimer()
+        {
+            _increaseObstaclesTimer.Tick -= CountdownTimer_IncreaseObstacles;
+            _increaseObstaclesTimer.Stop();
+        }
+
+        private void SetGameTimer()
+        {
+            _gameTimer = new DispatcherTimer();
+            _gameTimer.Interval = TimeSpan.FromMilliseconds(20);
+        }
         public void StartGameTimer()
         {
             _gameTimer.Tick += GameTimerEvent;
@@ -394,11 +371,6 @@ namespace SUP23_G9.ViewModels
             CountdownTimer._timer.Tick += CountdownTimer.TimerTick;
             CountdownTimer._timer.Stop();
         }
-
-        public Action StartPlayerTimerDelegate;
-        public Action StopPlayerTimerDelegate;
-        public void RaiseStartPlayerTimerDelegate() => StartPlayerTimerDelegate?.Invoke();
-        public void RaiseStopPlayerTimerDelegate() => StopPlayerTimerDelegate?.Invoke();
 
 
         private void CountdownTimer_TimeUp(object sender, EventArgs e)
