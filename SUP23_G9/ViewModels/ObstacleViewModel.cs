@@ -11,16 +11,16 @@ namespace SUP23_G9.ViewModels
             Width = 50;
             Height = 50;
             LoadObstacleImageProcessing();
+            IsAnimating = true;
         }
-
-        public bool IsAnimating { get; set; } = true;
-
 
         public double Left { get; set; }
         public double Top { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public BitmapImage ObstacleImage { get; set; }
+        public bool IsAnimating { get; set; }
+
         private void LoadObstacleImageProcessing()
         {
             BitmapImage image = new BitmapImage();

@@ -119,6 +119,7 @@ namespace SUP23_G9.ViewModels
                     break;
             }
         }
+
         /// <summary>
         /// Här och i "HandleKeyDown()" sätts med vilka tangenter spelaren styr sin karaktär
         /// </summary>
@@ -153,9 +154,9 @@ namespace SUP23_G9.ViewModels
         public void MovePlayerUp() => TopCoordinates -= playerSpeed;
         public void MovePlayerDown() => TopCoordinates += playerSpeed;
         public bool IsNotAtLeftEdge() => LeftCoordinates > distanceToEdge;
-        public bool IsNotAtRightEdge() => (LeftCoordinates + Width) < correctedGameAreaWidth - distanceToEdge;
+        public bool IsNotAtRightEdge() => (LeftCoordinates + Width) < (correctedGameAreaWidth - distanceToEdge);
         public bool IsNotAtTopEdge() => TopCoordinates > distanceToEdge;
-        public bool IsNotAtBottomEdge() => (TopCoordinates + Height) < correctedGameAreaHeight - distanceToEdge;
+        public bool IsNotAtBottomEdge() => (TopCoordinates + Height) < (correctedGameAreaHeight - distanceToEdge);
 
         /// <summary>
         /// Laddar in, processerar och cachar bild för spelarens karaktär

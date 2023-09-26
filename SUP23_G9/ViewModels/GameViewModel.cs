@@ -45,7 +45,7 @@ namespace SUP23_G9.ViewModels
 
             SetGameTimer();
             SetIncreaseObstaclesTimer();
-            SetCountdownTimer(60);
+            SetCountdownTimer(10);
 
             Debug.WriteLine($"New GameViewModel with ID: {InstanceID}");
         }
@@ -75,9 +75,7 @@ namespace SUP23_G9.ViewModels
 
         private void IncrementalDifficultyIncrease()
         {
-            bool tenSecondsHasPassed = _secondsPassedCounter % 10 == 0;
-
-            if (tenSecondsHasPassed)
+            if (SecondsHasPassed(10))
             {
                 CreateRandomObstacles();
                 IncreaseObstacleSpeed();
@@ -85,6 +83,7 @@ namespace SUP23_G9.ViewModels
             }
         }
 
+        private bool SecondsHasPassed(int intervalSeconds) => _secondsPassedCounter % intervalSeconds == 0;
         private void IncreaseObstacleSpeed() => _speedObstacle++;
         private void IncreaseShipSpeed() => _speedShip++;
 
@@ -371,7 +370,7 @@ namespace SUP23_G9.ViewModels
         public void SetCountdownTimer(int seconds)
         {
             CountdownTimer = new TimerViewModel(seconds); // Startar med 1 min.
-            CountdownTimer.TimeUp += CountdownTimer_TimeUp;
+            CountdownTimer.TimeUpEvent += CountdownTimer_TimeUp;
         }
         public void StartCountdownTimer()
         {
@@ -379,7 +378,7 @@ namespace SUP23_G9.ViewModels
         }
         public void StopCountdownTimer()
         {
-            CountdownTimer._timer.Tick += CountdownTimer.TimerTick;
+            CountdownTimer._timer.Tick -= CountdownTimer.TimerTick;
             CountdownTimer._timer.Stop();
         }
 

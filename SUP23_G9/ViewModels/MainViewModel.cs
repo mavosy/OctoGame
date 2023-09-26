@@ -14,8 +14,9 @@ namespace SUP23_G9.ViewModels
 
         public void SwitchToStartView()
         {
-            CurrentViewModel = new StartViewModel();
-            (CurrentViewModel as StartViewModel).SwitchToGameViewEvent = SwitchToGameView;
+            StartViewModel startViewModel= new StartViewModel();
+            CurrentViewModel = startViewModel;
+            startViewModel.SwitchToGameViewEvent = SwitchToGameView;
         }
 
         /// <summary>

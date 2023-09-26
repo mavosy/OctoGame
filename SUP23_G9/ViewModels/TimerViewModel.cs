@@ -34,7 +34,7 @@ namespace SUP23_G9.ViewModels
         public ICommand StartCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
 
-        public event EventHandler TimeUp; // Skapa en händelse för när tiden tar slut
+        public event EventHandler TimeUpEvent; // Skapa en händelse för när tiden tar slut
         public void TimerTick(object sender, EventArgs e)
         {
             Debug.WriteLine($"TimerViewModel event fire with ID: {InstanceID}");
@@ -47,9 +47,7 @@ namespace SUP23_G9.ViewModels
             {
                 RemainingTime = "Time's up!";
 
-                this.StopTimer();
-
-                OnTimeUp(); // Trigga händelsen när tiden tar slut
+                RaiseTimeUpEvent(); // Trigga händelsen när tiden tar slut
             }
             else
             {
@@ -68,9 +66,9 @@ namespace SUP23_G9.ViewModels
         }
 
         // Metod för att triggas när tiden tar slut
-        public void OnTimeUp()
+        public void RaiseTimeUpEvent()
         {
-            TimeUp?.Invoke(this, EventArgs.Empty);
+            TimeUpEvent?.Invoke(this, EventArgs.Empty);
         }
     }
 }

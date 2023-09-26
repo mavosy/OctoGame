@@ -7,12 +7,13 @@ namespace SUP23_G9.ViewModels
 {
     public class StartViewModel : BaseViewModel
     {
-        public ICommand StartButtonCommand { get; set; }
 
         public StartViewModel()
         {
             StartButtonCommand = new RelayCommand(parameter => StartGame());
         }
+
+        public ICommand StartButtonCommand { get; set; }
 
         public Action SwitchToGameViewEvent;
 
