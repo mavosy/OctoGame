@@ -15,7 +15,7 @@ namespace SUP23_G9.ViewModels
         {
             SwitchToStartView();
         }
-        public string ID { get; } = Guid.NewGuid().ToString();
+
         public BaseViewModel? CurrentViewModel { get; set; }
 
         public void SwitchToStartView()
@@ -27,25 +27,30 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Byter användargränssnittsfönstret till GameView, genom bindings mellan Main ViewModel och MainWindow
         /// </summary>
-        public void SwitchToGameView()// Behövdes för Score
+        public void SwitchToGameView()
         {
-            CurrentViewModel = new GameViewModel();
-            (CurrentViewModel as GameViewModel).SwitchToGameOverViewEvent = SwitchToGameOverView;
+            GameViewModel gameViewModel = new GameViewModel();
+            CurrentViewModel = gameViewModel;
+
+            gameViewModel.StartTimers();
+            gameViewModel.SwitchToGameOverViewEvent = SwitchToGameOverView;
         }
         /// <summary>
         /// Byter användargränssnittsfönstret till GameOverView, genom bindings mellan Main ViewModel och MainWindow
         /// </summary>
-
-        private void OnGameOver(int finalScore)// För Score
-        {
-            SwitchToGameOverView(finalScore);
-        }
         public void SwitchToGameOverView(int finalScore)// För Score
         {
+            (CurrentViewModel as GameViewModel).StopTimers();
             CurrentViewModel = new GameOverViewModel(finalScore);
             Debug.WriteLine($"Setting up GameOverViewModel with ID: {CurrentViewModel.InstanceID}");
             (CurrentViewModel as GameOverViewModel).SwitchToGameViewEvent = SwitchToGameView;
         
+        }
+
+        //TODO Vad gör denna, behövs den? Verkar inte användas i dagsläget
+        private void OnGameOver(int finalScore)// För Score
+        {
+            SwitchToGameOverView(finalScore);
         }
     }
 }

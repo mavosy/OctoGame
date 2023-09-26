@@ -26,52 +26,48 @@ namespace SUP23_G9.ViewModels
             Width = 50;
             Height = 50;
 
-            _playerTimer = new DispatcherTimer();
-            _playerTimer.Interval = TimeSpan.FromMilliseconds(10);
+            SetPlayerTimer();
+            //StartPlayerTimer();
+            //GameViewModel.StartPlayerTimerDelegate = StartPlayerTimer;
+            //GameViewModel.StopPlayerTimerDelegate = StopPlayerTimer;
 
-            _playerTimer.Tick += MovePlayerEvent;
-            _playerTimer.Start();
-
-            FlipImageX = 1.0;
+            //GameViewModelReference.StartPlayerTimerDelegate = StartPlayerTimer;
+            //GameViewModelReference.StopPlayerTimerDelegate = StopPlayerTimer;
 
             LoadKrakenImageProcessing();
+            FlipImageX = 1.0;
             Debug.WriteLine($"New playerViewModel with ID: {InstanceID}");
         }
 
-        /// <summary>
-        /// X-koordinat för spelarens vänstra kant
-        /// </summary>
         public double LeftCoordinates { get; private set; }
-        /// <summary>
-        /// Y-koordinat för spelarens övre kant, Y-koordinatens värde blir högre ju längre ner spelaren befinner sig
-        /// </summary>
         public double TopCoordinates { get; private set; }
-        /// <summary>
-        /// Spelarens bredd
-        /// </summary>
         public int Width { get; private set; }
-        /// <summary>
-        /// Spelarens höjd
-        /// </summary>
         public int Height { get; private set; }
-        /// <summary>
-        /// Bild för spelarens karaktär i spelet. Binder till UI.
-        /// </summary>
         public BitmapImage PlayerImage { get; private set; }
-        /// <summary>
-        /// Sätter vilket håll karaktärsbilden är vänd mot i horisontellt led (1.0=original, -1.0=spegel)
-        /// </summary>
         public double FlipImageX { get; private set; }
 
-        /// <summary>
-        /// Event handler för att förflytta spelaren. Uppdaterar även GlobalVariabels med spelarens koordinater.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        private void SetPlayerTimer()
+        {
+            _playerTimer = new DispatcherTimer();
+            _playerTimer.Interval = TimeSpan.FromMilliseconds(10);
+        }
+
+        public void StartPlayerTimer()
+        {
+            _playerTimer.Tick += MovePlayerEvent;
+            _playerTimer.Start();
+        }
+
+        public void StopPlayerTimer()
+        {
+            _playerTimer.Tick -= MovePlayerEvent;
+            _playerTimer.Stop();
+        }
+
         private void MovePlayerEvent(object? sender, EventArgs e)
         {
             UpdateGlobalVariabelsWithPlayerCoordinates();
-            Debug.WriteLine($"Event körs fortfarande från instans med ID: {InstanceID}");
+            Debug.WriteLine($"PlayerViewModel event fire with ID: {InstanceID}");
             if (_leftButtonIsDown && IsNotAtLeftEdge())
             {
                 MovePlayerLeft();
@@ -102,7 +98,7 @@ namespace SUP23_G9.ViewModels
         }
 
         /// <summary>
-        /// Event handler för att kontrollera om en viss tangent är nertryckt, här och i "HandleKeyUp()" sätts med vilka tangenter spelaren styr sin karaktär
+        /// Här och i "HandleKeyUp()" sätts med vilka tangenter spelaren styr sin karaktär
         /// </summary>
         /// <param name="e"></param>
         internal void HandleKeyDown(KeyEventArgs e)
@@ -130,7 +126,7 @@ namespace SUP23_G9.ViewModels
             }
         }
         /// <summary>
-        /// Event handler för att kontrollera om en viss tangent släpps, här och i "HandleKeyDown()" sätts med vilka tangenter spelaren styr sin karaktär
+        /// Här och i "HandleKeyDown()" sätts med vilka tangenter spelaren styr sin karaktär
         /// </summary>
         /// <param name="e"></param>
         internal void HandleKeyUp(KeyEventArgs e)
@@ -189,10 +185,5 @@ namespace SUP23_G9.ViewModels
         /// Vänder spelarens karaktärsbild tillbaka till originalhållet
         /// </summary>
         private void TurnSpriteBack() => FlipImageX = 1.0;
-
-        public void StopPlayerTimer()
-        {
-            _playerTimer.Stop();
-        }
     }
 }

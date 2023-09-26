@@ -10,11 +10,11 @@ namespace SUP23_G9.ViewModels
 {
     public class StartViewModel : BaseViewModel
     {
-        public ICommand StartCommand { get; set; }
+        public ICommand StartButtonCommand { get; set; }
 
         public StartViewModel()
         {
-            StartCommand = new RelayCommand(parameter => StartGame());
+            StartButtonCommand = new RelayCommand(parameter => StartGame());
         }
 
         public Action SwitchToGameViewEvent;
@@ -26,14 +26,6 @@ namespace SUP23_G9.ViewModels
         public void StartGame()
         {
             RaiseSwitchToGameViewEvent();
-            //// Skapa en instans av "MainWindow"
-            //MainWindow mainWindow = new MainWindow();
-
-            //// Visa MainWindow
-            //mainWindow.Show();
-
-            //// Stäng det nuvarande fönstret (StartView)
-            //Application.Current.MainWindow.Close();
         }
     }
 }

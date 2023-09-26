@@ -68,7 +68,7 @@
                 </Image.Triggers>
             </Image>
 
-            <Button Name="StartBtn" Command="{Binding StartCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="178" Margin="0,265,0,0">
+            <Button Name="StartBtn" Command="{Binding StartButtonCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="178" Margin="0,265,0,0">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="#FF0BE6EC" BorderBrush="#FF00928F" BorderThickness="5" CornerRadius="20">

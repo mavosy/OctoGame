@@ -17,9 +17,9 @@
              Width="{Binding Width}"
              Height="{Binding Height}"
              >
-    <UserControl.DataContext>
+    <!--<UserControl.DataContext>
         <vm:PlayerViewModel/>
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
 
     <Grid>
         <Image 

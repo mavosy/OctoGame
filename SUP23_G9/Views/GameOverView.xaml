@@ -65,8 +65,8 @@
                     </EventTrigger>
                 </Image.Triggers>
             </Image>
-            <!-- Knapp nedan Fungerar inte felfritt-->
-            <!--<Button Name="PlayAgainBtn" Command="{Binding PlayAgainCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="294" Margin="0,383,0,0">
+             <!--Knapp nedan Fungerar inte felfritt-->
+            <Button Name="PlayAgainBtn" Command="{Binding PlayAgainCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="294" Margin="0,383,0,0">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="#FF0BE6EC" BorderBrush="#FF00928F" BorderThickness="5" CornerRadius="20">
@@ -75,7 +75,7 @@
                     </ControlTemplate>
                 </Button.Template>
                 <TextBlock Text="Spela Igen" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="36"/>
-            </Button>-->
+            </Button>
         </Grid>
     </Border>
 </UserControl>
