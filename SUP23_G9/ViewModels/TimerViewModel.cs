@@ -19,10 +19,6 @@ namespace SUP23_G9.ViewModels
             remainingSeconds = initialSeconds;
             timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             timer.Tick += TimerTick;
-
-            StartCommand = new RelayCommand(x => StartTimer());
-            StopCommand = new RelayCommand(x => StopTimer());
-
             UpdateRemainingTime();
             timer.Start();
         }
@@ -32,7 +28,7 @@ namespace SUP23_G9.ViewModels
         public ICommand StopCommand { get; }
 
 
-        public event EventHandler TimeUp; 
+        public event EventHandler TimeUpEvent; 
        
         public void TimerTick(object sender, EventArgs e)
         {
@@ -57,13 +53,11 @@ namespace SUP23_G9.ViewModels
         private void CompleteTimer()
         {
             RemainingTime = "Time's up!";
-            StopTimer();
+          
             RaiseTimeUpEvent();
         }
 
-      private void StartTimer() => timer.Start();
-       private void StopTimer() => timer.Stop();
-        private void RaiseTimeUpEvent() => TimeUp?.Invoke(this, EventArgs.Empty);
+        private void RaiseTimeUpEvent() => TimeUpEvent?.Invoke(this, EventArgs.Empty);
        
 
        
