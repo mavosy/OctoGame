@@ -409,6 +409,8 @@ namespace SUP23_G9.ViewModels
 
             var gameOverViewModel = new GameOverViewModel(finalScore);
 
+            _backgroundMusicPlayer.Stop();
+
         }
 
         #endregion
