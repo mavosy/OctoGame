@@ -17,6 +17,7 @@ namespace SUP23_G9.ViewModels
         /// </summary>
 
         public int FinalScore { get; private set; }
+
         public GameOverViewModel(int finalScore)
         {
             PlayAgainCommand = new RelayCommand(parameter => PlayAgain());
@@ -26,40 +27,15 @@ namespace SUP23_G9.ViewModels
         public string ID { get; } = Guid.NewGuid().ToString();
         public Action SwitchToGameViewEvent { get; set; }
 
-        //public GameViewModel GameviewmodelTest = new GameViewModel();
-
-
         public void RaiseSwitchToGameViewEvent()
         {
             Debug.WriteLine($"Invoking from GameOverViewModel with ID: {InstanceID}");
             SwitchToGameViewEvent?.Invoke();
         }
 
-        /// <summary>
-        /// Metod för att knappen spela igen ska fungera
-        /// </summary>
         public void PlayAgain()
         {
             RaiseSwitchToGameViewEvent();
-            //TimerViewModel._remainingSeconds = 5;
-
-            //// Skapa en instans av "MainWindow"
-            //MainWindow mainWindow = new MainWindow();
-
-            //// Visa MainWindow
-            //mainWindow.Show();
-
-            //// Stäng det nuvarande fönstret (GameOverView)
-            //foreach (Window window in Application.Current.Windows)
-            //{
-            //    if (window is GameOverView)
-            //    {
-            //        window.Close();
-            //        break; // Stäng bara det första förekomsten av GameOverView
-            //    }
-            //}
         }
-
-
     }
 }

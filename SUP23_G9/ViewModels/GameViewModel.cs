@@ -29,10 +29,7 @@ namespace SUP23_G9.ViewModels
         private int _speedObstacle = 2;
 
         private static readonly Random _random = new();
-        public int PointResult { get; set; }
-        private bool isGameActive = true;   // Nytt boolskt fält som indikerar om spelet är aktivt eller inte.
-        public PlayerViewModel PlayerViewModel { get; private set; }// en ny instans av PlayerViewModel inom din GameViewModel
-        private double _mainWindowHeight = System.Windows.Application.Current.MainWindow.ActualHeight;
+        private double _mainWindowHeight = System.Windows.Application.Current.MainWindow.ActualHeight;   //TODO Skulle behöva se över dessa och hitta ett MVVM-sätt att hämta höjd och bredd
         private double _mainWindowWidth = System.Windows.Application.Current.MainWindow.ActualWidth;
 
         //Ny timer för generate obstacles
@@ -41,40 +38,47 @@ namespace SUP23_G9.ViewModels
 
         BitmapImage _fullHeart;
         BitmapImage _emptyHeart;
-
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(120); // Startar med 1 min.
-        public BitmapImage Heart1 { get; set; }
-        public BitmapImage Heart2 { get; set; }
-        public BitmapImage Heart3 { get; set; }
-
+        #endregion
 
         public GameViewModel()
         {
-            //this.PlayerViewModel = new PlayerViewModel();
             Ships = new ObservableCollection<ShipViewModel>();
             Obstacles = new ObservableCollection<ObstacleViewModel>();
-            PlayerHealth = 100;
+
+            CreateRandomShips();
+            CreateRandomObstacles();
+
+            PlayerHealth = 3;
             LoadEmptyHeartImageProcessing();
             LoadFullHeartImageProcessing();
             Heart1 = _fullHeart;
             Heart2 = _fullHeart;
             Heart3 = _fullHeart;
-            CreateRandomShips();
-            CreateRandomObstacles();
-            StartMovingObject();
+
+            PlayerVM = new PlayerViewModel();
+
+            //StartMovingObject();
+            SetGameTimer();
             CountdownTimer.TimeUp += CountdownTimer_TimeUp;
+
+            Debug.WriteLine($"New GameViewModel with ID: {InstanceID}");
 
             //Generate obstacles timer
             spawnObstacleTimer();
         }
 
+        #region Properties
+        public int PointResult { get; set; }
         public Points GamePoints { get; } = new Points();
+        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(10); // Startar med 1 min.
+        public PlayerViewModel PlayerVM { get; set; }
         public ObservableCollection<ShipViewModel> Ships { get; set; }
         public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
-        /// <summary>
-        /// Spelarens livspoäng, är bundet till ProgressBar i UI
-        /// </summary>
         public int PlayerHealth { get; set; }
+        public BitmapImage Heart1 { get; set; }
+        public BitmapImage Heart2 { get; set; }
+        public BitmapImage Heart3 { get; set; } 
+        #endregion
 
         /// <summary>
         /// Timer för att generera nya obstacles
@@ -126,30 +130,6 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-
-        /// <summary>
-        /// Kontrollerar att det nya objektet av ShipViewModel ej kolliderar med något annat objekt i listan
-        /// </summary>
-        private bool NewShipCollidesWithExistingShips(ShipViewModel newShip)
-        {
-            foreach (var existingShip in Ships)
-            {
-                bool collisionX = newShip.Left < existingShip.Left + 55 && newShip.Left + 55 > existingShip.Left; //Skrev 55 för att få lite extra marginal
-                bool collisionY = newShip.Top < existingShip.Top + 55 && newShip.Top + 55 > existingShip.Top;
-
-                if (collisionX && collisionY)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-
-        /// <summary>
-        /// Skapar nya objekt av typen Obstacles
-        /// </summary>
         private void CreateRandomObstacles()
         {
             for (int i = 0; i < 3; i++) //Obstacles 2st
@@ -160,33 +140,33 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-        /// <summary>
-        /// Randomsierar fram ett värde inom mainwindow Height
-        /// </summary>
         private int GenerateRandomTop() => _random.Next((int)_mainWindowHeight);
-
-        /// <summary>
-        /// Randomsierar fram ett värde inom mainwindow Width
-        /// </summary>
         private int GenerateRandomLeft() => _random.Next((int)_mainWindowWidth); 
 
-        private void StartMovingObject()
+        //private void StartMovingObject()
+        //{
+        //    _gameTimer = new DispatcherTimer();
+        //    Debug.WriteLine($"Setting up GameViewModel with ID: {InstanceID}");
+        //    _gameTimer.Interval = TimeSpan.FromMilliseconds(20);
+        //    _gameTimer.Tick += GameTimerEvent;
+        //    _gameTimer.Start();
+        //}
+
+        private void SetGameTimer()
         {
             _gameTimer = new DispatcherTimer();
-            Debug.WriteLine($"Setting up GameViewModel with ID: {this.InstanceID}");
             _gameTimer.Interval = TimeSpan.FromMilliseconds(20);
-            _gameTimer.Tick += GameTimerEvent;
-            _gameTimer.Start();
         }
 
-        private void GameTimerEvent(object sender, EventArgs e)
+        public void GameTimerEvent(object sender, EventArgs e)
         {
             MoveShipsLoop();
             MoveObstaclesLoop();
             SetPlayerShipCollisionConsequence();
             SetPlayerObstacleCollisionConsequence();
-            Debug.WriteLine($"Moving objects with GameViewModel with ID: {InstanceID}");
+            Debug.WriteLine($"GameViewModel event fire with ID: {InstanceID}");
         }
+
         /// <summary>
         /// Loopar genom skeppen för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till -10
         /// </summary>
@@ -194,15 +174,31 @@ namespace SUP23_G9.ViewModels
         {
             foreach (ShipViewModel ship in Ships)
             {
-                ship.Top += _speed;
+                ship.Top += _speedShip;
 
                 if (ship.Top > _mainWindowHeight)
                 {
-
                     ResetShipPosition(ship);
                 }
             }
         }
+
+        /// <summary>
+        /// Loopar genom hinder för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till 0
+        /// </summary>
+        private void MoveObstaclesLoop()
+        {
+            foreach (ObstacleViewModel obstacle in Obstacles)
+            {
+                obstacle.Top += _speedObstacle;
+
+                if (obstacle.Top > _mainWindowHeight)
+                {
+                    obstacle.Top = 0;
+                    obstacle.Left = GenerateRandomLeft();
+                }
+            }
+        } 
 
         /// <summary>
         /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande objekt i canvas vid repositionering, om true så genereras nytt värde 
@@ -239,27 +235,59 @@ namespace SUP23_G9.ViewModels
             return false;
         }
 
-
-        /// <summary>
-        /// Loopar genom hinder för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till 0
-        /// </summary>
-        private void MoveObstaclesLoop()
+        private bool NewShipCollidesWithExistingShips(ShipViewModel newShip)
         {
-            foreach (ObstacleViewModel obstacle in Obstacles)
+            foreach (var existingShip in Ships)
             {
-                obstacle.Top += _speedObstacle;
+                bool collisionX = newShip.Left < existingShip.Left + 55 && newShip.Left + 55 > existingShip.Left; //Skrev 55 för att få lite extra marginal
+                bool collisionY = newShip.Top < existingShip.Top + 55 && newShip.Top + 55 > existingShip.Top;
 
-                if (obstacle.Top > _mainWindowHeight)
+                if (collisionX && collisionY)
                 {
-                    obstacle.Top = 0;
-                    obstacle.Left = GenerateRandomLeft();
+                    return true;
                 }
             }
-        } 
+
+            return false;
+        }
+
+        /// <summary>
+        /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande objekt i canvas vid repositionering efter att spelaren krockar med ett skepp
+        /// </summary>
+        public void SetPlayerShipCollisionConsequence()
+        {
+            if (!_isGameActive) return;
+
+            foreach (var ship in Ships)
+            {
+                if (PlayerCollidesWithShip(ship))
+                {
+                    PlayerShipCollision(ship);
+                }
+            }
+        }
+
+        //TODO Föreslår namnbyte till något tydligare
+        /// <summary>
+        /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande objekt i canvas vid repositionering efter att spelaren krockar med ett skepp
+        /// </summary>
+        private void PlayerShipCollision(ShipViewModel ship)
+        {
+            int newLeft = GenerateRandomLeft();
+
+            while (IsCollisionWithExistingShips(newLeft, 0))
+            {
+                newLeft = GenerateRandomLeft();
+            }
+
+            ship.Top = 0;
+            ship.Left = newLeft;
+            GamePoints.AddPoints(10);
+        }
 
         private void SetPlayerObstacleCollisionConsequence()
         {
-            if (!isGameActive) return; // Om spelet inte är aktivt, gör ingenting och avbryt metoden.
+            if (!_isGameActive) return; // Om spelet inte är aktivt, gör ingenting och avbryt metoden.
 
             foreach (var obstacle in Obstacles)
             {
@@ -275,83 +303,6 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-        public bool PlayerCollidesWithObstacle(ObstacleViewModel obstacle)
-        {
-            bool collisionX = obstacle.Left < GlobalVariabels._playerCoordinatesLeft + 50 && obstacle.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
-            bool collisionY = obstacle.Top < GlobalVariabels._playerCoordinatesTop + 50 && obstacle.Top + 50 > GlobalVariabels._playerCoordinatesTop;
-
-            if (collisionX && collisionY)
-            {
-                return true;
-            }
-            return false;
-        }
-        /// <summary>
-        /// Metod för om spelaren skadas eller dör
-        /// </summary>
-        public void PlayerDamaged()
-        {
-            PlayerHealth -= 34;
-            if (PlayerHealth <= 66)
-            {
-                Heart3 = _emptyHeart;
-            }
-            if (PlayerHealth <= 32)
-            {
-                Heart2 = _emptyHeart;
-            }
-            if (PlayerHealth <= 0)
-            {
-                Heart1 = _emptyHeart;
-                OpenGameOverView();
-            }
-        }
-
-        /// <summary>
-        /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande objekt i canvas vid repositionering efter att spelaren krockar med ett skepp
-        /// </summary>
-        public void SetPlayerShipCollisionConsequence()
-        {
-            if (!isGameActive) return;
-
-            foreach (var ship in Ships)
-            {
-                if (PlayerCollidesWithShip(ship))
-                {
-                    PlayerShipCollision(ship);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande objekt i canvas vid repositionering efter att spelaren krockar med ett skepp
-        /// </summary>
-        private void PlayerShipCollision(ShipViewModel ship)
-        {
-            int newLeft = GenerateRandomLeft();
-
-            while(IsCollisionWithExistingShips(newLeft, 0))
-            {
-                newLeft = GenerateRandomLeft();
-            }
-
-            ship.Top = 0;
-            ship.Left = newLeft;
-            GamePoints.AddPoints(10);
-        }
-
-        public void StartGame()
-        {
-            isGameActive = true; // sätt detta till true när spelet startar om.
-
-        }
-
-        public void StopGame()
-        {
-            isGameActive = false; // sätt detta till false när spelet är över.
-
-        }
-        //TODO ändra så det inte är fasta värden på width/height här (50)
         private bool PlayerCollidesWithShip(ShipViewModel ship)
         {
             bool collisionX = ship.Left < GlobalVariabels._playerCoordinatesLeft + 50 && ship.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
@@ -364,22 +315,102 @@ namespace SUP23_G9.ViewModels
             return false;
         }
 
-        private void CountdownTimer_TimeUp(object sender, EventArgs e)
+        public bool PlayerCollidesWithObstacle(ObstacleViewModel obstacle)
         {
-            CountdownTimer._timer.Stop();
-            // Anropa ShowGameOverView när tiden tar slut
-            this.StopGame(); // Stoppa spelet.
-            StopAllTimersAndObjects();
-            OpenGameOverView();
+            bool collisionX = obstacle.Left < GlobalVariabels._playerCoordinatesLeft + 50 && obstacle.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
+            bool collisionY = obstacle.Top < GlobalVariabels._playerCoordinatesTop + 50 && obstacle.Top + 50 > GlobalVariabels._playerCoordinatesTop;
+
+            if (collisionX && collisionY)
+            {
+                return true;
+            }
+            return false;
         }
 
+        //TODO denna kan nog delas upp i mindre metoder
+        /// <summary>
+        /// Metod för om spelaren skadas eller dör
+        /// </summary>
+        public void PlayerDamaged()
+        {
+            PlayerHealth -= 1;
+            if (PlayerHealth <= 2)
+            {
+                Heart3 = _emptyHeart;
+            }
+            if (PlayerHealth <= 1)
+            {
+                Heart2 = _emptyHeart;
+            }
+            if (PlayerHealth <= 0)
+            {
+                OpenGameOverView();
+            }
+        }
+
+        //public void StartGame()
+        //{
+        //    _isGameActive = true;
+        //}
+
+        //public void StopGame()
+        //{
+        //    _isGameActive = false;
+        //}
+
+        public void StartTimers()
+        {
+            StartGameTimer();
+            StartCountdownTimer();
+            PlayerVM.StartPlayerTimer();
+            //RaiseStartPlayerTimerDelegate();
+        }
+
+        public void StopTimers()
+        {
+            StopGameTimer();
+            StopCountdownTimer();
+            PlayerVM.StopPlayerTimer();
+            //RaiseStopPlayerTimerDelegate();
+        }
+
+        public void StartGameTimer()
+        {
+            _gameTimer.Tick += GameTimerEvent;
+            _gameTimer.Start();
+        }
+        public void StopGameTimer()
+        {
+            _gameTimer.Tick -= GameTimerEvent;
+            _gameTimer.Stop();
+        }
+
+        public void StartCountdownTimer()
+        {
+            CountdownTimer._timer.Start();
+        }
+        public void StopCountdownTimer()
+        {
+            CountdownTimer._timer.Tick += CountdownTimer.TimerTick;
+            CountdownTimer._timer.Stop();
+        }
+
+        public Action StartPlayerTimerDelegate;
+        public Action StopPlayerTimerDelegate;
+        public void RaiseStartPlayerTimerDelegate() => StartPlayerTimerDelegate?.Invoke();
+        public void RaiseStopPlayerTimerDelegate() => StopPlayerTimerDelegate?.Invoke();
+
+
+        private void CountdownTimer_TimeUp(object sender, EventArgs e)
+        {
+            OpenGameOverView();
+        }
       
         public Action<int> SwitchToGameOverViewEvent { get; set; }
         public void RaiseSwitchToGameOverViewEvent(int finalScore) => SwitchToGameOverViewEvent?.Invoke(finalScore);
      
         public void OpenGameOverView()
         {
-
             int finalScore = GamePoints.GetScore();
            
             if (finalScore <= 0) 
@@ -387,46 +418,13 @@ namespace SUP23_G9.ViewModels
                 GameOverEvent?.Invoke(finalScore);
             }
 
-
             RaiseSwitchToGameOverViewEvent(finalScore);
            
-
-        var gameOverViewModel = new GameOverViewModel(finalScore);
-            // Anropa ShowGameOverView när tiden tar slut från rätt tråd
-            //Application.Current.Dispatcher.Invoke(() =>
-            //{
-            //    // Stäng det nuvarande fönstret (MainWindow) om det behövs
-            //    foreach (Window window in Application.Current.Windows)
-            //    {
-            //        if (window is MainWindow)
-            //        {
-            //            window.Close();
-            //            break; // Stäng bara det första förekomsten av MainWindow
-            //        }
-            //    }
-            //});
+            var gameOverViewModel = new GameOverViewModel(finalScore);
         }
+
         public event Action<int> GameOverEvent;
-        public void StopAllTimersAndObjects()
-        {
-            // Stoppa Game Timer
-            _gameTimer?.Stop();
 
-            // Stoppa Player Timer
-            //this.PlayerViewModel.StopPlayerTimer();
-            // Stoppa Countdown Timer
-            CountdownTimer._timer?.Stop();
-
-        }
-        public void SomeMethodWhereGameEndsOrUserExits()
-        {
-            this.StopAllTimersAndObjects(); // Stoppar alla timers och objekt.
-                                            // Övrig kod för att hantera spelavslut eller användaravslut.
-        }
-        public void StopGameTimer()
-        {
-            _gameTimer.Stop();
-        }
         private void LoadFullHeartImageProcessing()
         {
             BitmapImage image = new BitmapImage();

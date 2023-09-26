@@ -2,6 +2,7 @@
 using SUP23_G9.ViewModels.Base;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace SUP23_G9.ViewModels
     {
         public DispatcherTimer _timer;
         public int _remainingSeconds;
-        public static bool _isNotAllowedToRunTimeUpEvents;
+
         public TimerViewModel()
         {
             
@@ -39,49 +40,27 @@ namespace SUP23_G9.ViewModels
 
         public ICommand StartCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
-        private void TimerTick(object sender, EventArgs e)
+        public void TimerTick(object sender, EventArgs e)
         {
+            Debug.WriteLine($"TimerViewModel event fire with ID: {InstanceID}");
             if (_remainingSeconds > 0)
             {
                 _remainingSeconds--;
                 UpdateRemainingTime();
-                //_isNotAllowedToRunTimeUpEvents = false;
             }
-            else if (_remainingSeconds <= 0 /*&& !_isNotAllowedToRunTimeUpEvents*/)
+            else if (_remainingSeconds <= 0)
             {
-                //_isNotAllowedToRunTimeUpEvents = true;
-
-                //StartTimer();
-                //MainViewModel mainViewModel = new();
-                //mainViewModel.CreateGameOverWindowOverlay();
-
                 RemainingTime = "Time's up!";
-                RaiseStopPlayerTimerEvent();
-                RaiseStopShipTimerEvent();
-                RaiseStopObstacleTimerEvent();
-                RaiseStopGameTimerEvent();
+
                 this.StopTimer();
 
                 OnTimeUp(); // Trigga händelsen när tiden tar slut
-
             }
             else
             {
                 return;
             }
         }
-
-        public event Action StopPlayerTimerEvent;
-        public void RaiseStopPlayerTimerEvent() => StopPlayerTimerEvent?.Invoke();
-
-        public event Action StopShipTimerEvent;
-        public void RaiseStopShipTimerEvent() => StopShipTimerEvent?.Invoke();
-                    
-        public event Action StopObstacleTimerEvent;
-        public void RaiseStopObstacleTimerEvent() => StopObstacleTimerEvent?.Invoke();
-        
-        public event Action StopGameTimerEvent;
-        public void RaiseStopGameTimerEvent() => StopGameTimerEvent?.Invoke();
 
         public void StartTimer() => _timer.Start();
         public void StopTimer() => _timer.Stop();

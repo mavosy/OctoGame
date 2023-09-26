@@ -24,41 +24,72 @@ namespace SUP23_G9.Views.Characters
         public Player()
         {
             InitializeComponent();
+            //Loaded += (sender, e) => SetDataContextForPlayer();
         }
+
+        //private void SetDataContextForPlayer()
+        //{
+        //    var gameViewModel = this.DataContext as GameViewModel;
+
+        //    if (gameViewModel != null)
+        //    {
+        //        gameViewModel.PlayerVM = this.DataContext as PlayerViewModel;
+        //    }
+        //}
 
         /// <summary>
         /// Property som används för att skicka key-event till PlayerViewModel
         /// </summary>
         private PlayerViewModel ViewModel { get { return DataContext as PlayerViewModel; } }
 
-        /// <summary>
-        /// Sätter fokus på spelare för att möjliggöra KeyDown- och KeyUp-event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (this.DataContext is GameViewModel gameViewModel)
+            {
+                this.DataContext = gameViewModel.PlayerVM;
+            }
             krakenControl.Focus();
+            //FindDataContext();
         }
-        /// <summary>
-        /// Event handler för KeyDown-eventet, skickar vidare information om vilken knapp som trycks nere till PlayerViewModel
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
+        //private void FindDataContext()
+        //{
+        //    var playerViewModel = this.DataContext as PlayerViewModel;
+        //    if (playerViewModel != null)
+        //    {
+        //        var parentContext = this.FindAncestorDataContext<GameViewModel>();
+        //        if (parentContext != null)
+        //        {
+        //            parentContext.PlayerVM = playerViewModel;
+        //        }
+        //    }
+        //}
+
         private void krakenControl_KeyDown(object sender, KeyEventArgs e)
         {
             if (ViewModel == null) return;
             ViewModel.HandleKeyDown(e);
         }
-        /// <summary>
-        /// Event handler för KeyUp-eventet, skickar vidare information om vilken knapp som trycks nere till PlayerViewModel
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void krakenControl_KeyUp(object sender, KeyEventArgs e)
         {
             if (ViewModel == null) return;
             ViewModel.HandleKeyUp(e);
         }
+
+        //public T FindAncestorDataContext<T>() where T : class
+        //{
+        //    DependencyObject parent = this;
+        //    while (parent != null)
+        //    {
+        //        if (parent is FrameworkElement fe && fe.DataContext is T desiredDataContext)
+        //        {
+        //            return desiredDataContext;
+        //        }
+        //        parent = VisualTreeHelper.GetParent(parent);
+        //    }
+        //    return null;
+        //}
     }
+
 }

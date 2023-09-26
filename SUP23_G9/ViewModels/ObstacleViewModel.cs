@@ -13,14 +13,11 @@ namespace SUP23_G9.ViewModels
 {
     public class ObstacleViewModel : BaseViewModel
     {
-       
-
         public ObstacleViewModel()
         {
             Width = 50;
             Height = 50;
             LoadObstacleImageProcessing();
-
         }
 
         private bool _isAnimating = true;
@@ -35,35 +32,11 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-
-        /// <summary>
-        /// X-koordinat för hindren
-        /// </summary>
         public double Left { get; set; }
-        /// <summary>
-        /// Y-koordinat för hindren
-        /// </summary>
         public double Top { get; set; }
-        /// <summary>
-        /// Hindrens bredd
-        /// </summary>
         public int Width { get; set; }
-        /// <summary>
-        /// Hindrens höjd
-        /// </summary>
         public int Height { get; set; }
-        /// <summary>
-        /// Bild för hindren
-        /// </summary>
         public BitmapImage ObstacleImage { get; set; }
-        /// <summary>
-        /// Sätter vilket håll hindren är vänd mot i horisontellt led (1.0=original, -1.0=spegel)
-        /// </summary>
-        //public double FlipImageX { get; private set; }
-
-        /// <summary>
-        /// Processerar och cachar bild för hinder
-        /// </summary>
         private void LoadObstacleImageProcessing()
         {
             BitmapImage image = new BitmapImage();

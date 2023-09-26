@@ -25,34 +25,16 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-        /// <summary>
-        /// X-koordinat för skeppen
-        /// </summary>
         public double Left { get; set; }
 
-        /// <summary>
-        /// Y-koordinat för skeppen
-        /// </summary>
         public double Top { get; set; }
 
-        /// <summary>
-        /// Skeppens bredd
-        /// </summary>
         public int Width { get; set; }
 
-        /// <summary>
-        /// Skeppens höjd
-        /// </summary>
         public int Height { get; set; }
 
-        /// <summary>
-        /// Bild för skeppen
-        /// </summary>
-        public BitmapImage ShipImage { get; set; }
+        public BitmapImage ShipImage { get; private set; }
 
-        /// <summary>
-        /// Processerar och cachar bild för skepp
-        /// </summary>
         private void LoadShipImageProcessing()
         {
             BitmapImage image = new BitmapImage();
