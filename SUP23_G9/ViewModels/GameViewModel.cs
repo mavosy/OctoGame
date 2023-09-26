@@ -45,7 +45,7 @@ namespace SUP23_G9.ViewModels
 
             SetGameTimer();
             SetIncreaseObstaclesTimer();
-            SetCountdownTimer(60);
+            SetCountdownTimer(10);
 
             Debug.WriteLine($"New GameViewModel with ID: {InstanceID}");
         }
@@ -411,7 +411,7 @@ namespace SUP23_G9.ViewModels
         }
         public void StopCountdownTimer()
         {
-            CountdownTimer._timer.Tick += CountdownTimer.TimerTick;
+            CountdownTimer._timer.Tick -= CountdownTimer.TimerTick;
             CountdownTimer._timer.Stop();
         }
 
