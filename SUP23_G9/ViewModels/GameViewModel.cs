@@ -25,7 +25,7 @@ namespace SUP23_G9.ViewModels
         private DispatcherTimer _gameTimer;
         private DispatcherTimer _increaseObstaclesTimer;
 
-        private int _obstaclesIncreasedCounter = 0;
+        private int _secondsPassedCounter = 0;
         private int _speedShip = 4;
         private int _speedObstacle = 2;
 
@@ -73,23 +73,33 @@ namespace SUP23_G9.ViewModels
         public int PlayerHealth { get; set; }
         public BitmapImage Heart1 { get; set; }
         public BitmapImage Heart2 { get; set; }
-        public BitmapImage Heart3 { get; set; } 
+        public BitmapImage Heart3 { get; set; }
         #endregion
 
+        #region Creation of objects and coordinates
         /// <summary>
         /// Skapar nya objekt av typen Obstacle var 10:e sekund
         /// </summary>
         private void CountdownTimer_IncreaseObstacles(object? sender, EventArgs e)
         {
-            _obstaclesIncreasedCounter++;
+            _secondsPassedCounter++;
+            IncrementalDifficultyIncrease();
+        }
 
-            if (_obstaclesIncreasedCounter % 10 == 0)
+        private void IncrementalDifficultyIncrease()
+        {
+            bool tenSecondsHasPassed = _secondsPassedCounter % 10 == 0;
+
+            if (tenSecondsHasPassed)
             {
                 CreateRandomObstacles();
-                _speedObstacle++;
-                _speedShip++;
+                IncreaseObstacleSpeed();
+                IncreaseShipSpeed();
             }
         }
+
+        private void IncreaseObstacleSpeed() => _speedObstacle++;
+        private void IncreaseShipSpeed() => _speedShip++;
 
         /// <summary>
         /// Skapar nya objekt av typen ShipViewModel
@@ -127,7 +137,9 @@ namespace SUP23_G9.ViewModels
 
         private int GenerateRandomTop() => _random.Next((int)_mainWindowHeight);
         private int GenerateRandomLeft() => _random.Next((int)_mainWindowWidth);
+        #endregion
 
+        #region Movement and collision
         /// <summary>
         /// Loopar genom skeppen för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till -10
         /// </summary>
@@ -159,7 +171,7 @@ namespace SUP23_G9.ViewModels
                     obstacle.Left = GenerateRandomLeft();
                 }
             }
-        } 
+        }
 
         /// <summary>
         /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande objekt i canvas vid repositionering, om true så genereras nytt värde 
@@ -282,7 +294,8 @@ namespace SUP23_G9.ViewModels
                 return true;
             }
             return false;
-        }
+        } 
+        #endregion
 
         //TODO denna kan nog delas upp i mindre metoder
         /// <summary>
@@ -305,6 +318,7 @@ namespace SUP23_G9.ViewModels
             }
         }
 
+        #region Timers and Game ending
         public void GameTimerEvent(object sender, EventArgs e)
         {
             MoveShipsLoop();
@@ -313,6 +327,12 @@ namespace SUP23_G9.ViewModels
             SetPlayerObstacleCollisionConsequence();
             Debug.WriteLine($"GameViewModel event fire with ID: {InstanceID}");
         }
+
+        private void CountdownTimer_TimeUp(object sender, EventArgs e)
+        {
+            OpenGameOverView();
+        }
+
         public void StartTimers()
         {
             StartGameTimer();
@@ -372,30 +392,25 @@ namespace SUP23_G9.ViewModels
             CountdownTimer._timer.Stop();
         }
 
-
-        private void CountdownTimer_TimeUp(object sender, EventArgs e)
-        {
-            OpenGameOverView();
-        }
-      
         public Action<int> SwitchToGameOverViewEvent { get; set; }
+        public event Action<int> GameOverEvent; 
         public void RaiseSwitchToGameOverViewEvent(int finalScore) => SwitchToGameOverViewEvent?.Invoke(finalScore);
-     
+
         public void OpenGameOverView()
         {
             int finalScore = GamePoints.GetScore();
-           
-            if (finalScore <= 0) 
+
+            if (finalScore <= 0)
             {
                 GameOverEvent?.Invoke(finalScore);
             }
 
             RaiseSwitchToGameOverViewEvent(finalScore);
-           
+
             var gameOverViewModel = new GameOverViewModel(finalScore);
         }
 
-        public event Action<int> GameOverEvent;
+        #endregion
 
         private void LoadFullHeartImageProcessing()
         {
