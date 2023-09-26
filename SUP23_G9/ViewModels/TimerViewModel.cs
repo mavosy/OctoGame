@@ -9,68 +9,64 @@ namespace SUP23_G9.ViewModels
 {
     public class TimerViewModel : BaseViewModel
     {
-        public DispatcherTimer _timer;
-        public int _remainingSeconds;
 
-        //TODO Ta bort tom konstruktor?
-        public TimerViewModel()
-        {
+        public DispatcherTimer timer;
+        public int remainingSeconds;
 
-        }
+       
         public TimerViewModel(int initialSeconds)
         {
-            _remainingSeconds = initialSeconds;
-            _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-            _timer.Tick += TimerTick;
+            remainingSeconds = initialSeconds;
+            timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            timer.Tick += TimerTick;
 
             StartCommand = new RelayCommand(x => StartTimer());
             StopCommand = new RelayCommand(x => StopTimer());
 
             UpdateRemainingTime();
-            _timer.Start();
+            timer.Start();
         }
+        public string RemainingTime { get; private set; }
 
-        public string RemainingTime { get; set; }
-        public ICommand StartCommand { get; private set; }
-        public ICommand StopCommand { get; private set; }
+        public ICommand StartCommand { get; }
+        public ICommand StopCommand { get; }
 
-        public event EventHandler TimeUp; // Skapa en händelse för när tiden tar slut
+
+        public event EventHandler TimeUp; 
+       
         public void TimerTick(object sender, EventArgs e)
         {
             Debug.WriteLine($"TimerViewModel event fire with ID: {InstanceID}");
-            if (_remainingSeconds > 0)
+            if (remainingSeconds > 0)
             {
-                _remainingSeconds--;
+                remainingSeconds--;
                 UpdateRemainingTime();
-            }
-            else if (_remainingSeconds <= 0)
-            {
-                RemainingTime = "Time's up!";
-
-                this.StopTimer();
-
-                OnTimeUp(); // Trigga händelsen när tiden tar slut
             }
             else
             {
-                return;
+                CompleteTimer();
             }
+
         }
-
-        public void StartTimer() => _timer.Start();
-        public void StopTimer() => _timer.Stop();
-
         private void UpdateRemainingTime()
         {
-            int minutes = _remainingSeconds / 60;
-            int seconds = _remainingSeconds % 60;
+            int minutes = remainingSeconds / 60;
+            int seconds = remainingSeconds % 60;
             RemainingTime = $"{minutes:00 min}:{seconds:00 sec}";
         }
-
-        // Metod för att triggas när tiden tar slut
-        public void OnTimeUp()
+        private void CompleteTimer()
         {
-            TimeUp?.Invoke(this, EventArgs.Empty);
+            RemainingTime = "Time's up!";
+            StopTimer();
+            RaiseTimeUpEvent();
         }
+
+        public void StartTimer() => timer.Start();
+        public void StopTimer() => timer.Stop();
+        private void RaiseTimeUpEvent() => TimeUp?.Invoke(this, EventArgs.Empty);
+       
+
+       
+       
     }
 }
