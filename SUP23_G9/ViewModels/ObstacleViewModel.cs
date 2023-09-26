@@ -1,13 +1,6 @@
 ﻿using SUP23_G9.ViewModels.Base;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 
 namespace SUP23_G9.ViewModels
 {
@@ -20,17 +13,8 @@ namespace SUP23_G9.ViewModels
             LoadObstacleImageProcessing();
         }
 
-        private bool _isAnimating = true;
+        public bool IsAnimating { get; set; } = true;
 
-        public bool IsAnimating
-        {
-            get { return _isAnimating; }
-            set
-            {
-                _isAnimating = value;
-                OnPropertyChanged(nameof(IsAnimating));
-            }
-        }
 
         public double Left { get; set; }
         public double Top { get; set; }

@@ -6,8 +6,6 @@ namespace SUP23_G9.ViewModels
 {
     public class ShipViewModel : BaseViewModel
     {
-        private bool _isAnimating = true; 
-
         public ShipViewModel()
         {
             Width = 50;
@@ -15,24 +13,11 @@ namespace SUP23_G9.ViewModels
             LoadShipImageProcessing();
         }
 
-        public bool IsAnimating
-        {
-            get { return _isAnimating; }
-            set
-            {
-                _isAnimating = value;
-                OnPropertyChanged(nameof(IsAnimating));
-            }
-        }
-
+        public bool IsAnimating { get; set; } = true;
         public double Left { get; set; }
-
         public double Top { get; set; }
-
         public int Width { get; set; }
-
         public int Height { get; set; }
-
         public BitmapImage ShipImage { get; private set; }
 
         private void LoadShipImageProcessing()

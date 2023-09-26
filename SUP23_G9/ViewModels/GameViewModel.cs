@@ -1,21 +1,9 @@
 ﻿using SUP23_G9.ViewModels.Base;
-using SUP23_G9.Views;
-using SUP23_G9.Views.Characters;
-using SUP23_G9.Views.Components;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using static System.Formats.Asn1.AsnWriter;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SUP23_G9.ViewModels
 {
@@ -294,7 +282,7 @@ namespace SUP23_G9.ViewModels
                 return true;
             }
             return false;
-        } 
+        }
         #endregion
 
         //TODO denna kan nog delas upp i mindre metoder
@@ -352,7 +340,7 @@ namespace SUP23_G9.ViewModels
         private void SetIncreaseObstaclesTimer()
         {
             _increaseObstaclesTimer = new DispatcherTimer();
-            _increaseObstaclesTimer.Interval = TimeSpan.FromSeconds(1); //Timer tick/varje sek
+            _increaseObstaclesTimer.Interval = TimeSpan.FromSeconds(1);
         }
 
         private void StartIncreaseObstaclesTimer()
@@ -393,7 +381,7 @@ namespace SUP23_G9.ViewModels
         }
 
         public Action<int> SwitchToGameOverViewEvent { get; set; }
-        public event Action<int> GameOverEvent; 
+        public event Action<int> GameOverEvent;
         public void RaiseSwitchToGameOverViewEvent(int finalScore) => SwitchToGameOverViewEvent?.Invoke(finalScore);
 
         public void OpenGameOverView()

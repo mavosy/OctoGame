@@ -1,8 +1,4 @@
-﻿using SUP23_G9.ViewModels;
-using System;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
 
 namespace SUP23_G9.Views
 {

@@ -1,11 +1,5 @@
 ﻿using SUP23_G9.ViewModels.Base;
-using SUP23_G9.Views;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SUP23_G9.ViewModels
 {
@@ -44,7 +38,7 @@ namespace SUP23_G9.ViewModels
             CurrentViewModel = new GameOverViewModel(finalScore);
             Debug.WriteLine($"Setting up GameOverViewModel with ID: {CurrentViewModel.InstanceID}");
             (CurrentViewModel as GameOverViewModel).SwitchToGameViewEvent = SwitchToGameView;
-        
+
         }
 
         //TODO Vad gör denna, behövs den? Verkar inte användas i dagsläget

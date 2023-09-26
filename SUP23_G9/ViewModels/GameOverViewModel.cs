@@ -1,11 +1,7 @@
 ﻿using SUP23_G9.Commands;
 using SUP23_G9.ViewModels.Base;
-using SUP23_G9.Views;
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace SUP23_G9.ViewModels

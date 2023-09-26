@@ -27,12 +27,6 @@ namespace SUP23_G9.ViewModels
             Height = 50;
 
             SetPlayerTimer();
-            //StartPlayerTimer();
-            //GameViewModel.StartPlayerTimerDelegate = StartPlayerTimer;
-            //GameViewModel.StopPlayerTimerDelegate = StopPlayerTimer;
-
-            //GameViewModelReference.StartPlayerTimerDelegate = StartPlayerTimer;
-            //GameViewModelReference.StopPlayerTimerDelegate = StopPlayerTimer;
 
             LoadKrakenImageProcessing();
             FlipImageX = 1.0;
@@ -90,7 +84,7 @@ namespace SUP23_G9.ViewModels
                 MovePlayerDown();
             }
         }
-        
+
         private void UpdateGlobalVariabelsWithPlayerCoordinates()
         {
             GlobalVariabels._playerCoordinatesLeft = LeftCoordinates;
@@ -177,13 +171,7 @@ namespace SUP23_G9.ViewModels
 
             PlayerImage = image;
         }
-        /// <summary>
-        /// Vänder spelarens karaktärsbild åt andra hållet än originalet, i x-led
-        /// </summary>
         private void TurnSpriteHorizontally() => FlipImageX = -1.0;
-        /// <summary>
-        /// Vänder spelarens karaktärsbild tillbaka till originalhållet
-        /// </summary>
         private void TurnSpriteBack() => FlipImageX = 1.0;
     }
 }
