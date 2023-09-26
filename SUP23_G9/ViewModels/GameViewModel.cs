@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -23,6 +24,11 @@ namespace SUP23_G9.ViewModels
 
         private BitmapImage _fullHeart;
         private BitmapImage _emptyHeart;
+
+        private readonly MediaPlayer _backgroundMusicPlayer = new MediaPlayer();
+        
+
+
         #endregion
 
         public GameViewModel()
@@ -46,8 +52,11 @@ namespace SUP23_G9.ViewModels
             SetGameTimer();
             SetIncreaseObstaclesTimer();
             SetCountdownTimer(60);
+            InitializeBackgroundMusic();
 
             Debug.WriteLine($"New GameViewModel with ID: {InstanceID}");
+
+
         }
 
         #region Properties
@@ -399,6 +408,7 @@ namespace SUP23_G9.ViewModels
             RaiseSwitchToGameOverViewEvent(finalScore);
 
             var gameOverViewModel = new GameOverViewModel(finalScore);
+
         }
 
         #endregion
@@ -426,5 +436,15 @@ namespace SUP23_G9.ViewModels
 
             _emptyHeart = image;
         }
+
+        #region Sound
+        private void InitializeBackgroundMusic()
+        {
+            _backgroundMusicPlayer.Open(new Uri("Sounds/Background_sound.mp3", UriKind.Relative));
+            _backgroundMusicPlayer.MediaEnded += (sender, e) => { _backgroundMusicPlayer.Position = TimeSpan.Zero; _backgroundMusicPlayer.Play(); };
+            _backgroundMusicPlayer.Play();
+        }
+        #endregion
+
     }
 }
