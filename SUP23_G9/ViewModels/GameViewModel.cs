@@ -29,6 +29,7 @@ namespace SUP23_G9.ViewModels
         {
             Ships = new ObservableCollection<ShipViewModel>();
             Obstacles = new ObservableCollection<ObstacleViewModel>();
+            GamePoints = new Points();
 
             CreateRandomShips();
             CreateRandomObstacles();
