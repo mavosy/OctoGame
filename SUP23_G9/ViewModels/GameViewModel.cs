@@ -21,9 +21,8 @@ namespace SUP23_G9.ViewModels
         private double _mainWindowHeight = System.Windows.Application.Current.MainWindow.ActualHeight;   //TODO Skulle behöva se över dessa och hitta ett MVVM-sätt att hämta höjd och bredd
         private double _mainWindowWidth = System.Windows.Application.Current.MainWindow.ActualWidth;
 
-
-        BitmapImage _fullHeart;
-        BitmapImage _emptyHeart;
+        private BitmapImage _fullHeart;
+        private BitmapImage _emptyHeart;
         #endregion
 
         public GameViewModel()
@@ -44,17 +43,16 @@ namespace SUP23_G9.ViewModels
             PlayerVM = new PlayerViewModel();
 
             SetGameTimer();
-            CountdownTimer.TimeUp += CountdownTimer_TimeUp;
+            SetIncreaseObstaclesTimer();
+            SetCountdownTimer(60);
 
             Debug.WriteLine($"New GameViewModel with ID: {InstanceID}");
-
-            SetIncreaseObstaclesTimer();
         }
 
         #region Properties
         public int PointResult { get; set; }
-        public Points GamePoints { get; } = new Points();
-        public TimerViewModel CountdownTimer { get; set; } = new TimerViewModel(60); // Startar med 1 min.
+        public Points GamePoints { get; }
+        public TimerViewModel CountdownTimer { get; set; }
         public PlayerViewModel PlayerVM { get; set; }
         public ObservableCollection<ShipViewModel> Ships { get; set; }
         public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
@@ -369,7 +367,11 @@ namespace SUP23_G9.ViewModels
             _gameTimer.Tick -= GameTimerEvent;
             _gameTimer.Stop();
         }
-
+        public void SetCountdownTimer(int seconds)
+        {
+            CountdownTimer = new TimerViewModel(seconds); // Startar med 1 min.
+            CountdownTimer.TimeUp += CountdownTimer_TimeUp;
+        }
         public void StartCountdownTimer()
         {
             CountdownTimer._timer.Start();

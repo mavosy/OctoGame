@@ -1,12 +1,7 @@
 ﻿using SUP23_G9.Commands;
 using SUP23_G9.ViewModels.Base;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -17,9 +12,10 @@ namespace SUP23_G9.ViewModels
         public DispatcherTimer _timer;
         public int _remainingSeconds;
 
+        //TODO Ta bort tom konstruktor?
         public TimerViewModel()
         {
-            
+
         }
         public TimerViewModel(int initialSeconds)
         {
@@ -35,11 +31,10 @@ namespace SUP23_G9.ViewModels
         }
 
         public string RemainingTime { get; set; }
-        
-        public event EventHandler TimeUp; // Skapa en händelse för när tiden tar slut
-
         public ICommand StartCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
+
+        public event EventHandler TimeUp; // Skapa en händelse för när tiden tar slut
         public void TimerTick(object sender, EventArgs e)
         {
             Debug.WriteLine($"TimerViewModel event fire with ID: {InstanceID}");
