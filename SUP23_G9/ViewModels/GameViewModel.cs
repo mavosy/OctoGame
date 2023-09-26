@@ -375,12 +375,12 @@ namespace SUP23_G9.ViewModels
         }
         public void StartCountdownTimer()
         {
-            CountdownTimer.timer.Start();
+            CountdownTimer._timer.Start();
         }
         public void StopCountdownTimer()
         {
-            CountdownTimer.timer.Tick += CountdownTimer.TimerTick;
-            CountdownTimer.timer.Stop();
+            CountdownTimer._timer.Tick += CountdownTimer.TimerTick;
+            CountdownTimer._timer.Stop();
         }
 
         public Action<int> SwitchToGameOverViewEvent { get; set; }

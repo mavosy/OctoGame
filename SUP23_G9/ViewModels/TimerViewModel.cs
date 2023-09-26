@@ -9,33 +9,27 @@ namespace SUP23_G9.ViewModels
 {
     public class TimerViewModel : BaseViewModel
     {
+        public DispatcherTimer _timer;
+        public int _remainingSeconds;
 
-        public DispatcherTimer timer;
-        public int remainingSeconds;
-
-       
         public TimerViewModel(int initialSeconds)
         {
-            remainingSeconds = initialSeconds;
-            timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-            timer.Tick += TimerTick;
+            _remainingSeconds = initialSeconds;
+            _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            _timer.Tick += TimerTick;
             UpdateRemainingTime();
-            timer.Start();
+            _timer.Start();
         }
         public string RemainingTime { get; private set; }
-
-        public ICommand StartCommand { get; }
-        public ICommand StopCommand { get; }
-
 
         public event EventHandler TimeUpEvent; 
        
         public void TimerTick(object sender, EventArgs e)
         {
             Debug.WriteLine($"TimerViewModel event fire with ID: {InstanceID}");
-            if (remainingSeconds > 0)
+            if (_remainingSeconds > 0)
             {
-                remainingSeconds--;
+                _remainingSeconds--;
                 UpdateRemainingTime();
             }
             else
@@ -44,12 +38,14 @@ namespace SUP23_G9.ViewModels
             }
 
         }
+
         private void UpdateRemainingTime()
         {
-            int minutes = remainingSeconds / 60;
-            int seconds = remainingSeconds % 60;
+            int minutes = _remainingSeconds / 60;
+            int seconds = _remainingSeconds % 60;
             RemainingTime = $"{minutes:00 min}:{seconds:00 sec}";
         }
+
         private void CompleteTimer()
         {
             RemainingTime = "Time's up!";
@@ -57,10 +53,6 @@ namespace SUP23_G9.ViewModels
             RaiseTimeUpEvent();
         }
 
-        private void RaiseTimeUpEvent() => TimeUpEvent?.Invoke(this, EventArgs.Empty);
-       
-
-       
-       
+        private void RaiseTimeUpEvent() => TimeUpEvent?.Invoke(this, EventArgs.Empty); 
     }
 }
