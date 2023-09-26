@@ -61,8 +61,8 @@ namespace SUP23_G9.ViewModels
             RaiseTimeUpEvent();
         }
 
-        public void StartTimer() => timer.Start();
-        public void StopTimer() => timer.Stop();
+      private void StartTimer() => timer.Start();
+       private void StopTimer() => timer.Stop();
         private void RaiseTimeUpEvent() => TimeUp?.Invoke(this, EventArgs.Empty);
        
 
