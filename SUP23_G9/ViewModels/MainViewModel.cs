@@ -41,10 +41,6 @@ namespace SUP23_G9.ViewModels
 
         }
 
-        //TODO Vad gör denna, behövs den? Verkar inte användas i dagsläget
-        private void OnGameOver(int finalScore)// För Score
-        {
-            SwitchToGameOverView(finalScore);
-        }
+
     }
 }
