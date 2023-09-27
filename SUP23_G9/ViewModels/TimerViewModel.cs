@@ -20,6 +20,7 @@ namespace SUP23_G9.ViewModels
             UpdateRemainingTime();
             _timer.Start();
         }
+
         public string RemainingTime { get; private set; }
 
         public void TimerTick(object sender, EventArgs e)
@@ -42,6 +43,7 @@ namespace SUP23_G9.ViewModels
             int seconds = _remainingSeconds % 60;
             RemainingTime = $"{minutes:00 min}:{seconds:00 sec}";
         }
+
         private void CompleteTimer()
         {
             RemainingTime = "Time's up!";
