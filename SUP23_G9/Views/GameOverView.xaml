@@ -29,18 +29,15 @@
            
             <Image Name="player" Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp" Margin="128,247,662,227">
                 <Image.Triggers>
-                    <!-- Trigger för att starta animationen när fönstret laddas -->
                     <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                         <BeginStoryboard>
                             <Storyboard RepeatBehavior="Forever" AutoReverse="True">
-                                <!-- Animation som ändrar bildens Margin (position) -->
                                 <ThicknessAnimation
                                     Storyboard.TargetName="player"
                                     Storyboard.TargetProperty="Margin"
                                     From="128,247,662,227"
                                     To="202,247,588,227"
                                     Duration="0:0:1" />
-                                <!-- Varaktighet av animationen -->
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
@@ -48,18 +45,15 @@
             </Image>
             <Image Name="pirateShip1" Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Left.bmp" Margin="660,254,144,234">
                 <Image.Triggers>
-                    <!-- Trigger för att starta animationen när fönstret laddas -->
                     <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                         <BeginStoryboard>
                             <Storyboard RepeatBehavior="Forever" AutoReverse="True">
-                                <!-- Animation som ändrar bildens Margin (position) -->
                                 <ThicknessAnimation
                                     Storyboard.TargetName="pirateShip1"
                                     Storyboard.TargetProperty="Margin"
                                     From="660,254,144,234"
                                     To="602,254,202,234"
                                     Duration="0:0:1" />
-                                <!-- Varaktighet av animationen -->
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
