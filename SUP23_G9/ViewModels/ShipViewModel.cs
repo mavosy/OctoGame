@@ -10,7 +10,7 @@ namespace SUP23_G9.ViewModels
         {
             Width = 50;
             Height = 50;
-            LoadShipImageProcessing();
+            LoadImageProcessing();
         }
 
         public bool IsAnimating { get; set; } = true;
@@ -18,9 +18,9 @@ namespace SUP23_G9.ViewModels
         public double Top { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public BitmapImage ShipImage { get; private set; }
+        public BitmapImage SpriteImage { get; private set; }
 
-        private void LoadShipImageProcessing()
+        private void LoadImageProcessing()
         {
             BitmapImage image = new BitmapImage();
 
@@ -30,7 +30,7 @@ namespace SUP23_G9.ViewModels
             image.CacheOption = BitmapCacheOption.OnLoad;
             image.EndInit();
 
-            ShipImage = image;
+            SpriteImage = image;
         }
     }
 }
