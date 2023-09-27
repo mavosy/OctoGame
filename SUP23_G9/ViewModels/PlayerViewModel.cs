@@ -12,6 +12,7 @@ namespace SUP23_G9.ViewModels
         private const double distanceToEdge = 5;
         private const double playerSpeed = 5;
 
+        //TODO Fixa dessa konstanter så att de hämtas med t ex bindings eller liknande istället
         private const int correctedGameAreaWidth = 985;
         private const int correctedGameAreaHeight = 565;
 
@@ -21,6 +22,7 @@ namespace SUP23_G9.ViewModels
 
         public PlayerViewModel()
         {
+            //TODO vore kanske schysst att inte ha fasta värden på dessa från viewmodel, vet inte vad som är bäst
             LeftCoordinates = 475;
             TopCoordinates = 450;
             Width = 50;
@@ -28,7 +30,7 @@ namespace SUP23_G9.ViewModels
 
             SetPlayerTimer();
 
-            LoadKrakenImageProcessing();
+            LoadImageProcessing();
             FlipImageX = 1.0;
             Debug.WriteLine($"New playerViewModel with ID: {InstanceID}");
         }
@@ -37,7 +39,7 @@ namespace SUP23_G9.ViewModels
         public double TopCoordinates { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
-        public BitmapImage PlayerImage { get; private set; }
+        public BitmapImage SpriteImage { get; private set; }
         public double FlipImageX { get; private set; }
 
         private void SetPlayerTimer()
@@ -61,6 +63,7 @@ namespace SUP23_G9.ViewModels
         private void MovePlayerEvent(object? sender, EventArgs e)
         {
             UpdateGlobalVariabelsWithPlayerCoordinates();
+
             Debug.WriteLine($"PlayerViewModel event fire with ID: {InstanceID}");
             if (_leftButtonIsDown && IsNotAtLeftEdge())
             {
@@ -85,6 +88,7 @@ namespace SUP23_G9.ViewModels
             }
         }
 
+        //TODO göra oss av med de globala variablerna, försöka hitta ett annat sätt
         private void UpdateGlobalVariabelsWithPlayerCoordinates()
         {
             GlobalVariabels._playerCoordinatesLeft = LeftCoordinates;
@@ -148,19 +152,50 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-        public void MovePlayerLeft() => LeftCoordinates -= playerSpeed;
-        public void MovePlayerRight() => LeftCoordinates += playerSpeed;
-        public void MovePlayerUp() => TopCoordinates -= playerSpeed;
-        public void MovePlayerDown() => TopCoordinates += playerSpeed;
-        public bool IsNotAtLeftEdge() => LeftCoordinates > distanceToEdge;
-        public bool IsNotAtRightEdge() => (LeftCoordinates + Width) < correctedGameAreaWidth - distanceToEdge;
-        public bool IsNotAtTopEdge() => TopCoordinates > distanceToEdge;
-        public bool IsNotAtBottomEdge() => (TopCoordinates + Height) < correctedGameAreaHeight - distanceToEdge;
+        public void MovePlayerLeft()
+        {
+            LeftCoordinates -= playerSpeed;
+        }
+
+        public void MovePlayerRight()
+        {
+            LeftCoordinates += playerSpeed;
+        }
+
+        public void MovePlayerUp()
+        {
+            TopCoordinates -= playerSpeed;
+        }
+
+        public void MovePlayerDown()
+        {
+            TopCoordinates += playerSpeed;
+        }
+
+        public bool IsNotAtLeftEdge()
+        {
+            return LeftCoordinates > distanceToEdge;
+        }
+
+        public bool IsNotAtRightEdge()
+        {
+            return (LeftCoordinates + Width) < (correctedGameAreaWidth - distanceToEdge);
+        }
+
+        public bool IsNotAtTopEdge()
+        {
+            return TopCoordinates > distanceToEdge;
+        }
+
+        public bool IsNotAtBottomEdge()
+        {
+            return (TopCoordinates + Height) < (correctedGameAreaHeight - distanceToEdge);
+        }
 
         /// <summary>
         /// Laddar in, processerar och cachar bild för spelarens karaktär
         /// </summary>
-        private void LoadKrakenImageProcessing()
+        private void LoadImageProcessing()
         {
             BitmapImage image = new BitmapImage();
             image.BeginInit();
@@ -169,9 +204,17 @@ namespace SUP23_G9.ViewModels
             image.CacheOption = BitmapCacheOption.OnLoad;
             image.EndInit();
 
-            PlayerImage = image;
+            SpriteImage = image;
         }
-        private void TurnSpriteHorizontally() => FlipImageX = -1.0;
-        private void TurnSpriteBack() => FlipImageX = 1.0;
+
+        private void TurnSpriteHorizontally()
+        {
+            FlipImageX = -1.0;
+        }
+
+        private void TurnSpriteBack()
+        {
+            FlipImageX = 1.0;
+        }
     }
 }

@@ -46,13 +46,13 @@ namespace SUP23_G9.ViewModels
         {
             RemainingTime = "Time's up!";
 
-            RaiseTimeUpEvent();
+            RaiseTimeUpHandler();
         }
 
-        public event EventHandler TimeUpEvent;
-        private void RaiseTimeUpEvent()
+        public event EventHandler TimeUpHandler;
+        private void RaiseTimeUpHandler()
         {
-            TimeUpEvent?.Invoke(this, EventArgs.Empty);
+            TimeUpHandler?.Invoke(this, EventArgs.Empty);
         }
     }
 }

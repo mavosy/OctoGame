@@ -403,7 +403,7 @@ namespace SUP23_G9.ViewModels
         public void SetCountdownTimer(int seconds)
         {
             CountdownTimer = new TimerViewModel(seconds); // Startar med 1 min.
-            CountdownTimer.TimeUpEvent += CountdownTimer_TimeUp;
+            CountdownTimer.TimeUpHandler += CountdownTimer_TimeUp;
         }
         public void StartCountdownTimer()
         {
@@ -415,11 +415,11 @@ namespace SUP23_G9.ViewModels
             CountdownTimer._timer.Stop();
         }
 
-        public Action<int> SwitchToGameOverViewEvent;
+        public Action<int> SetToGameOverViewHandler;
         public event Action<int> GameOverEvent;
-        public void RaiseSwitchToGameOverViewEvent(int finalScore)
+        public void RaiseSetToGameOverViewHandler(int finalScore)
         {
-            SwitchToGameOverViewEvent?.Invoke(finalScore);
+            SetToGameOverViewHandler?.Invoke(finalScore);
         }
 
         public void OpenGameOverView()
@@ -431,9 +431,9 @@ namespace SUP23_G9.ViewModels
                 GameOverEvent?.Invoke(finalScore);
             }
 
-            RaiseSwitchToGameOverViewEvent(finalScore);
+            RaiseSetToGameOverViewHandler(finalScore);
 
-            var gameOverViewModel = new GameOverViewModel(finalScore);
+            var gameOverViewModel = new GameOverViewModel(finalScore); //TODO Behövs denna? Verkar inte leda någonstans, den lokala variabeln används inte
         }
 
         #endregion
