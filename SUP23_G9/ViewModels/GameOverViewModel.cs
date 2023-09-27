@@ -11,12 +11,12 @@ namespace SUP23_G9.ViewModels
         public GameOverViewModel(int finalScore)
         {
             PlayAgainCommand = new RelayCommand(parameter => PlayAgain());
-            FinalScore = finalScore; // Antar att du har en FinalScore egenskap i GameOverViewModel
+            FinalScore = finalScore;
         }
         public int FinalScore { get; private set; }
         public ICommand PlayAgainCommand { get; set; }
-        public Action SwitchToGameViewEvent { get; set; }
 
+        public Action SwitchToGameViewEvent;
         public void RaiseSwitchToGameViewEvent()
         {
             Debug.WriteLine($"Invoking from GameOverViewModel with ID: {InstanceID}");
