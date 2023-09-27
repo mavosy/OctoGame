@@ -24,7 +24,7 @@
     <Grid>
         <Image 
             x:Name="playerImage" 
-            Source="{Binding PlayerImage}"
+            Source="{Binding SpriteImage}"
             RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <ScaleTransform 

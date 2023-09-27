@@ -6,31 +6,35 @@ namespace SUP23_G9.ViewModels
 {
     public class ShipViewModel : BaseViewModel
     {
+        public const int width = 50;
+        public const int height = 50;
+
         public ShipViewModel()
         {
-            Width = 50;
-            Height = 50;
-            LoadShipImageProcessing();
+            Width = width;
+            Height = height;
+            IsAnimating = true;
+            LoadImageProcessing();
         }
 
-        public bool IsAnimating { get; set; } = true;
-        public double Left { get; set; }
-        public double Top { get; set; }
+        public double LeftCoordinates { get; set; }
+        public double TopCoordinates { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public BitmapImage ShipImage { get; private set; }
+        public bool IsAnimating { get; set; }
+        public BitmapImage SpriteImage { get; private set; }
 
-        private void LoadShipImageProcessing()
+        private void LoadImageProcessing()
         {
             BitmapImage image = new BitmapImage();
 
             image.BeginInit();
             image.UriSource = new Uri("pack://application:,,,/SUP23_G9;component/Views/Components/Images/PirateShip1_Right.bmp");
-            image.DecodePixelWidth = 50;
+            image.DecodePixelWidth = width;
             image.CacheOption = BitmapCacheOption.OnLoad;
             image.EndInit();
 
-            ShipImage = image;
+            SpriteImage = image;
         }
     }
 }

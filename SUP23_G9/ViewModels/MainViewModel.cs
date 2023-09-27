@@ -7,40 +7,43 @@ namespace SUP23_G9.ViewModels
     {
         public MainViewModel()
         {
-            SwitchToStartView();
+            SetToStartView();
         }
 
         public BaseViewModel? CurrentViewModel { get; set; }
 
-        public void SwitchToStartView()
+        /// <summary>
+        /// Byter UI-fönstret till StartView, genom bindings för CurrentViewModel mellan MainViewModel och MainWindow
+        /// </summary>
+        public void SetToStartView()
         {
             CurrentViewModel = new StartViewModel();
             (CurrentViewModel as StartViewModel).SwitchToGameViewEvent = SwitchToGameView;
         }
 
         /// <summary>
-        /// Byter användargränssnittsfönstret till GameView, genom bindings mellan Main ViewModel och MainWindow
+        /// Byter UI-fönstret till GameView, genom bindings för CurrentViewModel mellan MainViewModel och MainWindow
         /// </summary>
         public void SwitchToGameView()
         {
             GameViewModel gameViewModel = new GameViewModel();
             CurrentViewModel = gameViewModel;
 
+            Debug.WriteLine($"Setting up GameViewModel with ID: {CurrentViewModel.InstanceID}");
             gameViewModel.StartTimers();
-            gameViewModel.SwitchToGameOverViewEvent = SwitchToGameOverView;
+            gameViewModel.SetToGameOverViewHandler = SwitchToGameOverView;
         }
+
         /// <summary>
-        /// Byter användargränssnittsfönstret till GameOverView, genom bindings mellan Main ViewModel och MainWindow
+        /// Byter UI-fönstret till GameOverView, genom bindings för CurrentViewModel mellan MainViewModel och MainWindow
         /// </summary>
         public void SwitchToGameOverView(int finalScore)// För Score
         {
             (CurrentViewModel as GameViewModel).StopTimers();
             CurrentViewModel = new GameOverViewModel(finalScore);
+
             Debug.WriteLine($"Setting up GameOverViewModel with ID: {CurrentViewModel.InstanceID}");
-            (CurrentViewModel as GameOverViewModel).SwitchToGameViewEvent = SwitchToGameView;
-
+            (CurrentViewModel as GameOverViewModel).SetToGameViewHandler = SwitchToGameView;
         }
-
-
     }
 }

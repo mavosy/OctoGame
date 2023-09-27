@@ -15,7 +15,7 @@
     </UserControl.DataContext>
 
     <Image Name="pirateShip1" 
-           Source="{Binding ShipImage}"
+           Source="{Binding SpriteImage}"
            RenderTransformOrigin="0.5,0.5">
         <Image.RenderTransform>
             <ScaleTransform x:Name="sailTransform" ScaleX="1.0"/>

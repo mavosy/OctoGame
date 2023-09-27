@@ -7,6 +7,7 @@ namespace SUP23_G9.Commands
     {
         private Action<object> _execute;
         private Func<object, bool> _canExecute;
+
         public event EventHandler? CanExecuteChanged;
 
         public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
@@ -14,6 +15,7 @@ namespace SUP23_G9.Commands
             _execute = execute;
             _canExecute = canExecute;
         }
+
         public bool CanExecute(object? parameter)
         {
             return _canExecute == null || _canExecute(parameter);

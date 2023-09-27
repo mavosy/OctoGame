@@ -20,6 +20,7 @@ namespace SUP23_G9.ViewModels
         {
             SwitchToGameViewEvent?.Invoke();
         }
+
         public void StartGame()
         {
             RaiseSwitchToGameViewEvent();
