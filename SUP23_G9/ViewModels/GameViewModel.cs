@@ -26,7 +26,6 @@ namespace SUP23_G9.ViewModels
         private BitmapImage _emptyHeart;
 
         private readonly MediaPlayer _backgroundMusicPlayer = new MediaPlayer();
-        
 
 
         #endregion
@@ -440,6 +439,9 @@ namespace SUP23_G9.ViewModels
         }
 
         #region Sound
+        /// <summary>
+        /// Startar musik i bakgrunden i spelvyn
+        /// </summary>
         private void InitializeBackgroundMusic()
         {
             _backgroundMusicPlayer.Open(new Uri("Sounds/Background_sound.mp3", UriKind.Relative));

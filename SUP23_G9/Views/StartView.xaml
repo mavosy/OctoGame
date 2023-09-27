@@ -30,18 +30,15 @@
             <Label Name="lblTitle" Content="Happy Kraken's &#xA;Pirate Buffet" Foreground="#FF034A4E" FontFamily="Ravie" FontSize="50" Margin="216,25,216,412" Width="557" HorizontalContentAlignment="Center" />
             <Image Name="player" Source="/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp" Margin="183,237,717,255" Height="80" Width="80">
                 <Image.Triggers>
-                    <!-- Trigger för att starta animationen när fönstret laddas -->
                     <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                         <BeginStoryboard>
                             <Storyboard RepeatBehavior="Forever" AutoReverse="True">
-                                <!-- Animation som ändrar bildens Margin (position) -->
                                 <ThicknessAnimation
                                     Storyboard.TargetName="player"
                                     Storyboard.TargetProperty="Margin"
                                     From="128,247,662,227"
                                     To="202,247,588,227"
                                     Duration="0:0:1" />
-                                <!-- Varaktighet av animationen -->
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
@@ -50,18 +47,15 @@
 
             <Image Name="pirateShip1" Source="/SUP23_G9;component/Views/Components/Images/PirateShip1_Left.bmp" Margin="728,248,172,256" Height="80" Width="80">
                 <Image.Triggers>
-                    <!-- Trigger för att starta animationen när fönstret laddas -->
                     <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                         <BeginStoryboard>
                             <Storyboard RepeatBehavior="Forever" AutoReverse="True">
-                                <!-- Animation som ändrar bildens Margin (position) -->
                                 <ThicknessAnimation
                                     Storyboard.TargetName="pirateShip1"
                                     Storyboard.TargetProperty="Margin"
                                     From="660,254,144,234"
                                     To="602,254,202,234"
                                     Duration="0:0:1" />
-                                <!-- Varaktighet av animationen -->
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
@@ -96,24 +90,20 @@
 
             <Image Name="obstacle" Source="/SUP23_G9;component/Views/Components/Images/PirateIsland1.bmp" Margin="233,467,687,53" Height="80" Width="80">
                 <Image.Triggers>
-                    <!-- Trigger för att starta animationen när fönstret laddas -->
                     <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                         <BeginStoryboard>
                             <Storyboard RepeatBehavior="Forever" AutoReverse="True">
-                                <!-- Animation som ändrar bildens Margin (position) -->
                                 <ThicknessAnimation
                                     Storyboard.TargetName="obstacle"
                                     Storyboard.TargetProperty="Margin"
                                     From="233,467,687,53"
                                     To="265,467,655,53"
                                     Duration="0:0:1" />
-                                <!-- Varaktighet av animationen -->
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
                 </Image.Triggers>
             </Image>
-
         </Grid>
     </Border>
 </UserControl>
