@@ -7,7 +7,7 @@ namespace SUP23_G9.ViewModels
 {
     public class TimerViewModel : BaseViewModel
     {
-        private DispatcherTimer _timer;
+        public DispatcherTimer _timer;
         private int _remainingSeconds;
 
         /// <summary>
