@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SUP23_G9
 {
-    public static class GlobalVariabels
+    public static class GlobalVariables
     {
         public static double _playerCoordinatesLeft;
         public static double _playerCoordinatesTop;

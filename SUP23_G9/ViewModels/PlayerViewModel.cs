@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Threading;
 
 namespace SUP23_G9.ViewModels
@@ -12,10 +13,13 @@ namespace SUP23_G9.ViewModels
         private const double distanceToEdge = 5;
         private const double playerSpeed = 5;
 
+        public const int width = 50;
+        public const int height = 50;
+
         //TODO Fixa dessa konstanter så att de hämtas med t ex bindings eller liknande istället
         private const int correctedGameAreaWidth = 985;
         private const int correctedGameAreaHeight = 565;
-
+        private const int playerUpdateFrequencyInMilliseconds = 10;
         private bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;
 
         DispatcherTimer _playerTimer;
@@ -25,8 +29,9 @@ namespace SUP23_G9.ViewModels
             //TODO vore kanske schysst att inte ha fasta värden på dessa från viewmodel, vet inte vad som är bäst
             LeftCoordinates = 475;
             TopCoordinates = 450;
-            Width = 50;
-            Height = 50;
+
+            Width = width;
+            Height = height;
 
             SetPlayerTimer();
 
@@ -45,7 +50,7 @@ namespace SUP23_G9.ViewModels
         private void SetPlayerTimer()
         {
             _playerTimer = new DispatcherTimer();
-            _playerTimer.Interval = TimeSpan.FromMilliseconds(10);
+            _playerTimer.Interval = TimeSpan.FromMilliseconds(playerUpdateFrequencyInMilliseconds);
         }
 
         public void StartPlayerTimer()
@@ -62,7 +67,7 @@ namespace SUP23_G9.ViewModels
 
         private void MovePlayerEvent(object? sender, EventArgs e)
         {
-            UpdateGlobalVariabelsWithPlayerCoordinates();
+            //UpdateGlobalVariabelsWithPlayerCoordinates();
 
             Debug.WriteLine($"PlayerViewModel event fire with ID: {InstanceID}");
             if (_leftButtonIsDown && IsNotAtLeftEdge())
@@ -89,11 +94,11 @@ namespace SUP23_G9.ViewModels
         }
 
         //TODO göra oss av med de globala variablerna, försöka hitta ett annat sätt
-        private void UpdateGlobalVariabelsWithPlayerCoordinates()
-        {
-            GlobalVariabels._playerCoordinatesLeft = LeftCoordinates;
-            GlobalVariabels._playerCoordinatesTop = TopCoordinates;
-        }
+        //private void UpdateGlobalVariabelsWithPlayerCoordinates()
+        //{
+        //    GlobalVariables._playerCoordinatesLeft = LeftCoordinates;
+        //    GlobalVariables._playerCoordinatesTop = TopCoordinates;
+        //}
 
         /// <summary>
         /// Här och i "HandleKeyUp()" sätts med vilka tangenter spelaren styr sin karaktär
@@ -200,7 +205,7 @@ namespace SUP23_G9.ViewModels
             BitmapImage image = new BitmapImage();
             image.BeginInit();
             image.UriSource = new Uri("pack://application:,,,/SUP23_G9;component/Views/Components/Images/Happy_Kraken_Left.bmp");
-            image.DecodePixelWidth = 50;
+            image.DecodePixelWidth = width;
             image.CacheOption = BitmapCacheOption.OnLoad;
             image.EndInit();
 

@@ -7,6 +7,7 @@ namespace SUP23_G9.ViewModels
 {
     public class TimerViewModel : BaseViewModel
     {
+        private const int secondsInMinute = 60;
         public DispatcherTimer _timer;
         private int _remainingSeconds;
 
@@ -49,8 +50,8 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         private void UpdateRemainingTime()
         {
-            int minutes = _remainingSeconds / 60;
-            int seconds = _remainingSeconds % 60;
+            int minutes = _remainingSeconds / secondsInMinute;
+            int seconds = _remainingSeconds % secondsInMinute;
             RemainingTime = $"{minutes:00 min}:{seconds:00 sek}";
         }
 

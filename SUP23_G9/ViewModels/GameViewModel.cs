@@ -1,4 +1,5 @@
 ﻿using SUP23_G9.ViewModels.Base;
+using SUP23_G9.Views.Characters;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -11,16 +12,33 @@ namespace SUP23_G9.ViewModels
     {
         #region Fields and Constants
         private DispatcherTimer _gameTimer;
-        private DispatcherTimer _increaseObstaclesTimer;
+        private DispatcherTimer _increaseDifficultyTimer;
+
+        private int _shipWidth = ShipViewModel.width;
+        private int _shipHeight = ShipViewModel.height;
+        private int _playerWidth = PlayerViewModel.width;
+        private int _playerHeight = PlayerViewModel.height;
+        private int _obstacleWidth = ObstacleViewModel.width;
+        private int _obstacleHeight = ObstacleViewModel.height;
 
         private int _secondsPassedCounter = 0;
+        private const int secondsBetweenDifficultyIncrease = 10;
+
         private int _speedShip = 4;
         private int _speedObstacle = 2;
 
+        private const int gainedPointsFromShips = 10;
+        private const int lostPointsFromObstacles = 5;
+
         private static readonly Random _random = new();
+        private const int initialYAxisDeplacement = 600;
+        private const int objectPaddingAtGeneration = 5;
+
         private double _mainWindowHeight = System.Windows.Application.Current.MainWindow.ActualHeight;   //TODO Skulle behöva se över dessa och hitta ett MVVM-sätt att hämta höjd och bredd
         private double _mainWindowWidth = System.Windows.Application.Current.MainWindow.ActualWidth;
 
+        private const int maxPlayerHealth = 3;
+        private const int gameTimerUpdateFrequencyInMilliseconds = 20;
         private BitmapImage _fullHeart;
         private BitmapImage _emptyHeart;
         #endregion
@@ -34,7 +52,7 @@ namespace SUP23_G9.ViewModels
             CreateRandomShips();
             CreateRandomObstacles();
 
-            PlayerHealth = 3;
+            PlayerHealth = maxPlayerHealth;
             LoadEmptyHeartImageProcessing();
             LoadFullHeartImageProcessing();
             Heart1 = _fullHeart;
@@ -44,7 +62,7 @@ namespace SUP23_G9.ViewModels
             PlayerVM = new PlayerViewModel();
 
             SetGameTimer();
-            SetIncreaseObstaclesTimer();
+            SetTimerForIncreasedDifficulty();
             SetCountdownTimer(60);
 
             Debug.WriteLine($"New GameViewModel with ID: {InstanceID}");
@@ -79,7 +97,7 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         private void IncrementalDifficultyIncrease()
         {
-            if (HasSecondsPassed(10))
+            if (IsTimeForDifficultyIncrease())
             {
                 CreateRandomObstacles();
                 IncreaseObstacleSpeed();
@@ -90,11 +108,10 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Avgör om ett givet antal sekunder har passerat sedan senaste ökningen
         /// </summary>
-        /// <param name="secToDifficultyIncrease"></param>
         /// <returns></returns>
-        private bool HasSecondsPassed(int secToDifficultyIncrease)
+        private bool IsTimeForDifficultyIncrease()
         {
-            return _secondsPassedCounter % secToDifficultyIncrease == 0;
+            return _secondsPassedCounter % secondsBetweenDifficultyIncrease == 0;
         }
 
         /// <summary>
@@ -123,10 +140,10 @@ namespace SUP23_G9.ViewModels
                 int randomTop;
                 int randomLeft;
                 ShipViewModel newShip;
-
+                
                 do
                 {
-                    randomTop = GenerateRandomTop() - 600;
+                    randomTop = GenerateRandomTop() - initialYAxisDeplacement;
                     randomLeft = GenerateRandomLeft();
                     newShip = new ShipViewModel { TopCoordinates = randomTop, LeftCoordinates = randomLeft };
                 }
@@ -141,7 +158,7 @@ namespace SUP23_G9.ViewModels
         {
             for (int i = 0; i < 3; i++) //Obstacles 2st
             {
-                int randomTop = GenerateRandomTop() - 600;
+                int randomTop = GenerateRandomTop() - initialYAxisDeplacement;
                 int randomLeft = GenerateRandomLeft();
                 Obstacles.Add(new ObstacleViewModel { TopCoordinates = randomTop, LeftCoordinates = randomLeft });
             }
@@ -211,14 +228,14 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande objekt i canvas vid repositionering
         /// </summary>
-        private bool IsCollisionWithExistingShips(int left, int top)
+        private bool IsCollisionWithExistingShips(int left, int top) //TODO Går det att få ihop IsCollisionWithExistingShips och NewShipCollidesWithExistingShips till samma? Finns viss redundans, men kanske klurigt.
         {
             foreach (var existingShip in Ships) //Måste göra ny kollisonskoll mellan existerande skepp och det nya värdet som genereras
             {
-                bool collisionX = left < existingShip.LeftCoordinates + 55 && left + 55 > existingShip.LeftCoordinates;
-                bool collisionY = top < existingShip.TopCoordinates + 55 && top + 55 > existingShip.TopCoordinates;
+                bool collisionXAxis = left < (existingShip.LeftCoordinates + _shipWidth + objectPaddingAtGeneration) && (left + _shipWidth + objectPaddingAtGeneration) > existingShip.LeftCoordinates;
+                bool collisionYAxis = top < (existingShip.TopCoordinates + _shipHeight + objectPaddingAtGeneration) && (top + _shipHeight + objectPaddingAtGeneration) > existingShip.TopCoordinates;
 
-                if (collisionX && collisionY)
+                if (collisionXAxis && collisionYAxis)
                 {
                     return true;
                 }
@@ -231,10 +248,10 @@ namespace SUP23_G9.ViewModels
         {
             foreach (var existingShip in Ships)
             {
-                bool collisionX = newShip.LeftCoordinates < existingShip.LeftCoordinates + 55 && newShip.LeftCoordinates + 55 > existingShip.LeftCoordinates; //Skrev 55 för att få lite extra marginal
-                bool collisionY = newShip.TopCoordinates < existingShip.TopCoordinates + 55 && newShip.TopCoordinates + 55 > existingShip.TopCoordinates;
+                bool collisionXAxis = newShip.LeftCoordinates < (existingShip.LeftCoordinates + _shipWidth) && (newShip.LeftCoordinates + _shipWidth) > existingShip.LeftCoordinates;
+                bool collisionYAxis = newShip.TopCoordinates < (existingShip.TopCoordinates + _shipHeight) && (newShip.TopCoordinates + _shipHeight) > existingShip.TopCoordinates;
 
-                if (collisionX && collisionY)
+                if (collisionXAxis && collisionYAxis)
                 {
                     return true;
                 }
@@ -272,7 +289,7 @@ namespace SUP23_G9.ViewModels
 
             ship.TopCoordinates = 0;
             ship.LeftCoordinates = newLeft;
-            GamePoints.AddPoints(10);
+            GamePoints.AddPoints(gainedPointsFromShips);
         }
 
         private void SetPlayerObstacleCollisionConsequence()
@@ -284,19 +301,19 @@ namespace SUP23_G9.ViewModels
                     obstacle.TopCoordinates = 0;
                     obstacle.LeftCoordinates = GenerateRandomLeft();
 
-                    GamePoints.DeductPoints(5);
+                    GamePoints.DeductPoints(lostPointsFromObstacles);
                     PlayerDamaged();
-                    PointResult -= 5;
+                    PointResult -= lostPointsFromObstacles; //TODO Någon som vet varför man måste dra av från både PointResult och köra DeductPoints?
                 }
             }
         }
 
         private bool PlayerCollidesWithShip(ShipViewModel ship)
         {
-            bool collisionX = ship.LeftCoordinates < GlobalVariabels._playerCoordinatesLeft + 50 && ship.LeftCoordinates + 50 > GlobalVariabels._playerCoordinatesLeft;
-            bool collisionY = ship.TopCoordinates < GlobalVariabels._playerCoordinatesTop + 50 && ship.TopCoordinates + 50 > GlobalVariabels._playerCoordinatesTop;
+            bool collisionXAxis = ship.LeftCoordinates < (PlayerVM.LeftCoordinates + _playerWidth) && (ship.LeftCoordinates + _shipWidth) > PlayerVM.LeftCoordinates;
+            bool collisionYAxis = ship.TopCoordinates < (PlayerVM.TopCoordinates + _playerHeight) && (ship.TopCoordinates + _shipHeight) > PlayerVM.TopCoordinates;
 
-            if (collisionX && collisionY)
+            if (collisionXAxis && collisionYAxis)
             {
                 return true;
             }
@@ -305,10 +322,10 @@ namespace SUP23_G9.ViewModels
 
         public bool PlayerCollidesWithObstacle(ObstacleViewModel obstacle)
         {
-            bool collisionX = obstacle.LeftCoordinates < GlobalVariabels._playerCoordinatesLeft + 50 && obstacle.LeftCoordinates + 50 > GlobalVariabels._playerCoordinatesLeft;
-            bool collisionY = obstacle.TopCoordinates < GlobalVariabels._playerCoordinatesTop + 50 && obstacle.TopCoordinates + 50 > GlobalVariabels._playerCoordinatesTop;
+            bool collisionXAxis = obstacle.LeftCoordinates < (PlayerVM.LeftCoordinates + _playerWidth) && (obstacle.LeftCoordinates + _obstacleWidth) > PlayerVM.LeftCoordinates;
+            bool collisionYAxis = obstacle.TopCoordinates < (PlayerVM.TopCoordinates + _playerHeight) && (obstacle.TopCoordinates + _obstacleHeight) > PlayerVM.TopCoordinates;
 
-            if (collisionX && collisionY)
+            if (collisionXAxis && collisionYAxis)
             {
                 return true;
             }
@@ -356,7 +373,7 @@ namespace SUP23_G9.ViewModels
         {
             StartGameTimer();
             StartCountdownTimer();
-            StartIncreaseObstaclesTimer();
+            StartTimerForIncreasedDifficulty();
             PlayerVM.StartPlayerTimer();
         }
 
@@ -364,31 +381,31 @@ namespace SUP23_G9.ViewModels
         {
             StopGameTimer();
             StopCountdownTimer();
-            StopIncreaseObstaclesTimer();
+            StopTimerForIncreasedDifficulty();
             PlayerVM.StopPlayerTimer();
         }
 
-        private void SetIncreaseObstaclesTimer()
+        private void SetTimerForIncreasedDifficulty()
         {
-            _increaseObstaclesTimer = new DispatcherTimer();
-            _increaseObstaclesTimer.Interval = TimeSpan.FromSeconds(1);
+            _increaseDifficultyTimer = new DispatcherTimer();
+            _increaseDifficultyTimer.Interval = TimeSpan.FromSeconds(1);
         }
 
-        private void StartIncreaseObstaclesTimer()
+        private void StartTimerForIncreasedDifficulty()
         {
-            _increaseObstaclesTimer.Tick += CountdownTimer_IncreaseObstacles;
-            _increaseObstaclesTimer.Start();
+            _increaseDifficultyTimer.Tick += CountdownTimer_IncreaseObstacles;
+            _increaseDifficultyTimer.Start();
         }
-        private void StopIncreaseObstaclesTimer()
+        private void StopTimerForIncreasedDifficulty()
         {
-            _increaseObstaclesTimer.Tick -= CountdownTimer_IncreaseObstacles;
-            _increaseObstaclesTimer.Stop();
+            _increaseDifficultyTimer.Tick -= CountdownTimer_IncreaseObstacles;
+            _increaseDifficultyTimer.Stop();
         }
 
         private void SetGameTimer()
         {
             _gameTimer = new DispatcherTimer();
-            _gameTimer.Interval = TimeSpan.FromMilliseconds(20);
+            _gameTimer.Interval = TimeSpan.FromMilliseconds(gameTimerUpdateFrequencyInMilliseconds);
         }
         public void StartGameTimer()
         {

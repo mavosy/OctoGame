@@ -1,15 +1,19 @@
 ﻿using SUP23_G9.ViewModels.Base;
 using System;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 
 namespace SUP23_G9.ViewModels
 {
     public class ObstacleViewModel : BaseViewModel
     {
+        public const int width = 50;
+        public const int height = 50;
+
         public ObstacleViewModel()
         {
-            Width = 50;
-            Height = 50;
+            Width = width;
+            Height = height;
             IsAnimating = true;
             LoadImageProcessing();
         }
@@ -27,7 +31,7 @@ namespace SUP23_G9.ViewModels
 
             image.BeginInit();
             image.UriSource = new Uri("pack://application:,,,/SUP23_G9;component/Views/Components/Images/PirateIsland1.bmp");
-            image.DecodePixelWidth = 50;
+            image.DecodePixelWidth = width;
             image.CacheOption = BitmapCacheOption.OnLoad;
             image.EndInit();
 
