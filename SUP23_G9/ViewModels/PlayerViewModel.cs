@@ -67,8 +67,6 @@ namespace SUP23_G9.ViewModels
 
         private void MovePlayerEvent(object? sender, EventArgs e)
         {
-            //UpdateGlobalVariabelsWithPlayerCoordinates();
-
             Debug.WriteLine($"PlayerViewModel event fire with ID: {InstanceID}");
             if (_leftButtonIsDown && IsNotAtLeftEdge())
             {
@@ -92,13 +90,6 @@ namespace SUP23_G9.ViewModels
                 MovePlayerDown();
             }
         }
-
-        //TODO göra oss av med de globala variablerna, försöka hitta ett annat sätt
-        //private void UpdateGlobalVariabelsWithPlayerCoordinates()
-        //{
-        //    GlobalVariables._playerCoordinatesLeft = LeftCoordinates;
-        //    GlobalVariables._playerCoordinatesTop = TopCoordinates;
-        //}
 
         /// <summary>
         /// Här och i "HandleKeyUp()" sätts med vilka tangenter spelaren styr sin karaktär
