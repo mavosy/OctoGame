@@ -64,8 +64,9 @@ namespace SUP23_G9.ViewModels
         #endregion
 
         #region Creation of objects and coordinates
+
         /// <summary>
-        /// Skapar nya objekt av typen Obstacle var 10:e sekund
+        /// Event som körs 1 gång i sekunden.
         /// </summary>
         private void CountdownTimer_IncreaseObstacles(object? sender, EventArgs e)
         {
@@ -73,11 +74,12 @@ namespace SUP23_G9.ViewModels
             IncrementalDifficultyIncrease();
         }
 
+        /// <summary>
+        /// Ökar svårighetsgrad efter att ett givet antal sekunder har passerat
+        /// </summary>
         private void IncrementalDifficultyIncrease()
         {
-            bool tenSecondsHasPassed = _secondsPassedCounter % 10 == 0;
-
-            if (tenSecondsHasPassed)
+            if (HasSecondsPassed(10))
             {
                 CreateRandomObstacles();
                 IncreaseObstacleSpeed();
@@ -85,8 +87,31 @@ namespace SUP23_G9.ViewModels
             }
         }
 
-        private void IncreaseObstacleSpeed() => _speedObstacle++;
-        private void IncreaseShipSpeed() => _speedShip++;
+        /// <summary>
+        /// Avgör om ett givet antal sekunder har passerat sedan senaste ökningen
+        /// </summary>
+        /// <param name="secToDifficultyIncrease"></param>
+        /// <returns></returns>
+        private bool HasSecondsPassed(int secToDifficultyIncrease)
+        {
+            return _secondsPassedCounter % secToDifficultyIncrease == 0;
+        }
+
+        /// <summary>
+        /// Ökar alla hinders hastighet
+        /// </summary>
+        private void IncreaseObstacleSpeed()
+        {
+            _speedObstacle++;
+        }
+
+        /// <summary>
+        /// Ökar alla skepps hastighet
+        /// </summary>
+        private void IncreaseShipSpeed()
+        {
+            _speedShip++;
+        }
 
         /// <summary>
         /// Skapar nya objekt av typen ShipViewModel
@@ -103,7 +128,7 @@ namespace SUP23_G9.ViewModels
                 {
                     randomTop = GenerateRandomTop() - 600;
                     randomLeft = GenerateRandomLeft();
-                    newShip = new ShipViewModel { Top = randomTop, Left = randomLeft };
+                    newShip = new ShipViewModel { TopCoordinates = randomTop, LeftCoordinates = randomLeft };
                 }
                 while (NewShipCollidesWithExistingShips(newShip)); //Sålänge (while) som villkoret är true så kommer koden i do köras - körs tills fått rätt värden som ej krockar.
                                                                    //inspo från battleship videos del 6 ca 13:30
@@ -118,12 +143,19 @@ namespace SUP23_G9.ViewModels
             {
                 int randomTop = GenerateRandomTop() - 600;
                 int randomLeft = GenerateRandomLeft();
-                Obstacles.Add(new ObstacleViewModel { Top = randomTop, Left = randomLeft });
+                Obstacles.Add(new ObstacleViewModel { TopCoordinates = randomTop, LeftCoordinates = randomLeft });
             }
         }
 
-        private int GenerateRandomTop() => _random.Next((int)_mainWindowHeight);
-        private int GenerateRandomLeft() => _random.Next((int)_mainWindowWidth);
+        private int GenerateRandomTop()
+        {
+            return _random.Next((int)_mainWindowHeight);
+        }
+        private int GenerateRandomLeft()
+        {
+            return _random.Next((int)_mainWindowWidth);
+        }
+
         #endregion
 
         #region Movement and collision
@@ -134,9 +166,9 @@ namespace SUP23_G9.ViewModels
         {
             foreach (ShipViewModel ship in Ships)
             {
-                ship.Top += _speedShip;
+                ship.TopCoordinates += _speedShip;
 
-                if (ship.Top > _mainWindowHeight)
+                if (ship.TopCoordinates > _mainWindowHeight)
                 {
                     ResetShipPosition(ship);
                 }
@@ -150,12 +182,12 @@ namespace SUP23_G9.ViewModels
         {
             foreach (ObstacleViewModel obstacle in Obstacles)
             {
-                obstacle.Top += _speedObstacle;
+                obstacle.TopCoordinates += _speedObstacle;
 
-                if (obstacle.Top > _mainWindowHeight)
+                if (obstacle.TopCoordinates > _mainWindowHeight)
                 {
-                    obstacle.Top = 0;
-                    obstacle.Left = GenerateRandomLeft();
+                    obstacle.TopCoordinates = 0;
+                    obstacle.LeftCoordinates = GenerateRandomLeft();
                 }
             }
         }
@@ -172,8 +204,8 @@ namespace SUP23_G9.ViewModels
                 newLeft = GenerateRandomLeft();
             }
 
-            ship.Top = 0;
-            ship.Left = newLeft;
+            ship.TopCoordinates = 0;
+            ship.LeftCoordinates = newLeft;
         }
 
         /// <summary>
@@ -183,8 +215,8 @@ namespace SUP23_G9.ViewModels
         {
             foreach (var existingShip in Ships) //Måste göra ny kollisonskoll mellan existerande skepp och det nya värdet som genereras
             {
-                bool collisionX = left < existingShip.Left + 55 && left + 55 > existingShip.Left;
-                bool collisionY = top < existingShip.Top + 55 && top + 55 > existingShip.Top;
+                bool collisionX = left < existingShip.LeftCoordinates + 55 && left + 55 > existingShip.LeftCoordinates;
+                bool collisionY = top < existingShip.TopCoordinates + 55 && top + 55 > existingShip.TopCoordinates;
 
                 if (collisionX && collisionY)
                 {
@@ -199,8 +231,8 @@ namespace SUP23_G9.ViewModels
         {
             foreach (var existingShip in Ships)
             {
-                bool collisionX = newShip.Left < existingShip.Left + 55 && newShip.Left + 55 > existingShip.Left; //Skrev 55 för att få lite extra marginal
-                bool collisionY = newShip.Top < existingShip.Top + 55 && newShip.Top + 55 > existingShip.Top;
+                bool collisionX = newShip.LeftCoordinates < existingShip.LeftCoordinates + 55 && newShip.LeftCoordinates + 55 > existingShip.LeftCoordinates; //Skrev 55 för att få lite extra marginal
+                bool collisionY = newShip.TopCoordinates < existingShip.TopCoordinates + 55 && newShip.TopCoordinates + 55 > existingShip.TopCoordinates;
 
                 if (collisionX && collisionY)
                 {
@@ -238,8 +270,8 @@ namespace SUP23_G9.ViewModels
                 newLeft = GenerateRandomLeft();
             }
 
-            ship.Top = 0;
-            ship.Left = newLeft;
+            ship.TopCoordinates = 0;
+            ship.LeftCoordinates = newLeft;
             GamePoints.AddPoints(10);
         }
 
@@ -249,8 +281,8 @@ namespace SUP23_G9.ViewModels
             {
                 if (PlayerCollidesWithObstacle(obstacle))
                 {
-                    obstacle.Top = 0;
-                    obstacle.Left = GenerateRandomLeft();
+                    obstacle.TopCoordinates = 0;
+                    obstacle.LeftCoordinates = GenerateRandomLeft();
 
                     GamePoints.DeductPoints(5);
                     PlayerDamaged();
@@ -261,8 +293,8 @@ namespace SUP23_G9.ViewModels
 
         private bool PlayerCollidesWithShip(ShipViewModel ship)
         {
-            bool collisionX = ship.Left < GlobalVariabels._playerCoordinatesLeft + 50 && ship.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
-            bool collisionY = ship.Top < GlobalVariabels._playerCoordinatesTop + 50 && ship.Top + 50 > GlobalVariabels._playerCoordinatesTop;
+            bool collisionX = ship.LeftCoordinates < GlobalVariabels._playerCoordinatesLeft + 50 && ship.LeftCoordinates + 50 > GlobalVariabels._playerCoordinatesLeft;
+            bool collisionY = ship.TopCoordinates < GlobalVariabels._playerCoordinatesTop + 50 && ship.TopCoordinates + 50 > GlobalVariabels._playerCoordinatesTop;
 
             if (collisionX && collisionY)
             {
@@ -273,8 +305,8 @@ namespace SUP23_G9.ViewModels
 
         public bool PlayerCollidesWithObstacle(ObstacleViewModel obstacle)
         {
-            bool collisionX = obstacle.Left < GlobalVariabels._playerCoordinatesLeft + 50 && obstacle.Left + 50 > GlobalVariabels._playerCoordinatesLeft;
-            bool collisionY = obstacle.Top < GlobalVariabels._playerCoordinatesTop + 50 && obstacle.Top + 50 > GlobalVariabels._playerCoordinatesTop;
+            bool collisionX = obstacle.LeftCoordinates < GlobalVariabels._playerCoordinatesLeft + 50 && obstacle.LeftCoordinates + 50 > GlobalVariabels._playerCoordinatesLeft;
+            bool collisionY = obstacle.TopCoordinates < GlobalVariabels._playerCoordinatesTop + 50 && obstacle.TopCoordinates + 50 > GlobalVariabels._playerCoordinatesTop;
 
             if (collisionX && collisionY)
             {
@@ -383,9 +415,12 @@ namespace SUP23_G9.ViewModels
             CountdownTimer._timer.Stop();
         }
 
-        public Action<int> SwitchToGameOverViewEvent { get; set; }
+        public Action<int> SwitchToGameOverViewEvent;
         public event Action<int> GameOverEvent;
-        public void RaiseSwitchToGameOverViewEvent(int finalScore) => SwitchToGameOverViewEvent?.Invoke(finalScore);
+        public void RaiseSwitchToGameOverViewEvent(int finalScore)
+        {
+            SwitchToGameOverViewEvent?.Invoke(finalScore);
+        }
 
         public void OpenGameOverView()
         {

@@ -16,7 +16,7 @@
 
     <Image 
         Name="obstacleImage" 
-        Source="{Binding ObstacleImage}"
+        Source="{Binding SpriteImage}"
         RenderTransformOrigin="0.5,0.5">
 
         <Image.RenderTransform>

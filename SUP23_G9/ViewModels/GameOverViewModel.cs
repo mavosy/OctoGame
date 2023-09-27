@@ -13,6 +13,7 @@ namespace SUP23_G9.ViewModels
             PlayAgainCommand = new RelayCommand(parameter => PlayAgain());
             FinalScore = finalScore;
         }
+
         public int FinalScore { get; private set; }
         public ICommand PlayAgainCommand { get; set; }
 

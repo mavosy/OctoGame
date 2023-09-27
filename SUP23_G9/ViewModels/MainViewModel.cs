@@ -12,6 +12,9 @@ namespace SUP23_G9.ViewModels
 
         public BaseViewModel? CurrentViewModel { get; set; }
 
+        /// <summary>
+        /// Byter UI-fönstret till StartView, genom bindings för CurrentViewModel mellan MainViewModel och MainWindow
+        /// </summary>
         public void SwitchToStartView()
         {
             CurrentViewModel = new StartViewModel();
@@ -19,28 +22,28 @@ namespace SUP23_G9.ViewModels
         }
 
         /// <summary>
-        /// Byter användargränssnittsfönstret till GameView, genom bindings mellan Main ViewModel och MainWindow
+        /// Byter UI-fönstret till GameView, genom bindings för CurrentViewModel mellan MainViewModel och MainWindow
         /// </summary>
         public void SwitchToGameView()
         {
             GameViewModel gameViewModel = new GameViewModel();
             CurrentViewModel = gameViewModel;
 
+            Debug.WriteLine($"Setting up GameViewModel with ID: {CurrentViewModel.InstanceID}");
             gameViewModel.StartTimers();
             gameViewModel.SwitchToGameOverViewEvent = SwitchToGameOverView;
         }
+
         /// <summary>
-        /// Byter användargränssnittsfönstret till GameOverView, genom bindings mellan Main ViewModel och MainWindow
+        /// Byter UI-fönstret till GameOverView, genom bindings för CurrentViewModel mellan MainViewModel och MainWindow
         /// </summary>
         public void SwitchToGameOverView(int finalScore)// För Score
         {
             (CurrentViewModel as GameViewModel).StopTimers();
             CurrentViewModel = new GameOverViewModel(finalScore);
+
             Debug.WriteLine($"Setting up GameOverViewModel with ID: {CurrentViewModel.InstanceID}");
             (CurrentViewModel as GameOverViewModel).SwitchToGameViewEvent = SwitchToGameView;
-
         }
-
-
     }
 }

@@ -10,18 +10,18 @@ namespace SUP23_G9.ViewModels
         {
             Width = 50;
             Height = 50;
-            LoadObstacleImageProcessing();
+            IsAnimating = true;
+            LoadImageProcessing();
         }
 
-        public bool IsAnimating { get; set; } = true;
-
-
-        public double Left { get; set; }
-        public double Top { get; set; }
+        public double LeftCoordinates { get; set; }
+        public double TopCoordinates { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public BitmapImage ObstacleImage { get; set; }
-        private void LoadObstacleImageProcessing()
+        public bool IsAnimating { get; set; }
+        public BitmapImage SpriteImage { get; set; }
+
+        private void LoadImageProcessing()
         {
             BitmapImage image = new BitmapImage();
 
@@ -31,7 +31,7 @@ namespace SUP23_G9.ViewModels
             image.CacheOption = BitmapCacheOption.OnLoad;
             image.EndInit();
 
-            ObstacleImage = image;
+            SpriteImage = image;
         }
     }
 }

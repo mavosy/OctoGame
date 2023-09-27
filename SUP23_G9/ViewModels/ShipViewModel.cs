@@ -10,14 +10,15 @@ namespace SUP23_G9.ViewModels
         {
             Width = 50;
             Height = 50;
+            IsAnimating = true;
             LoadImageProcessing();
         }
 
-        public bool IsAnimating { get; set; } = true;
-        public double Left { get; set; }
-        public double Top { get; set; }
+        public double LeftCoordinates { get; set; }
+        public double TopCoordinates { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public bool IsAnimating { get; set; }
         public BitmapImage SpriteImage { get; private set; }
 
         private void LoadImageProcessing()
