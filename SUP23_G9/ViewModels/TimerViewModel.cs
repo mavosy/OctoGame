@@ -1,8 +1,6 @@
-﻿using SUP23_G9.Commands;
-using SUP23_G9.ViewModels.Base;
+﻿using SUP23_G9.ViewModels.Base;
 using System;
 using System.Diagnostics;
-using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace SUP23_G9.ViewModels
@@ -47,11 +45,11 @@ namespace SUP23_G9.ViewModels
         private void CompleteTimer()
         {
             RemainingTime = "Time's up!";
-          
+
             RaiseTimeUpEvent();
         }
 
-        public event EventHandler TimeUpEvent; 
+        public event EventHandler TimeUpEvent;
         private void RaiseTimeUpEvent()
         {
             TimeUpEvent?.Invoke(this, EventArgs.Empty);
