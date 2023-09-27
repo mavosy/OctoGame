@@ -22,8 +22,6 @@ namespace SUP23_G9.ViewModels
         }
         public string RemainingTime { get; private set; }
 
-        public event EventHandler TimeUpEvent; 
-       
         public void TimerTick(object sender, EventArgs e)
         {
             Debug.WriteLine($"TimerViewModel event fire with ID: {InstanceID}");
@@ -36,7 +34,6 @@ namespace SUP23_G9.ViewModels
             {
                 CompleteTimer();
             }
-
         }
 
         private void UpdateRemainingTime()
@@ -45,7 +42,6 @@ namespace SUP23_G9.ViewModels
             int seconds = _remainingSeconds % 60;
             RemainingTime = $"{minutes:00 min}:{seconds:00 sec}";
         }
-
         private void CompleteTimer()
         {
             RemainingTime = "Time's up!";
@@ -53,6 +49,10 @@ namespace SUP23_G9.ViewModels
             RaiseTimeUpEvent();
         }
 
-        private void RaiseTimeUpEvent() => TimeUpEvent?.Invoke(this, EventArgs.Empty); 
+        public event EventHandler TimeUpEvent; 
+        private void RaiseTimeUpEvent()
+        {
+            TimeUpEvent?.Invoke(this, EventArgs.Empty);
+        }
     }
 }
