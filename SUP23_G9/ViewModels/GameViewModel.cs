@@ -14,19 +14,18 @@ namespace SUP23_G9.ViewModels
         private DispatcherTimer _gameTimer;
         private DispatcherTimer _increaseDifficultyTimer;
 
-        private int _shipWidth = ShipViewModel.width;
-        private int _shipHeight = ShipViewModel.height;
-        private int _playerWidth = PlayerViewModel.width;
-        private int _playerHeight = PlayerViewModel.height;
-        private int _obstacleWidth = ObstacleViewModel.width;
-        private int _obstacleHeight = ObstacleViewModel.height;
+        private static readonly int _shipWidth = ShipViewModel.width;
+        private static readonly int _shipHeight = ShipViewModel.height;
+        private static readonly int _playerWidth = PlayerViewModel.width;
+        private static readonly int _playerHeight = PlayerViewModel.height;
+        private static readonly int _obstacleWidth = ObstacleViewModel.width;
+        private static readonly int _obstacleHeight = ObstacleViewModel.height;
 
         private int _secondsPassedCounter = 0;
         private const int secondsBetweenDifficultyIncrease = 10;
 
         private int _speedShip = 4;
         private int _speedObstacle = 2;
-
         private const int gainedPointsFromShips = 10;
         private const int lostPointsFromObstacles = 5;
 
