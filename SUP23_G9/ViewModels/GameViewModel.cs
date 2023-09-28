@@ -23,7 +23,7 @@ namespace SUP23_G9.ViewModels
         private static readonly int _obstacleHeight = ObstacleViewModel.height;
 
         private int _secondsPassedCounter = 0;
-        private const int secondsBetweenDifficultyIncrease = 10;
+        private const int secondsBetweenDifficultyIncrease = 20;
 
         private int _speedShip = 4;
         private int _speedObstacle = 2;
@@ -31,7 +31,7 @@ namespace SUP23_G9.ViewModels
         private const int lostPointsFromObstacles = 5;
 
         private static readonly Random _random = new();
-        private const int initialYAxisDeplacement = 600;
+        private const int initialYAxisDeplacement = 550;
         private const int objectPaddingAtGeneration = 5;
 
         private double _mainWindowHeight = System.Windows.Application.Current.MainWindow.ActualHeight;   //TODO Skulle behöva se över dessa och hitta ett MVVM-sätt att hämta höjd och bredd
@@ -67,7 +67,7 @@ namespace SUP23_G9.ViewModels
 
             SetGameTimer();
             SetTimerForIncreasedDifficulty();
-            SetCountdownTimer(60);
+            SetCountdownTimer(180);
             InitializeBackgroundMusic();
 
             Debug.WriteLine($"New GameViewModel with ID: {InstanceID}");
@@ -122,7 +122,7 @@ namespace SUP23_G9.ViewModels
         }
 
         /// <summary>
-        /// Ökar alla hinders hastighet
+        /// Ökar hastigheten för alla objekt av typen ObstacleViewModel
         /// </summary>
         private void IncreaseObstacleSpeed()
         {
@@ -130,7 +130,7 @@ namespace SUP23_G9.ViewModels
         }
 
         /// <summary>
-        /// Ökar alla skepps hastighet
+        /// Ökar hastigheten för alla objekt av typen ShipViewModel
         /// </summary>
         private void IncreaseShipSpeed()
         {
@@ -142,7 +142,7 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         private void CreateRandomShips()
         {
-            for (int i = 0; i < 20; i++) // Skapa 10 skepp
+            for (int i = 0; i < 20; i++)
             {
                 int randomTop;
                 int randomLeft;
@@ -154,16 +154,18 @@ namespace SUP23_G9.ViewModels
                     randomLeft = GenerateRandomLeft();
                     newShip = new ShipViewModel { TopCoordinates = randomTop, LeftCoordinates = randomLeft };
                 }
-                while (NewShipCollidesWithExistingShips(newShip)); //Sålänge (while) som villkoret är true så kommer koden i do köras - körs tills fått rätt värden som ej krockar.
-                                                                   //inspo från battleship videos del 6 ca 13:30
+                while (IsCollisionWithExistingShips(randomLeft, randomTop)); 
 
-                Ships.Add(newShip); //Om false så läggs de nya skeppen till
+                Ships.Add(newShip);
             }
         }
 
+        /// <summary>
+        /// Skapar nya objekt av typen ObstacleViewModel
+        /// </summary>
         private void CreateRandomObstacles()
         {
-            for (int i = 0; i < 3; i++) //Obstacles 2st
+            for (int i = 0; i < 3; i++) 
             {
                 int randomTop = GenerateRandomTop() - initialYAxisDeplacement;
                 int randomLeft = GenerateRandomLeft();
@@ -171,10 +173,19 @@ namespace SUP23_G9.ViewModels
             }
         }
 
+        /// <summary>
+        /// Randomiserar fram ett värde utifrån fönstrets höjd
+        /// </summary>
+        /// <returns></returns>
         private int GenerateRandomTop()
         {
             return _random.Next((int)_mainWindowHeight);
         }
+
+        /// <summary>
+        /// Randomiserar fram ett värde utifrån fönstrets bredd
+        /// </summary>
+        /// <returns></returns>
         private int GenerateRandomLeft()
         {
             return _random.Next((int)_mainWindowWidth);
@@ -184,7 +195,7 @@ namespace SUP23_G9.ViewModels
 
         #region Movement and collision
         /// <summary>
-        /// Loopar genom skeppen för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till -10
+        /// Loopar genom alla ShipViewModel objekt i listan Ships för att repositionera de objekt som hamnar utanför fönstrets höjd.
         /// </summary>
         private void MoveShipsLoop()
         {
@@ -200,7 +211,7 @@ namespace SUP23_G9.ViewModels
         }
 
         /// <summary>
-        /// Loopar genom hinder för att hitta vilka som "ramlar" ut ur fönstret för att sedan repositionera till 0
+        /// Loopar genom alla ObstacleViewModel objekt i listan Obstacles för att repositionera de objekt som hamnar utanför fönstrets höjd.
         /// </summary>
         private void MoveObstaclesLoop()
         {
@@ -210,34 +221,35 @@ namespace SUP23_G9.ViewModels
 
                 if (obstacle.TopCoordinates > _mainWindowHeight)
                 {
-                    obstacle.TopCoordinates = 0;
+                    obstacle.TopCoordinates = -50;
                     obstacle.LeftCoordinates = GenerateRandomLeft();
                 }
             }
         }
 
         /// <summary>
-        /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande objekt i canvas vid repositionering, om true så genereras nytt värde 
+        /// Kontrollerar och repositionerar objekt av typen ShipViewModel så att dem ej kolliderar med existerande ShipViewModel objekt ute på canvas.
         /// </summary>
         private void ResetShipPosition(ShipViewModel ship)
         {
             int newLeft = GenerateRandomLeft();
 
-            while (IsCollisionWithExistingShips(newLeft, -10))
+            while (IsCollisionWithExistingShips(newLeft, -50))
             {
                 newLeft = GenerateRandomLeft();
             }
 
-            ship.TopCoordinates = 0;
+            ship.TopCoordinates = -50;
             ship.LeftCoordinates = newLeft;
         }
 
         /// <summary>
-        /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande objekt i canvas vid repositionering
+        /// Kontrollerar om objekten av typen ShipViewModel kolliderar med existerande ShipViewModel objekt ute på canvas vid en repositionering
         /// </summary>
-        private bool IsCollisionWithExistingShips(int left, int top) //TODO Går det att få ihop IsCollisionWithExistingShips och NewShipCollidesWithExistingShips till samma? Finns viss redundans, men kanske klurigt.
+        /// <returns></returns>
+        private bool IsCollisionWithExistingShips(int left, int top) 
         {
-            foreach (var existingShip in Ships) //Måste göra ny kollisonskoll mellan existerande skepp och det nya värdet som genereras
+            foreach (var existingShip in Ships) 
             {
                 bool collisionXAxis = left < (existingShip.LeftCoordinates + _shipWidth + objectPaddingAtGeneration) && (left + _shipWidth + objectPaddingAtGeneration) > existingShip.LeftCoordinates;
                 bool collisionYAxis = top < (existingShip.TopCoordinates + _shipHeight + objectPaddingAtGeneration) && (top + _shipHeight + objectPaddingAtGeneration) > existingShip.TopCoordinates;
@@ -251,24 +263,8 @@ namespace SUP23_G9.ViewModels
             return false;
         }
 
-        private bool NewShipCollidesWithExistingShips(ShipViewModel newShip)
-        {
-            foreach (var existingShip in Ships)
-            {
-                bool collisionXAxis = newShip.LeftCoordinates < (existingShip.LeftCoordinates + _shipWidth) && (newShip.LeftCoordinates + _shipWidth) > existingShip.LeftCoordinates;
-                bool collisionYAxis = newShip.TopCoordinates < (existingShip.TopCoordinates + _shipHeight) && (newShip.TopCoordinates + _shipHeight) > existingShip.TopCoordinates;
-
-                if (collisionXAxis && collisionYAxis)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         /// <summary>
-        /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande objekt i canvas vid repositionering efter att spelaren krockar med ett skepp
+        /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande ShipViewModel objekt ute på canvas vid en repositionering efter en kollision med spelaren.
         /// </summary>
         public void SetPlayerShipCollisionConsequence()
         {
@@ -276,36 +272,38 @@ namespace SUP23_G9.ViewModels
             {
                 if (PlayerCollidesWithShip(ship))
                 {
-                    PlayerShipCollision(ship);
+                    PlayerShipCollisionReposition(ship);
                 }
             }
         }
 
-        //TODO Föreslår namnbyte till något tydligare
         /// <summary>
-        /// Kontrollerar att objekten av typen ShipViewModel ej kolliderar med existerande objekt i canvas vid repositionering efter att spelaren krockar med ett skepp
+        /// Kontrollerar och repositionerar objekt av typen ShipViewModel så att dem ej kolliderar med existerande ShipViewModel objekt ute på canvas efter en kollision med spelaren.
         /// </summary>
-        private void PlayerShipCollision(ShipViewModel ship)
+        private void PlayerShipCollisionReposition(ShipViewModel ship)
         {
             int newLeft = GenerateRandomLeft();
 
-            while (IsCollisionWithExistingShips(newLeft, 0))
+            while (IsCollisionWithExistingShips(newLeft, -50))
             {
                 newLeft = GenerateRandomLeft();
             }
 
-            ship.TopCoordinates = 0;
+            ship.TopCoordinates = -50;
             ship.LeftCoordinates = newLeft;
             GamePoints.AddPoints(gainedPointsFromShips);
         }
 
+        /// <summary>
+        /// Repositionerar objekten av typen ObstacleViewModel efter en kollision med spelaren.
+        /// </summary>
         private void SetPlayerObstacleCollisionConsequence()
         {
             foreach (var obstacle in Obstacles)
             {
                 if (PlayerCollidesWithObstacle(obstacle))
                 {
-                    obstacle.TopCoordinates = 0;
+                    obstacle.TopCoordinates = -50;
                     obstacle.LeftCoordinates = GenerateRandomLeft();
 
                     GamePoints.DeductPoints(lostPointsFromObstacles);
@@ -315,6 +313,9 @@ namespace SUP23_G9.ViewModels
             }
         }
 
+        /// <summary>
+        /// Registrerar om spelaren kolliderar med ett objekt av typen ShipViewModel
+        /// </summary>
         private bool PlayerCollidesWithShip(ShipViewModel ship)
         {
             bool collisionXAxis = ship.LeftCoordinates < (PlayerVM.LeftCoordinates + _playerWidth) && (ship.LeftCoordinates + _shipWidth) > PlayerVM.LeftCoordinates;
@@ -327,6 +328,9 @@ namespace SUP23_G9.ViewModels
             return false;
         }
 
+        /// <summary>
+        /// Registrerar om spelaren kolliderar med ett objekt av typen ObstacleViewModel
+        /// </summary>
         public bool PlayerCollidesWithObstacle(ObstacleViewModel obstacle)
         {
             bool collisionXAxis = obstacle.LeftCoordinates < (PlayerVM.LeftCoordinates + _playerWidth) && (obstacle.LeftCoordinates + _obstacleWidth) > PlayerVM.LeftCoordinates;
@@ -340,13 +344,22 @@ namespace SUP23_G9.ViewModels
         }
         #endregion
 
-        //TODO denna kan nog delas upp i mindre metoder
         /// <summary>
-        /// Metod för om spelaren skadas eller dör
+        /// Huruvida spelaren ska ta skada eller dö (game over)
         /// </summary>
         public void PlayerDamaged()
         {
             PlayerHealth -= 1;
+            UpdateHearts();
+            CheckIfGameOver();
+
+        }
+
+        /// <summary>
+        /// Uppdaterar hjärtan vid kollision med Obstackle
+        /// </summary>
+        private void UpdateHearts()
+        {
             if (PlayerHealth <= 2)
             {
                 Heart3 = _emptyHeart;
@@ -355,6 +368,13 @@ namespace SUP23_G9.ViewModels
             {
                 Heart2 = _emptyHeart;
             }
+        }
+
+        /// <summary>
+        /// Om spelaren har 0 liv kvar så öppnas Game Over fönstret
+        /// </summary>
+        private void CheckIfGameOver()
+        {
             if (PlayerHealth <= 0)
             {
                 OpenGameOverView();
@@ -426,7 +446,7 @@ namespace SUP23_G9.ViewModels
         }
         public void SetCountdownTimer(int seconds)
         {
-            CountdownTimer = new TimerViewModel(seconds); // Startar med 1 min.
+            CountdownTimer = new TimerViewModel(seconds); 
             CountdownTimer.TimeUpHandler += CountdownTimer_TimeUp;
         }
         public void StartCountdownTimer()
