@@ -7,10 +7,15 @@ namespace SUP23_G9.ViewModels
 {
     public class TimerViewModel : BaseViewModel
     {
+        #region Constants
         private const int secondsInMinute = 60;
+        #endregion
+        #region Fields
         public DispatcherTimer _timer;
         private int _remainingSeconds;
+        #endregion
 
+        #region Constructor
         /// <summary>
         /// Initierar en ny instans av TimerViewModel med specificerade initiala sekunder.
         /// </summary>
@@ -22,12 +27,16 @@ namespace SUP23_G9.ViewModels
             UpdateRemainingTime();
             _timer.Start();
         }
+        #endregion
 
+        #region Properties
         /// <summary>
         /// Representerar den återstående tiden som en sträng.
         /// </summary>
         public string RemainingTime { get; private set; }
+        #endregion
 
+        #region Methods
         /// <summary>
         /// Hanterar Timer Tick eventet. Uppdaterar den återstående tiden eller avslutar timern om tiden är slut.
         /// </summary>
@@ -63,18 +72,22 @@ namespace SUP23_G9.ViewModels
             RemainingTime = "Tiden är ute!";
             RaiseTimeUpHandler();
         }
-
-        /// <summary>
-        /// Eventet som triggas när tiden är ute.
-        /// </summary>
-        public event EventHandler TimeUpHandler;
-
         /// <summary>
         /// Triggar TimeUpHandler eventet.
         /// </summary>
+
         private void RaiseTimeUpHandler()
         {
             TimeUpHandler?.Invoke(this, EventArgs.Empty);
         }
+        #endregion
+
+        #region Events
+        /// <summary>
+        /// Eventet som triggas när tiden är ute.
+        /// </summary>
+        public event EventHandler TimeUpHandler;
+        #endregion
+      
     }
 }
