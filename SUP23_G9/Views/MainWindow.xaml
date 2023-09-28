@@ -7,13 +7,9 @@
         xmlns:local="clr-namespace:SUP23_G9.Views"
         d:DataContext="{d:DesignInstance vm:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="{Binding defaultWindowHeight}" Width="{Binding defaultWindowWidth}"
+        Title="MainWindow" Height="600" Width="1000"
         SizeChanged="MainWindow_SizeChanged"
         >
-    
-    <!--<Window.DataContext>
-        <vm:MainViewModel/>
-    </Window.DataContext>-->
 
     <Grid Background="PaleTurquoise">
 
