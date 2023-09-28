@@ -43,7 +43,7 @@ namespace SUP23_G9.ViewModels
             GameViewModel gameViewModel = new GameViewModel();
             CurrentViewModel = gameViewModel;
 
-            //SetDefaultWindowSize(gameViewModel);
+            SetDefaultWindowSize(gameViewModel);
 
             WindowSizeChangedHandler = (width, height) =>
             {
