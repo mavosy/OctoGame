@@ -32,22 +32,17 @@
                         <DataTrigger.EnterActions>
                             <BeginStoryboard>
                                 <Storyboard RepeatBehavior="Forever">
-                                    <!-- Flippar snabbt åt vänster -->
                                     <DoubleAnimation 
                                         Storyboard.TargetProperty="(Image.RenderTransform).(ScaleTransform.ScaleX)"
                                         From="1.0"
                                         To="-1.0"
                                         Duration="0:0:0.005"/>
-
-                                    <!-- Håller skeppet vänd åt vänster i 1 sekund -->
                                     <DoubleAnimation 
                                         Storyboard.TargetProperty="(Image.RenderTransform).(ScaleTransform.ScaleX)"
                                         From="-1.0"
                                         To="-1.0"
                                         Duration="0:0:2"
                                         BeginTime="0:0:0.10"/>
-
-                                    <!-- Flippar tillbaka till ursprungliga positionen efter fördröjningen -->
                                     <DoubleAnimation 
                                         Storyboard.TargetProperty="(Image.RenderTransform).(ScaleTransform.ScaleX)"
                                         From="-1.0"
