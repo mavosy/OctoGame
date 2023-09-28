@@ -4,6 +4,7 @@ namespace SUP23_G9.ViewModels
 {
     public class Points : BaseViewModel
     {
+        #region Fields & Properties
         /// <summary>
         /// Representerar den aktuella poängen.
         /// </summary>
@@ -13,7 +14,9 @@ namespace SUP23_G9.ViewModels
         /// Returnerar den aktuella poängen som en sträng.
         /// </summary>
         public string DisplayScore => $"{Score} Poäng";
+        #endregion
 
+        #region Public Methods
         /// <summary>
         /// Returnerar den aktuella poängen.
         /// </summary>
@@ -48,5 +51,6 @@ namespace SUP23_G9.ViewModels
         {
             Score = 0;
         }
+        #endregion
     }
 }
