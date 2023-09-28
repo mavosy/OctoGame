@@ -7,16 +7,19 @@
         xmlns:local="clr-namespace:SUP23_G9.Views"
         d:DataContext="{d:DesignInstance vm:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000">
+        Title="MainWindow" Height="{Binding defaultWindowHeight}" Width="{Binding defaultWindowWidth}"
+        SizeChanged="MainWindow_SizeChanged"
+        >
     
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <vm:MainViewModel/>
-    </Window.DataContext>
-    
+    </Window.DataContext>-->
+
     <Grid Background="PaleTurquoise">
 
-        <ContentControl Content="{Binding CurrentViewModel}"
-                        VerticalAlignment="Stretch"
-                        HorizontalAlignment="Stretch"/>
+        <ContentControl 
+            Content="{Binding CurrentViewModel}"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch"/>
     </Grid>
 </Window>

@@ -26,6 +26,7 @@ namespace SUP23_G9.ViewModels
 
         public PlayerViewModel()
         {
+            //Debug.WriteLine($"PlayerViewModel width: {windowWidth}, height: {windowHeight}");
             //TODO vore kanske schysst att inte ha fasta värden på dessa från viewmodel, vet inte vad som är bäst
             LeftCoordinates = 475;
             TopCoordinates = 450;
@@ -33,17 +34,22 @@ namespace SUP23_G9.ViewModels
             Width = width;
             Height = height;
 
+            //WindowWidth = windowWidth;
+            //WindowHeight = windowHeight;
+
             SetPlayerTimer();
 
             LoadImageProcessing();
             FlipImageX = 1.0;
-            Debug.WriteLine($"New playerViewModel with ID: {InstanceID}");
+            //Debug.WriteLine($"New playerViewModel with ID: {InstanceID}");
         }
 
         public double LeftCoordinates { get; private set; }
         public double TopCoordinates { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
+        public double WindowWidth { get; set; }
+        public double WindowHeight { get; set; }
         public BitmapImage SpriteImage { get; private set; }
         public double FlipImageX { get; private set; }
 
@@ -67,7 +73,7 @@ namespace SUP23_G9.ViewModels
 
         private void MovePlayerEvent(object? sender, EventArgs e)
         {
-            Debug.WriteLine($"PlayerViewModel event fire with ID: {InstanceID}");
+            //Debug.WriteLine($"PlayerViewModel event fire with ID: {InstanceID}");
             if (_leftButtonIsDown && IsNotAtLeftEdge())
             {
                 MovePlayerLeft();
@@ -175,7 +181,7 @@ namespace SUP23_G9.ViewModels
 
         public bool IsNotAtRightEdge()
         {
-            return (LeftCoordinates + Width) < (correctedGameAreaWidth - distanceToEdge);
+            return (LeftCoordinates + Width) < (WindowWidth - distanceToEdge);
         }
 
         public bool IsNotAtTopEdge()
@@ -185,7 +191,7 @@ namespace SUP23_G9.ViewModels
 
         public bool IsNotAtBottomEdge()
         {
-            return (TopCoordinates + Height) < (correctedGameAreaHeight - distanceToEdge);
+            return (TopCoordinates + Height) < (WindowHeight - distanceToEdge);
         }
 
         /// <summary>

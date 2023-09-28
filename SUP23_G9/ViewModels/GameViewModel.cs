@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Threading;
 
 namespace SUP23_G9.ViewModels
@@ -34,8 +35,10 @@ namespace SUP23_G9.ViewModels
         private const int initialYAxisDeplacement = 600;
         private const int objectPaddingAtGeneration = 5;
 
-        private double _mainWindowHeight = System.Windows.Application.Current.MainWindow.ActualHeight;   //TODO Skulle behöva se över dessa och hitta ett MVVM-sätt att hämta höjd och bredd
-        private double _mainWindowWidth = System.Windows.Application.Current.MainWindow.ActualWidth;
+        private double _mainWindowWidth;
+        private double _mainWindowHeight;
+        //private double _mainWindowWidth = System.Windows.Application.Current.MainWindow.ActualWidth;
+        //private double _mainWindowHeight = System.Windows.Application.Current.MainWindow.ActualHeight;
 
         private const int maxPlayerHealth = 3;
         private const int gameTimerUpdateFrequencyInMilliseconds = 20;
@@ -49,9 +52,12 @@ namespace SUP23_G9.ViewModels
 
         public GameViewModel()
         {
+            //Debug.WriteLine($"GameViewModel width: {windowWidth}, height: {windowHeight}");
             Ships = new ObservableCollection<ShipViewModel>();
             Obstacles = new ObservableCollection<ObstacleViewModel>();
             GamePoints = new Points();
+            WindowWidth = 1000;
+            WindowHeight = 600;
 
             CreateRandomShips();
             CreateRandomObstacles();
@@ -62,6 +68,9 @@ namespace SUP23_G9.ViewModels
             Heart1 = _fullHeart;
             Heart2 = _fullHeart;
             Heart3 = _fullHeart;
+
+            //WindowWidth = windowWidth;
+            //WindowHeight = windowHeight;
 
             PlayerVM = new PlayerViewModel();
 
@@ -83,6 +92,9 @@ namespace SUP23_G9.ViewModels
         public ObservableCollection<ShipViewModel> Ships { get; set; }
         public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
         public int PlayerHealth { get; set; }
+        //public Action<double, double> WindowSizeChangedHandler { get; set; }
+        public double WindowWidth { get; set; }
+        public double WindowHeight { get; set; }
         public BitmapImage Heart1 { get; set; }
         public BitmapImage Heart2 { get; set; }
         public BitmapImage Heart3 { get; set; }
@@ -173,10 +185,12 @@ namespace SUP23_G9.ViewModels
 
         private int GenerateRandomTop()
         {
+            _mainWindowHeight = WindowHeight;
             return _random.Next((int)_mainWindowHeight);
         }
         private int GenerateRandomLeft()
         {
+            _mainWindowWidth = WindowWidth;
             return _random.Next((int)_mainWindowWidth);
         }
 
@@ -368,7 +382,7 @@ namespace SUP23_G9.ViewModels
             MoveObstaclesLoop();
             SetPlayerShipCollisionConsequence();
             SetPlayerObstacleCollisionConsequence();
-            Debug.WriteLine($"GameViewModel event fire with ID: {InstanceID}");
+            //Debug.WriteLine($"GameViewModel event fire with ID: {InstanceID}");
         }
 
         private void CountdownTimer_TimeUp(object sender, EventArgs e)

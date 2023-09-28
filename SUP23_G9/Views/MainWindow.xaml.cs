@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using SUP23_G9.ViewModels;
+using System.Diagnostics;
+using System.Windows;
 
 namespace SUP23_G9.Views
 {
@@ -7,6 +9,15 @@ namespace SUP23_G9.Views
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainViewModel(/*Width, Height*/);
+        }
+
+        private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (DataContext is MainViewModel mainViewModel)
+            {
+                mainViewModel.WindowSizeChangedHandler?.Invoke(e.NewSize.Width, e.NewSize.Height);
+            }
         }
     }
 }
