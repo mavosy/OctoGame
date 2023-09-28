@@ -478,6 +478,8 @@ namespace SUP23_G9.ViewModels
             RaiseSetToGameOverViewHandler(finalScore);
 
             var gameOverViewModel = new GameOverViewModel(finalScore); //TODO Behövs denna? Verkar inte leda någonstans, den lokala variabeln används inte
+
+            _backgroundMusicPlayer.Stop();
         }
 
         #endregion
