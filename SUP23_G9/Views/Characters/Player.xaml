@@ -1,4 +1,4 @@
-﻿<UserControl x:Name="krakenControl"
+﻿<UserControl x:Name="playerControl"
              x:Class="SUP23_G9.Views.Characters.Player"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -12,14 +12,11 @@
              Canvas.Top="{Binding TopCoordinates, UpdateSourceTrigger=PropertyChanged}"
              Loaded="UserControl_Loaded"
              Focusable="True"
-             KeyDown="krakenControl_KeyDown"
-             KeyUp="krakenControl_KeyUp"
+             KeyDown="playerControl_KeyDown"
+             KeyUp="playerControl_KeyUp"
              Width="{Binding Width}"
              Height="{Binding Height}"
              >
-    <!--<UserControl.DataContext>
-        <vm:PlayerViewModel/>
-    </UserControl.DataContext>-->
 
     <Grid>
         <Image 

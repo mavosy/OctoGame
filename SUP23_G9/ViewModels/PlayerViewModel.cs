@@ -23,7 +23,6 @@ namespace SUP23_G9.ViewModels
 
         public PlayerViewModel()
         {
-            //Debug.WriteLine($"PlayerViewModel width: {windowWidth}, height: {windowHeight}");
             LeftCoordinates = 475;
             TopCoordinates = 450;
 
@@ -34,39 +33,70 @@ namespace SUP23_G9.ViewModels
 
             LoadImageProcessing();
             FlipImageX = 1.0;
-            //Debug.WriteLine($"New playerViewModel with ID: {InstanceID}");
         }
-
+        /// <summary>
+        /// X-koordinater för objekt av typen PlayerViewModel
+        /// </summary>
         public double LeftCoordinates { get; private set; }
+        /// <summary>
+        /// Y-koordinater för objekt av typen PlayerViewModel
+        /// </summary>
         public double TopCoordinates { get; private set; }
+        /// <summary>
+        /// Breddmått för objekt av typen PlayerViewModel, värde hämtas från konstanten "width".
+        /// </summary>
         public int Width { get; private set; }
+        /// <summary>
+        /// Höjdmått för objekt av typen PlayerViewModel, värde hämtas från konstanten "height".
+        /// </summary>
         public int Height { get; private set; }
+        /// <summary>
+        /// Mått på den renderade bredden för programfönstret. Sätts från MainViewModel. Används för att begränsa spelarens rörelser till inom skärmen
+        /// </summary>
         public double WindowWidth { get; set; }
+        /// <summary>
+        /// Mått på den renderade höjden för programfönstret. Sätts från MainViewModel. Används för att begränsa spelarens rörelser till inom skärmen
+        /// </summary>
         public double WindowHeight { get; set; }
+        /// <summary>
+        /// Bild som representerar objekt av typen PlayerViewModel i gränssnittet
+        /// </summary>
         public BitmapImage SpriteImage { get; private set; }
+        /// <summary>
+        /// Bestämmer den visuella riktningen på bilden som representerar objekt av typen PlayerViewModel i gränssnittet. Värde 1.0 är originalvärdet, -1.0 ger en spegelvänd bild.
+        /// </summary>
         public double FlipImageX { get; private set; }
-
+        /// <summary>
+        /// Etablerar och konfigurerar timer för rörelse av objekt av typen PlayerViewModel
+        /// </summary>
         private void SetPlayerTimer()
         {
             _playerTimer = new DispatcherTimer();
             _playerTimer.Interval = TimeSpan.FromMilliseconds(playerUpdateFrequencyInMilliseconds);
         }
-
+        /// <summary>
+        /// Startar timer för rörelse objekt av typen PlayerViewModel och fäster eventet MovePlayerEvent att köras vid givet intervall
+        /// </summary>
         public void StartPlayerTimer()
         {
             _playerTimer.Tick += MovePlayerEvent;
             _playerTimer.Start();
         }
-
+        /// <summary>
+        /// Stoppar timer för rörelse av objekt av typen PlayerViewModel och lossar eventet MovePlayerEvent
+        /// </summary>
         public void StopPlayerTimer()
         {
             _playerTimer.Tick -= MovePlayerEvent;
             _playerTimer.Stop();
         }
-
+        /// <summary>
+        /// Förflyttar objekt av typen PlayerViewModel i given riktining om objektet har tillåtelse. Körs av timer vid givet intervall
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MovePlayerEvent(object? sender, EventArgs e)
         {
-            //Debug.WriteLine($"PlayerViewModel event fire with ID: {InstanceID}");
             if (_leftButtonIsDown && IsNotAtLeftEdge())
             {
                 MovePlayerLeft();
@@ -91,7 +121,7 @@ namespace SUP23_G9.ViewModels
         }
 
         /// <summary>
-        /// Här och i "HandleKeyUp()" sätts med vilka tangenter spelaren styr sin karaktär
+        /// Här och i "HandleKeyUp()" sätts med vilka tangenter objekt av typen PlayerViewModel styrs, och kontrollerar om de är nertryckta. Event-argument skickas från händelseevent i Player.xaml.cs
         /// </summary>
         /// <param name="e"></param>
         internal void HandleKeyDown(KeyEventArgs e)
@@ -119,7 +149,7 @@ namespace SUP23_G9.ViewModels
             }
         }
         /// <summary>
-        /// Här och i "HandleKeyDown()" sätts med vilka tangenter spelaren styr sin karaktär
+        /// Här och i "HandleKeyDown()" sätts med vilka tangenter objekt av typen PlayerViewModel styrs, och kontrollerar om man släppt tangenten. Event-argument skickas från händelseevent i Player.xaml.cs
         /// </summary>
         /// <param name="e"></param>
         internal void HandleKeyUp(KeyEventArgs e)
@@ -146,49 +176,69 @@ namespace SUP23_G9.ViewModels
                     break;
             }
         }
-
+        /// <summary>
+        /// Förflyttar objekt av typen PlayerViewModel åt vänster genom att ändra objektets faktiska koordinatvärde med hjälp av konstanten _playerSpeed
+        /// </summary>
         public void MovePlayerLeft()
         {
             LeftCoordinates -= playerSpeed;
         }
-
+        /// <summary>
+        /// Förflyttar objekt av typen PlayerViewModel åt höger genom att ändra objektets faktiska koordinatvärde med hjälp av konstanten _playerSpeed
+        /// </summary>
         public void MovePlayerRight()
         {
             LeftCoordinates += playerSpeed;
         }
-
+        /// <summary>
+        /// Förflyttar objekt av typen PlayerViewModel uppåt genom att ändra objektets faktiska koordinatvärde med hjälp av konstanten _playerSpeed
+        /// </summary>
         public void MovePlayerUp()
         {
             TopCoordinates -= playerSpeed;
         }
-
+        /// <summary>
+        /// Förflyttar objekt av typen PlayerViewModel nedåt genom att ändra objektets faktiska koordinatvärde med hjälp av konstanten _playerSpeed
+        /// </summary>
         public void MovePlayerDown()
         {
             TopCoordinates += playerSpeed;
         }
-
+        /// <summary>
+        /// Kontrollerar om ett objekt av typen PlayerViewModel är tillräckligt långt bort från den vänstra kanten. Förhindrar objektet från att röra sig utanför skärmen
+        /// </summary>
+        /// <returns>bool</returns>
         public bool IsNotAtLeftEdge()
         {
             return LeftCoordinates > distanceToEdge;
         }
-
+        /// <summary>
+        /// Kontrollerar om ett objekt av typen PlayerViewModel är tillräckligt långt bort från den högra kanten. Förhindrar objektet från att röra sig utanför skärmen
+        /// </summary>
+        /// <returns>bool</returns>
         public bool IsNotAtRightEdge()
         {
             return (LeftCoordinates + Width) < (WindowWidth - distanceToEdge);
         }
-
+        /// <summary>
+        /// Kontrollerar om ett objekt av typen PlayerViewModel är tillräckligt långt bort från den övre kanten. Förhindrar objektet från att röra sig utanför skärmen
+        /// </summary>
+        /// <returns>bool</returns>
         public bool IsNotAtTopEdge()
         {
             return TopCoordinates > distanceToEdge;
         }
-
+        /// <summary>
+        /// Kontrollerar om ett objekt av typen PlayerViewModel är tillräckligt långt bort från den nedre kanten. Förhindrar objektet från att röra sig utanför skärmen
+        /// </summary>
+        /// <returns>bool</returns>
         public bool IsNotAtBottomEdge()
         {
             return (TopCoordinates + Height) < (WindowHeight - distanceToEdge);
         }
 
         /// <summary>
-        /// Laddar in, processerar och cachar bild för spelarens karaktär
+        /// Processerar bild till lämpligt format för bild tillhörande objekt av typen ShipViewModel, samt tilldelar bild till egenskapen SpriteImage
         /// </summary>
         private void LoadImageProcessing()
         {
@@ -201,12 +251,16 @@ namespace SUP23_G9.ViewModels
 
             SpriteImage = image;
         }
-
+        /// <summary>
+        /// Spegelvänder bilden som representerar objekt av typen PlayerViewModel
+        /// </summary>
         private void TurnSpriteHorizontally()
         {
             FlipImageX = -1.0;
         }
-
+        /// <summary>
+        /// Vänder bilden som representerar objekt av typen PlayerViewModel till originalhåll
+        /// </summary>
         private void TurnSpriteBack()
         {
             FlipImageX = 1.0;

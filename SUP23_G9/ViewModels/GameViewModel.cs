@@ -48,7 +48,6 @@ namespace SUP23_G9.ViewModels
 
         public GameViewModel()
         {
-            //Debug.WriteLine($"GameViewModel width: {windowWidth}, height: {windowHeight}");
             Ships = new ObservableCollection<ShipViewModel>();
             Obstacles = new ObservableCollection<ObstacleViewModel>();
             GamePoints = new Points();
@@ -71,29 +70,63 @@ namespace SUP23_G9.ViewModels
             SetTimerForIncreasedDifficulty();
             SetCountdownTimer(180);
             InitializeBackgroundMusic();
-
-            Debug.WriteLine($"New GameViewModel with ID: {InstanceID}");
         }
 
         #region Properties
+        /// <summary>
+        /// Håller värde för poängresultat
+        /// </summary>
         public int PointResult { get; set; }
+        /// <summary>
+        /// Hanterar värde för poängresultat hämtade från Points.cs
+        /// </summary>
         public Points GamePoints { get; }
+        /// <summary>
+        /// Timer som räknar ner tiden
+        /// </summary>
         public TimerViewModel CountdownTimer { get; set; }
+        /// <summary>
+        /// Håller den instans av PlayerViewModel representerar spelarens spelkaraktär
+        /// </summary>
         public PlayerViewModel PlayerVM { get; set; }
+        /// <summary>
+        /// Innehåller och hanterar skapade objekt av typen ShipViewModel
+        /// </summary>
         public ObservableCollection<ShipViewModel> Ships { get; set; }
+        /// <summary>
+        /// Innehåller och hanterar skapade objekt av typen ShipViewModel
+        /// </summary>
         public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
+        /// <summary>
+        /// Spelarkaraktärens livspoäng, reduceras när ett objekt av typen PlayerViewModel kolliderar me dett objekt av typen ObstacleViewModel
+        /// </summary>
         public int PlayerHealth { get; set; }
+        /// <summary>
+        /// Mått på den renderade bredden för programfönstret. Sätts från MainViewModel. Används för att begränsa skepp och hinders rörelser till inom skärmen
+        /// </summary>
         public double WindowWidth { get; set; }
+        /// <summary>
+        /// Mått på den renderade höjden för programfönstret. Sätts från MainViewModel. Används för att begränsa skepp och hinders rörelser rörelser till inom skärmen
+        /// </summary>
         public double WindowHeight { get; set; }
+        /// <summary>
+        /// Bild som representerar hjärta 1 i livmätaren i gränssnittet
+        /// </summary>
         public BitmapImage Heart1 { get; set; }
+        /// <summary>
+        /// Bild som representerar hjärta 2 i livmätaren i gränssnittet
+        /// </summary>
         public BitmapImage Heart2 { get; set; }
+        /// <summary>
+        /// Bild som representerar hjärta 3 i livmätaren i gränssnittet
+        /// </summary>
         public BitmapImage Heart3 { get; set; }
         #endregion
 
         #region Creation of objects and coordinates
 
         /// <summary>
-        /// Event som körs 1 gång i sekunden.
+        /// Event som körs 1 gång i sekunden, ökar svårighetsgraden
         /// </summary>
         private void CountdownTimer_IncreaseObstacles(object? sender, EventArgs e)
         {
@@ -117,7 +150,7 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Avgör om ett givet antal sekunder har passerat sedan senaste ökningen
         /// </summary>
-        /// <returns></returns>
+        /// <returns>bool</returns>
         private bool IsTimeForDifficultyIncrease()
         {
             return _secondsPassedCounter % secondsBetweenDifficultyIncrease == 0;
@@ -178,7 +211,7 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Randomiserar fram ett värde utifrån fönstrets höjd
         /// </summary>
-        /// <returns></returns>
+        /// <returns>int</returns>
         private int GenerateRandomTop()
         {
             _mainWindowHeight = WindowHeight;
@@ -188,7 +221,7 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Randomiserar fram ett värde utifrån fönstrets bredd
         /// </summary>
-        /// <returns></returns>
+        /// <returns>int</returns>
         private int GenerateRandomLeft()
         {
             _mainWindowWidth = WindowWidth;
@@ -250,7 +283,7 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Kontrollerar om objekten av typen ShipViewModel kolliderar med existerande ShipViewModel objekt ute på canvas vid en repositionering
         /// </summary>
-        /// <returns></returns>
+        /// <returns>bool</returns>
         private bool IsCollisionWithExistingShips(int left, int top) 
         {
             foreach (var existingShip in Ships) 
@@ -312,7 +345,7 @@ namespace SUP23_G9.ViewModels
 
                     GamePoints.DeductPoints(lostPointsFromObstacles);
                     PlayerDamaged();
-                    PointResult -= lostPointsFromObstacles; //TODO Någon som vet varför man måste dra av från både PointResult och köra DeductPoints?
+                    PointResult -= lostPointsFromObstacles; 
                 }
             }
         }
@@ -386,20 +419,30 @@ namespace SUP23_G9.ViewModels
         }
 
         #region Timers and Game ending
+        /// <summary>
+        /// Event som körs av _gameTimer, kör metoder för rörelse och kollision av objekt av typerna ShipViewModel och ObstacleViewModel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void GameTimerEvent(object sender, EventArgs e)
         {
             MoveShipsLoop();
             MoveObstaclesLoop();
             SetPlayerShipCollisionConsequence();
             SetPlayerObstacleCollisionConsequence();
-            //Debug.WriteLine($"GameViewModel event fire with ID: {InstanceID}");
         }
-
+        /// <summary>
+        /// Event som körs när tiden för CountdownTimer är ute.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CountdownTimer_TimeUp(object sender, EventArgs e)
         {
             OpenGameOverView();
         }
-
+        /// <summary>
+        /// Startar alla timers
+        /// </summary>
         public void StartTimers()
         {
             StartGameTimer();
@@ -407,7 +450,9 @@ namespace SUP23_G9.ViewModels
             StartTimerForIncreasedDifficulty();
             PlayerVM.StartPlayerTimer();
         }
-
+        /// <summary>
+        /// Stoppar alla timers
+        /// </summary>
         public void StopTimers()
         {
             StopGameTimer();
@@ -415,61 +460,95 @@ namespace SUP23_G9.ViewModels
             StopTimerForIncreasedDifficulty();
             PlayerVM.StopPlayerTimer();
         }
-        
+        /// <summary>
+        /// Etablerar och konfigurerar timer för att öka svårighetsgraden allt eftersom
+        /// </summary>
         private void SetTimerForIncreasedDifficulty()
         {
             _increaseDifficultyTimer = new DispatcherTimer();
             _increaseDifficultyTimer.Interval = TimeSpan.FromSeconds(1);
         }
-
+        /// <summary>
+        /// Startar timer för att öka svårighetsgraden allt eftersom
+        /// </summary>
         private void StartTimerForIncreasedDifficulty()
         {
             _increaseDifficultyTimer.Tick += CountdownTimer_IncreaseObstacles;
             _increaseDifficultyTimer.Start();
         }
+        /// <summary>
+        /// Stoppar timer för att öka svårighetsgraden allt eftersom
+        /// </summary>
         private void StopTimerForIncreasedDifficulty()
         {
             _increaseDifficultyTimer.Tick -= CountdownTimer_IncreaseObstacles;
             _increaseDifficultyTimer.Stop();
         }
-
+        /// <summary>
+        /// Etablerar och konfigurerar timer för rörelse och kollision för skepp och hinder
+        /// </summary>
         private void SetGameTimer()
         {
             _gameTimer = new DispatcherTimer();
             _gameTimer.Interval = TimeSpan.FromMilliseconds(gameTimerUpdateFrequencyInMilliseconds);
         }
+        /// <summary>
+        /// Startar timer för rörelse och kollision för skepp och hinder
+        /// </summary>
         public void StartGameTimer()
         {
             _gameTimer.Tick += GameTimerEvent;
             _gameTimer.Start();
         }
+        /// <summary>
+        /// Stoppar timer för rörelse och kollision för skepp och hinder
+        /// </summary>
         public void StopGameTimer()
         {
             _gameTimer.Tick -= GameTimerEvent;
             _gameTimer.Stop();
         }
+        /// <summary>
+        /// Etablerar och konfigurerar timer som räknar ner och bestämmer när spelet är slut
+        /// </summary>
         public void SetCountdownTimer(int seconds)
         {
             CountdownTimer = new TimerViewModel(seconds); 
             CountdownTimer.TimeUpHandler += CountdownTimer_TimeUp;
         }
+        /// <summary>
+        /// Startar timer som räknar ner och bestämmer när spelet är slut
+        /// </summary>
         public void StartCountdownTimer()
         {
             CountdownTimer._timer.Start();
         }
+        /// <summary>
+        /// Stoppar timer som räknar ner och bestämmer när spelet är slut
+        /// </summary>
         public void StopCountdownTimer()
         {
             CountdownTimer._timer.Tick += CountdownTimer.TimerTick;
             CountdownTimer._timer.Stop();
         }
-
+        /// <summary>
+        /// Action som körs i MainViewModel när spelet avslutas, för att byta skärmvy till spelslutskärmen
+        /// </summary>
         public Action<int> SetToGameOverViewHandler;
+        /// <summary>
+        /// Action som körs när spelet är slut
+        /// </summary>
         public event Action<int> GameOverEvent;
+        /// <summary>
+        /// Åberopar SetToGameOverViewHandler när spelaren trycker på Spela Igen
+        /// </summary>
         public void RaiseSetToGameOverViewHandler(int finalScore)
         {
             SetToGameOverViewHandler?.Invoke(finalScore);
         }
-
+        /// <summary>
+        /// Körs när spelet är slut, hämtar slutpoäng och förbereder för att byta till spelslutfönster. Stoppar musik
+        /// </summary>
         public void OpenGameOverView()
         {
             int finalScore = GamePoints.GetScore();
@@ -481,13 +560,13 @@ namespace SUP23_G9.ViewModels
 
             RaiseSetToGameOverViewHandler(finalScore);
 
-            var gameOverViewModel = new GameOverViewModel(finalScore); //TODO Behövs denna? Verkar inte leda någonstans, den lokala variabeln används inte
-
             _backgroundMusicPlayer.Stop();
         }
 
         #endregion
-
+        /// <summary>
+        /// Processerar bild till lämpligt format för bild tillhörande hjärtan som representerar hälsopoängen, samt tilldelar bild till variabeln _fullHeart
+        /// </summary>
         private void LoadFullHeartImageProcessing()
         {
             BitmapImage image = new BitmapImage();
@@ -499,7 +578,9 @@ namespace SUP23_G9.ViewModels
 
             _fullHeart = image;
         }
-
+        /// <summary>
+        /// Processerar bild till lämpligt format för bild tillhörande hjärtan som representerar hälsopoängen, samt tilldelar bild till variabeln _emptyHeart
+        /// </summary>
         private void LoadEmptyHeartImageProcessing()
         {
             BitmapImage image = new BitmapImage();
@@ -523,6 +604,5 @@ namespace SUP23_G9.ViewModels
             _backgroundMusicPlayer.Play();
         }
         #endregion
-
     }
 }

@@ -20,6 +20,11 @@ namespace SUP23_G9.Views.Characters
         /// </summary>
         private PlayerViewModel ViewModel { get { return DataContext as PlayerViewModel; } }
 
+        /// <summary>
+        /// Eventhandler för att fånga upp när UserControl Player laddas in i gränssnittet. Sätter datacontext till objektet PlayerVM av typen PlayerViewModel som skapas i GameViewModels konstruktor
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (this.DataContext is GameViewModel gameViewModel)
@@ -27,16 +32,24 @@ namespace SUP23_G9.Views.Characters
                 this.DataContext = gameViewModel.PlayerVM;
             }
 
-            krakenControl.Focus();
+            playerControl.Focus();
         }
-
-        private void krakenControl_KeyDown(object sender, KeyEventArgs e)
+        /// <summary>
+        /// Hanterar när en knapp trycks ner, skickar vidare argument till PlayerViewModel där de hanteras vidare
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void playerControl_KeyDown(object sender, KeyEventArgs e)
         {
             if (ViewModel == null) return;
             ViewModel.HandleKeyDown(e);
         }
-
-        private void krakenControl_KeyUp(object sender, KeyEventArgs e)
+        /// <summary>
+        /// Hanterar när en knapp släpps skickar vidare argument till PlayerViewModel där de hanteras vidare
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void playerControl_KeyUp(object sender, KeyEventArgs e)
         {
             if (ViewModel == null) return;
             ViewModel.HandleKeyUp(e);
