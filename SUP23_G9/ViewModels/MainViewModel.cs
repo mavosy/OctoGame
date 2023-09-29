@@ -8,8 +8,6 @@ namespace SUP23_G9.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        //public const double defaultWindowWidth = 1400;
-        //public const double defaultWindowHeight = 800;
         public const double windowWidthCorrection = 17;
         public const double windowHeightCorrection = 40;
 
@@ -17,17 +15,21 @@ namespace SUP23_G9.ViewModels
         {
             SetToStartView();
         }
-
+        /// <summary>
+        /// Håller nuvarande vymodell och binder till en ContentControl i MainWindow.xaml. Ny vymodell sätts genom metoder i MainViewModel
+        /// </summary>
         public BaseViewModel? CurrentViewModel { get; set; }
-
-        public double WindowWidth { get; set; }
-        public double WindowHeight { get; set; }
+        /// <summary>
+        /// Håller värden för programfönstrets förändrade storlek, sätts efter att en förändring har skett.
+        /// </summary>
         public Action<double, double> WindowSizeChangedHandler { get; set; }
-        public Action<double, double> GetWindowSizeBeforeChanged { get; set; }
-
-        public Action OnChangedViewModelGetWindowSize;
-
+        /// <summary>
+        /// Action som triggas när UI-fönstret byts till GameView
+        /// </summary>
         public Action OnSwitchToGameView;
+        /// <summary>
+        /// Action som triggas när UI-fönstret byts till GameOverView
+        /// </summary>
         public Action OnSwitchToGameOverView;
 
         /// <summary>
@@ -36,17 +38,31 @@ namespace SUP23_G9.ViewModels
         public void SetToStartView()
         {
             CurrentViewModel = new StartViewModel();
-            (CurrentViewModel as StartViewModel).SwitchToGameViewEvent = SwitchToGameView;
+            (CurrentViewModel as StartViewModel).SetToGameViewEvent = SwitchToGameView;
         }
 
         /// <summary>
-        /// Byter UI-fönstret till GameView, genom bindings för CurrentViewModel mellan MainViewModel och MainWindow
+        /// Byter UI-fönstret till GameView, genom bindings för CurrentViewModel mellan MainViewModel och MainWindow. Startar timers för spelet och förbereder för att byta till GameOverViewModel
         /// </summary>
         public void SwitchToGameView()
         {
             GameViewModel gameViewModel = new GameViewModel();
             CurrentViewModel = gameViewModel;
 
+            SetWindowSizeToNewSize(gameViewModel);
+
+
+            //Debug.WriteLine($"Setting up GameViewModel with ID: {CurrentViewModel.InstanceID}");
+            OnSwitchToGameView?.Invoke();
+            gameViewModel.StartTimers();
+            gameViewModel.SetToGameOverViewHandler = SwitchToGameOverView;
+        }
+        /// <summary>
+        /// Hämtar nya värden från WindowSizeChangedHandler, korrigerar för felaktigheter och disponerar värdena till egenskaper i GameViewModel och PlayerViewModel
+        /// </summary>
+        /// <param name="gameViewModel"></param>
+        private void SetWindowSizeToNewSize(GameViewModel gameViewModel)
+        {
             WindowSizeChangedHandler = (width, height) =>
             {
                 double correctedWindowWidth = width - windowWidthCorrection;
@@ -57,12 +73,6 @@ namespace SUP23_G9.ViewModels
                 gameViewModel.PlayerVM.WindowWidth = correctedWindowWidth;
                 gameViewModel.PlayerVM.WindowHeight = correctedWindowheight;
             };
-
-
-            //Debug.WriteLine($"Setting up GameViewModel with ID: {CurrentViewModel.InstanceID}");
-            OnSwitchToGameView?.Invoke();
-            gameViewModel.StartTimers();
-            gameViewModel.SetToGameOverViewHandler = SwitchToGameOverView;
         }
 
         /// <summary>

@@ -7,20 +7,29 @@ namespace SUP23_G9.ViewModels
 {
     public class StartViewModel : BaseViewModel
     {
+        /// <summary>
+        /// Command som triggas när spelaren trycker på start-knappen 
+        /// </summary>
         public ICommand StartButtonCommand { get; set; }
 
         public StartViewModel()
         {
             StartButtonCommand = new RelayCommand(parameter => StartGame());
         }
-
-        public Action SwitchToGameViewEvent;
-
+        /// <summary>
+        /// Action som körs i MainViewModel när spelet börjar, för att byta skärmvy till spelplanen.
+        /// </summary>
+        public Action SetToGameViewEvent;
+        /// <summary>
+        /// Åberopar SetToGameViewHandler när spelaren trycker på start-knappen
+        /// </summary>
         private void RaiseSwitchToGameViewEvent()
         {
-            SwitchToGameViewEvent?.Invoke();
+            SetToGameViewEvent?.Invoke();
         }
-
+        /// <summary>
+        /// Körs när StartCommand körs, när spelaren trycker på start-knappen
+        /// </summary>
         public void StartGame()
         {
             RaiseSwitchToGameViewEvent();
