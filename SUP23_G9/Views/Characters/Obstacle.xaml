@@ -9,22 +9,18 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Width="{Binding Width}"
              Height="{Binding Height}">
-
     <UserControl.DataContext>
         <vm:ObstacleViewModel/>
     </UserControl.DataContext>
-
     <Image 
         Name="obstacleImage" 
         Source="{Binding SpriteImage}"
         RenderTransformOrigin="0.5,0.5">
-
         <Image.RenderTransform>
             <ScaleTransform
                 x:Name="flipTransform"
                 ScaleX="1"/>
         </Image.RenderTransform>
-
         <Image.Style>
             <Style TargetType="Image">
                 <Style.Triggers>
@@ -56,6 +52,5 @@
                 </Style.Triggers>
             </Style>
         </Image.Style>
-
     </Image>
 </UserControl>

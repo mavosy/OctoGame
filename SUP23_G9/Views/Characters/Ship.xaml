@@ -9,11 +9,9 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Width="{Binding Width}"
              Height="{Binding Height}">
-
     <UserControl.DataContext>
         <vm:ShipViewModel/>
     </UserControl.DataContext>
-
     <Image Name="pirateShip1" 
            Source="{Binding SpriteImage}"
            RenderTransformOrigin="0.5,0.5">

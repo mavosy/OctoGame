@@ -8,11 +8,8 @@
         d:DataContext="{d:DesignInstance vm:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1000"
-        SizeChanged="MainWindow_SizeChanged"
-        >
-
+        SizeChanged="MainWindow_SizeChanged">
     <Grid Background="PaleTurquoise">
-
         <ContentControl 
             Content="{Binding CurrentViewModel}"
             VerticalAlignment="Stretch"
