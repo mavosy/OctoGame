@@ -9,7 +9,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1000"
         SizeChanged="MainWindow_SizeChanged">
-
     <Grid Background="PaleTurquoise">
         <ContentControl 
             Content="{Binding CurrentViewModel}"
