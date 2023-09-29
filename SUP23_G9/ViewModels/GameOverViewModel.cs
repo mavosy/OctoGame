@@ -20,7 +20,7 @@ namespace SUP23_G9.ViewModels
         public Action SetToGameViewHandler;
         public void RaiseSetToGameViewHandler()
         {
-            Debug.WriteLine($"Invoking from GameOverViewModel with ID: {InstanceID}");
+            //Debug.WriteLine($"Invoking from GameOverViewModel with ID: {InstanceID}");
             SetToGameViewHandler?.Invoke();
         }
 

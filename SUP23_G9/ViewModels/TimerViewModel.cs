@@ -42,7 +42,7 @@ namespace SUP23_G9.ViewModels
         /// </summary>
         public void TimerTick(object sender, EventArgs e)
         {
-            Debug.WriteLine($"TimerViewModel event fire with ID: {InstanceID}");
+            //Debug.WriteLine($"TimerViewModel event fire with ID: {InstanceID}");
             if (_remainingSeconds > 0)
             {
                 _remainingSeconds--;

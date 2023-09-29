@@ -32,7 +32,8 @@
 
         <Canvas 
             x:Name="gameArea">
-            <Characters:Player x:Name="player"/>
+            <Characters:Player 
+                x:Name="player"/>
 
             <ItemsControl ItemsSource="{Binding Ships}">
                 <ItemsControl.ItemsPanel>

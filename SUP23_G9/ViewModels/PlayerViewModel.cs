@@ -16,9 +16,6 @@ namespace SUP23_G9.ViewModels
         public const int width = 50;
         public const int height = 50;
 
-        //TODO Fixa dessa konstanter så att de hämtas med t ex bindings eller liknande istället
-        private const int correctedGameAreaWidth = 985;
-        private const int correctedGameAreaHeight = 565;
         private const int playerUpdateFrequencyInMilliseconds = 10;
         private bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;
 
@@ -26,7 +23,7 @@ namespace SUP23_G9.ViewModels
 
         public PlayerViewModel()
         {
-            //TODO vore kanske schysst att inte ha fasta värden på dessa från viewmodel, vet inte vad som är bäst
+            //Debug.WriteLine($"PlayerViewModel width: {windowWidth}, height: {windowHeight}");
             LeftCoordinates = 475;
             TopCoordinates = 450;
 
@@ -37,13 +34,15 @@ namespace SUP23_G9.ViewModels
 
             LoadImageProcessing();
             FlipImageX = 1.0;
-            Debug.WriteLine($"New playerViewModel with ID: {InstanceID}");
+            //Debug.WriteLine($"New playerViewModel with ID: {InstanceID}");
         }
 
         public double LeftCoordinates { get; private set; }
         public double TopCoordinates { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
+        public double WindowWidth { get; set; }
+        public double WindowHeight { get; set; }
         public BitmapImage SpriteImage { get; private set; }
         public double FlipImageX { get; private set; }
 
@@ -67,7 +66,7 @@ namespace SUP23_G9.ViewModels
 
         private void MovePlayerEvent(object? sender, EventArgs e)
         {
-            Debug.WriteLine($"PlayerViewModel event fire with ID: {InstanceID}");
+            //Debug.WriteLine($"PlayerViewModel event fire with ID: {InstanceID}");
             if (_leftButtonIsDown && IsNotAtLeftEdge())
             {
                 MovePlayerLeft();
@@ -175,7 +174,7 @@ namespace SUP23_G9.ViewModels
 
         public bool IsNotAtRightEdge()
         {
-            return (LeftCoordinates + Width) < (correctedGameAreaWidth - distanceToEdge);
+            return (LeftCoordinates + Width) < (WindowWidth - distanceToEdge);
         }
 
         public bool IsNotAtTopEdge()
@@ -185,7 +184,7 @@ namespace SUP23_G9.ViewModels
 
         public bool IsNotAtBottomEdge()
         {
-            return (TopCoordinates + Height) < (correctedGameAreaHeight - distanceToEdge);
+            return (TopCoordinates + Height) < (WindowHeight - distanceToEdge);
         }
 
         /// <summary>
