@@ -52,7 +52,6 @@ namespace SUP23_G9.ViewModels
             SetWindowSizeToNewSize(gameViewModel);
 
 
-            //Debug.WriteLine($"Setting up GameViewModel with ID: {CurrentViewModel.InstanceID}");
             OnSwitchToGameView?.Invoke();
             gameViewModel.StartTimers();
             gameViewModel.SetToGameOverViewHandler = SwitchToGameOverView;
@@ -78,12 +77,11 @@ namespace SUP23_G9.ViewModels
         /// <summary>
         /// Byter UI-fönstret till GameOverView, genom bindings för CurrentViewModel mellan MainViewModel och MainWindow
         /// </summary>
-        public void SwitchToGameOverView(int finalScore)// För Score
+        public void SwitchToGameOverView(int finalScore)
         {
             (CurrentViewModel as GameViewModel).StopTimers();
             CurrentViewModel = new GameOverViewModel(finalScore);
 
-            //Debug.WriteLine($"Setting up GameOverViewModel with ID: {CurrentViewModel.InstanceID}");
             OnSwitchToGameOverView?.Invoke();
             (CurrentViewModel as GameOverViewModel).SetToGameViewHandler = SwitchToGameView;
         }

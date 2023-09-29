@@ -23,7 +23,6 @@ namespace SUP23_G9.ViewModels
 
         public PlayerViewModel()
         {
-            //Debug.WriteLine($"PlayerViewModel width: {windowWidth}, height: {windowHeight}");
             LeftCoordinates = 475;
             TopCoordinates = 450;
 
@@ -34,7 +33,6 @@ namespace SUP23_G9.ViewModels
 
             LoadImageProcessing();
             FlipImageX = 1.0;
-            //Debug.WriteLine($"New playerViewModel with ID: {InstanceID}");
         }
         /// <summary>
         /// X-koordinater för objekt av typen PlayerViewModel
@@ -99,7 +97,6 @@ namespace SUP23_G9.ViewModels
         /// <param name="e"></param>
         private void MovePlayerEvent(object? sender, EventArgs e)
         {
-            //Debug.WriteLine($"PlayerViewModel event fire with ID: {InstanceID}");
             if (_leftButtonIsDown && IsNotAtLeftEdge())
             {
                 MovePlayerLeft();

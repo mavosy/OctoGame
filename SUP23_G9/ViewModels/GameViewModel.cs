@@ -48,7 +48,6 @@ namespace SUP23_G9.ViewModels
 
         public GameViewModel()
         {
-            //Debug.WriteLine($"GameViewModel width: {windowWidth}, height: {windowHeight}");
             Ships = new ObservableCollection<ShipViewModel>();
             Obstacles = new ObservableCollection<ObstacleViewModel>();
             GamePoints = new Points();
@@ -71,8 +70,6 @@ namespace SUP23_G9.ViewModels
             SetTimerForIncreasedDifficulty();
             SetCountdownTimer(180);
             InitializeBackgroundMusic();
-
-            Debug.WriteLine($"New GameViewModel with ID: {InstanceID}");
         }
 
         #region Properties
@@ -348,7 +345,7 @@ namespace SUP23_G9.ViewModels
 
                     GamePoints.DeductPoints(lostPointsFromObstacles);
                     PlayerDamaged();
-                    PointResult -= lostPointsFromObstacles; //TODO Någon som vet varför man måste dra av från både PointResult och köra DeductPoints?
+                    PointResult -= lostPointsFromObstacles; 
                 }
             }
         }
@@ -433,7 +430,6 @@ namespace SUP23_G9.ViewModels
             MoveObstaclesLoop();
             SetPlayerShipCollisionConsequence();
             SetPlayerObstacleCollisionConsequence();
-            //Debug.WriteLine($"GameViewModel event fire with ID: {InstanceID}");
         }
         /// <summary>
         /// Event som körs när tiden för CountdownTimer är ute.
