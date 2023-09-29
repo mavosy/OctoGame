@@ -415,7 +415,7 @@ namespace SUP23_G9.ViewModels
             StopTimerForIncreasedDifficulty();
             PlayerVM.StopPlayerTimer();
         }
-
+        
         private void SetTimerForIncreasedDifficulty()
         {
             _increaseDifficultyTimer = new DispatcherTimer();
