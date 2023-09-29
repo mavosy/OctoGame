@@ -10,7 +10,6 @@
              d:DataContext="{d:DesignInstance {x:Type vm:GameViewModel}}"
              d:DesignWidth="1000" d:DesignHeight="600"
              mc:Ignorable="d">
-
     <Grid>
         <TextBlock 
             Text="{Binding GamePoints.DisplayScore}" 
@@ -53,7 +52,6 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-
             <ItemsControl ItemsSource="{Binding Obstacles}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
