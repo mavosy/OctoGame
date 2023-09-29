@@ -19,39 +19,6 @@ namespace SUP23_G9.ViewModels
         }
 
         public BaseViewModel? CurrentViewModel { get; set; }
-        //private BaseViewModel? _currentViewModel;
-
-        //public BaseViewModel? CurrentViewModel
-        //{
-        //    get { return _currentViewModel; }
-        //    set
-        //    {
-        //        _currentViewModel = value;
-        //        OnChangedViewModel();
-        //    }
-        //}
-
-        //private void OnChangedViewModel()
-        //{
-        //    if (_currentViewModel != null)
-        //    {
-        //        return;
-        //    }
-        //    else if (CurrentViewModel is GameViewModel gameViewModel)
-        //    {
-        //        OnChangedViewModelGetWindowSize?.Invoke();
-        //        GetWindowSizeBeforeChanged = (WidthAtGameStart, HeightAtGameStart) =>
-        //        {
-        //            double correctedWidthAtGameStart = WidthAtGameStart - windowWidthCorrection;
-        //            double correctedHeightAtGameStart = HeightAtGameStart - windowHeightCorrection;
-
-        //            gameViewModel.WindowWidth = correctedWidthAtGameStart;
-        //            gameViewModel.WindowHeight = correctedHeightAtGameStart;
-        //            gameViewModel.PlayerVM.WindowWidth = correctedWidthAtGameStart;
-        //            gameViewModel.PlayerVM.WindowHeight = correctedHeightAtGameStart;
-        //        };
-        //    }
-        //}
 
         public double WindowWidth { get; set; }
         public double WindowHeight { get; set; }
@@ -62,14 +29,6 @@ namespace SUP23_G9.ViewModels
 
         public Action OnSwitchToGameView;
         public Action OnSwitchToGameOverView;
-
-        //private void SetDefaultWindowSize(GameViewModel gameViewModel)
-        //{
-        //    //gameViewModel.WindowWidth = defaultWindowWidth;
-        //    //gameViewModel.WindowHeight = defaultWindowHeight;
-        //    //gameViewModel.PlayerVM.WindowWidth = defaultWindowWidth;
-        //    //gameViewModel.PlayerVM.WindowHeight = defaultWindowHeight;
-        //}
 
         /// <summary>
         /// Byter UI-fönstret till StartView, genom bindings för CurrentViewModel mellan MainViewModel och MainWindow
@@ -88,8 +47,6 @@ namespace SUP23_G9.ViewModels
             GameViewModel gameViewModel = new GameViewModel();
             CurrentViewModel = gameViewModel;
 
-            //SetDefaultWindowSize(gameViewModel);
-
             WindowSizeChangedHandler = (width, height) =>
             {
                 double correctedWindowWidth = width - windowWidthCorrection;
@@ -103,8 +60,8 @@ namespace SUP23_G9.ViewModels
 
 
             //Debug.WriteLine($"Setting up GameViewModel with ID: {CurrentViewModel.InstanceID}");
-            gameViewModel.StartTimers();
             OnSwitchToGameView?.Invoke();
+            gameViewModel.StartTimers();
             gameViewModel.SetToGameOverViewHandler = SwitchToGameOverView;
         }
 

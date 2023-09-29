@@ -16,9 +16,6 @@ namespace SUP23_G9.ViewModels
         public const int width = 50;
         public const int height = 50;
 
-        //TODO Fixa dessa konstanter så att de hämtas med t ex bindings eller liknande istället
-        private const int correctedGameAreaWidth = 985;
-        private const int correctedGameAreaHeight = 565;
         private const int playerUpdateFrequencyInMilliseconds = 10;
         private bool _leftButtonIsDown, _rightButtonIsDown, _upButtonIsDown, _downButtonIsDown;
 
@@ -27,15 +24,11 @@ namespace SUP23_G9.ViewModels
         public PlayerViewModel()
         {
             //Debug.WriteLine($"PlayerViewModel width: {windowWidth}, height: {windowHeight}");
-            //TODO vore kanske schysst att inte ha fasta värden på dessa från viewmodel, vet inte vad som är bäst
             LeftCoordinates = 475;
             TopCoordinates = 450;
 
             Width = width;
             Height = height;
-
-            //WindowWidth = windowWidth;
-            //WindowHeight = windowHeight;
 
             SetPlayerTimer();
 

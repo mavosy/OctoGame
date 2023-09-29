@@ -37,8 +37,6 @@ namespace SUP23_G9.ViewModels
 
         private double _mainWindowWidth;
         private double _mainWindowHeight;
-        //private double _mainWindowWidth = System.Windows.Application.Current.MainWindow.ActualWidth;
-        //private double _mainWindowHeight = System.Windows.Application.Current.MainWindow.ActualHeight;
 
         private const int maxPlayerHealth = 3;
         private const int gameTimerUpdateFrequencyInMilliseconds = 20;
@@ -46,8 +44,6 @@ namespace SUP23_G9.ViewModels
         private BitmapImage _emptyHeart;
 
         private readonly MediaPlayer _backgroundMusicPlayer = new MediaPlayer();
-
-
         #endregion
 
         public GameViewModel()
@@ -69,9 +65,6 @@ namespace SUP23_G9.ViewModels
             Heart2 = _fullHeart;
             Heart3 = _fullHeart;
 
-            //WindowWidth = windowWidth;
-            //WindowHeight = windowHeight;
-
             PlayerVM = new PlayerViewModel();
 
             SetGameTimer();
@@ -80,8 +73,6 @@ namespace SUP23_G9.ViewModels
             InitializeBackgroundMusic();
 
             Debug.WriteLine($"New GameViewModel with ID: {InstanceID}");
-
-
         }
 
         #region Properties
@@ -92,7 +83,6 @@ namespace SUP23_G9.ViewModels
         public ObservableCollection<ShipViewModel> Ships { get; set; }
         public ObservableCollection<ObstacleViewModel> Obstacles { get; set; }
         public int PlayerHealth { get; set; }
-        //public Action<double, double> WindowSizeChangedHandler { get; set; }
         public double WindowWidth { get; set; }
         public double WindowHeight { get; set; }
         public BitmapImage Heart1 { get; set; }
